@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "ozm.capability_realization_matrix.v1",
+  "type": "object",
+  "required": ["capabilities"],
+  "properties": {
+    "capabilities": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["capability_id", "tool", "state_owner", "transition", "failure_mode", "observability", "test_proof"],
+        "properties": {
+          "capability_id": {"type": "string"},
+          "tool": {"type": "string"},
+          "state_owner": {"type": "string"},
+          "transition": {"type": "string"},
+          "failure_mode": {"type": "string"},
+          "observability": {"type": "string"},
+          "test_proof": {"type": "string"},
+          "freshness": {"type": "string"},
+          "authority_boundary": {"type": "string"}
+        },
+        "additionalProperties": true
+      }
+    }
+  },
+  "additionalProperties": true
+}

@@ -1,0 +1,29 @@
+{
+  "schema": "ozm.activation_effect.v1",
+  "skill": "ozm-reference-method-grounding",
+  "ownerQuestions": [
+    "Use when OZM-governed work must keep reference projects, papers, frameworks, engines, products, or prior implementations as source-backed method anchors during later planning, dispatch, writing, review, and closeout."
+  ],
+  "blocksActionWhen": [
+    "reference-guided packet lacks reference_anchor_ids",
+    "source-backed gap or proof_surface is missing"
+  ],
+  "requiredArtifacts": [
+    "paper_method_card",
+    "source_backed_gap_ledger",
+    "execution_anchor_contract"
+  ],
+  "downstreamBinding": [
+    "ozm-dispatch-freeze.reference_anchor_ids",
+    "ozm-review-diffgate-acceptance.reference_gap_reduction"
+  ],
+  "proofOrScript": [
+    "scripts/method_anchor_check.py; scripts/reference_gap_check.py"
+  ],
+  "claimEffects": [
+    "blocks paper/reference progress above reference_depth_candidate without gap movement proof"
+  ],
+  "nonSurfaceFailureCodes": [
+    "ozm-reference-method-grounding_loaded_without_required_activation_effect"
+  ]
+}

@@ -1,0 +1,120 @@
+{
+  "schema": "ozm.skill_contract.v3.1",
+  "skill": "ozm-recurring-failure-governance",
+  "activationTriggers": {
+    "ownerStrongPhrases": [],
+    "ownerWeakKeywords": [
+      "control plane weight",
+      "control-plane weight",
+      "control plane noise",
+      "control-plane noise",
+      "auto loop method",
+      "auto-loop method",
+      "automatic loop method",
+      "auto-loop interface",
+      "packet gate",
+      "gate tier",
+      "change class",
+      "scoped gate"
+    ],
+    "companionStrongPhrases": [
+      "参考项目有效分析",
+      "论文方法提炼",
+      "论文方法论",
+      "方法论落地",
+      "reference method grounding",
+      "paper method grounding"
+    ],
+    "companionWeakKeywords": [],
+    "negativeTriggers": [
+      "metadata-only mention",
+      "route output without SKILL.md hydration",
+      "pre-compaction receipt reused after compaction"
+    ]
+  },
+  "ownerQuestions": [
+    "Use when OZM-governed work touches known repeated failure modes such as stale summaries, ownership drift, self-promoted evidence, nonstart loops, late prerequisite discovery, evidence hash cascades, gate-noise loops, runtime-carrier mismatch, masking, or false blockers and needs extra governance."
+  ],
+  "preconditions": [
+    "ozm-recurring-failure-governance selected by ozone-manager for a matching OZM-governed request",
+    "latest visible request role and authority class are classified",
+    "owner surfaces or explicit absence are recorded"
+  ],
+  "blockingConditions": [
+    "same failure repeats as ordinary repair",
+    "hardening prose is added without eval or owner child"
+  ],
+  "requiredArtifacts": [
+    {
+      "id": "failure_signature",
+      "schema": "ozone-manager/references/schemas/failure_signature.schema.json",
+      "requiredWhen": "ozm-recurring-failure-governance is activated and failure_signature governs the next downstream claim or action",
+      "claimCeilingIfMissing": "artifact_missing_or_candidate_only"
+    },
+    {
+      "id": "recurring_family_entry",
+      "schema": "ozone-manager/references/schemas/recurring_family_entry.schema.json",
+      "requiredWhen": "ozm-recurring-failure-governance is activated and recurring_family_entry governs the next downstream claim or action",
+      "claimCeilingIfMissing": "artifact_missing_or_candidate_only"
+    },
+    {
+      "id": "regression_candidate",
+      "schema": "ozone-manager/references/schemas/regression_candidate.schema.json",
+      "requiredWhen": "ozm-recurring-failure-governance is activated and regression_candidate governs the next downstream claim or action",
+      "claimCeilingIfMissing": "artifact_missing_or_candidate_only"
+    }
+  ],
+  "validators": [
+    {
+      "script": "ozm-recurring-failure-governance/scripts/failure_to_regression_check.py",
+      "appliesTo": [
+        "recurring_failure_family",
+        "regression_candidate",
+        "hardening_delta",
+        "failure_signature",
+        "recurring_family_entry"
+      ],
+      "mustPassBefore": [
+        "positive_claim",
+        "closeout"
+      ]
+    }
+  ],
+  "downstreamBindings": [
+    {
+      "consumer": "ozm-skill-hardening",
+      "field": "hardening_candidate",
+      "required": true
+    },
+    {
+      "consumer": "ozone-manager",
+      "field": "recurring_failure_registry",
+      "required": true
+    }
+  ],
+  "claimTransitions": [
+    {
+      "from": "planned",
+      "to": "artifact_present",
+      "requires": [
+        "failure_signature",
+        "recurring_family_entry",
+        "regression_candidate"
+      ],
+      "validator": "ozm-recurring-failure-governance/scripts/failure_to_regression_check.py"
+    },
+    {
+      "from": "artifact_present",
+      "to": "reviewed",
+      "requires": [
+        "hardening_candidate",
+        "recurring_failure_registry"
+      ],
+      "validator": "ozm-recurring-failure-governance/scripts/failure_to_regression_check.py"
+    }
+  ],
+  "nonSurfaceFailures": [
+    "ozm-recurring-failure-governance_loaded_without_required_activation_effect"
+  ],
+  "paperEvidenceClass": "contractual_control_surface"
+}

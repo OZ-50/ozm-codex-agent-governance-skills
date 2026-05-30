@@ -1,0 +1,107 @@
+{
+  "schema": "ozm.skill_contract.v3.1",
+  "skill": "ozm-security-review",
+  "activationTriggers": {
+    "ownerStrongPhrases": [
+      "security review",
+      "security review"
+    ],
+    "ownerWeakKeywords": [],
+    "companionStrongPhrases": [
+      "domain execution gap",
+      "领域执行缺口"
+    ],
+    "companionWeakKeywords": [],
+    "negativeTriggers": [
+      "metadata-only mention",
+      "route output without SKILL.md hydration"
+    ]
+  },
+  "ownerQuestions": [
+    "What domain proof, prerequisite, negative test, and rollback/recovery evidence is required before this security review claim can rise?"
+  ],
+  "preconditions": [
+    "ozone-manager routed a domain execution request to this optional specialist",
+    "latest request role and claim ceiling are classified"
+  ],
+  "blockingConditions": [
+    "domain claim lacks proof surfaces",
+    "external prerequisite or rollback/recovery posture is absent",
+    "negative/recovery behavior is untested for acceptance-grade wording"
+  ],
+  "requiredArtifacts": [
+    {
+      "id": "security_proof_matrix",
+      "schema": "ozone-manager/references/schemas/domain_specialist_contract.schema.json",
+      "requiredWhen": "domain claim is raised or reviewed",
+      "claimCeilingIfMissing": "domain_candidate_only"
+    },
+    {
+      "id": "external_prerequisite_table",
+      "schema": "ozone-manager/references/schemas/domain_specialist_contract.schema.json",
+      "requiredWhen": "external prerequisite may affect execution",
+      "claimCeilingIfMissing": "prerequisite_blocked"
+    },
+    {
+      "id": "rollback_recovery_plan",
+      "schema": "ozone-manager/references/schemas/domain_specialist_contract.schema.json",
+      "requiredWhen": "change can affect runtime, data, security, or public API posture",
+      "claimCeilingIfMissing": "local_only_or_candidate"
+    }
+  ],
+  "validators": [
+    {
+      "script": "ozm-external-prerequisite-gate/scripts/external_prerequisite_gate_check.py",
+      "appliesTo": [
+        "security_proof_matrix",
+        "external_prerequisite_table",
+        "rollback_recovery_plan"
+      ],
+      "mustPassBefore": [
+        "positive_claim",
+        "closeout"
+      ]
+    }
+  ],
+  "downstreamBindings": [
+    {
+      "consumer": "ozm-external-prerequisite-gate",
+      "field": "prerequisite_state",
+      "required": true
+    },
+    {
+      "consumer": "ozm-review-diffgate-acceptance",
+      "field": "domain_verdict",
+      "required": true
+    },
+    {
+      "consumer": "ozm-claim-ceiling",
+      "field": "domain_ceiling",
+      "required": true
+    }
+  ],
+  "claimTransitions": [
+    {
+      "from": "planned",
+      "to": "artifact_present",
+      "requires": [
+        "security_proof_matrix",
+        "external_prerequisite_table",
+        "rollback_recovery_plan"
+      ],
+      "validator": "ozm-external-prerequisite-gate/scripts/external_prerequisite_gate_check.py"
+    },
+    {
+      "from": "artifact_present",
+      "to": "reviewed",
+      "requires": [
+        "domain_verdict",
+        "domain_ceiling"
+      ],
+      "validator": "ozm-external-prerequisite-gate/scripts/external_prerequisite_gate_check.py"
+    }
+  ],
+  "nonSurfaceFailures": [
+    "ozm-security-review_loaded_without_required_activation_effect"
+  ]
+}

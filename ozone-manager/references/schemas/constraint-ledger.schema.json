@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "ozm.constraint_ledger.v1",
+  "type": "object",
+  "required": ["constraints"],
+  "properties": {
+    "constraints": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["constraint_id", "owner", "source_ref", "status", "claim_effect", "downstream_consumers"],
+        "properties": {
+          "constraint_id": {"type": "string"},
+          "owner": {"type": "string"},
+          "source_ref": {"type": "string"},
+          "status": {"enum": ["active", "preserved", "violated", "deferred", "retired"]},
+          "claim_effect": {"type": "string"},
+          "downstream_consumers": {"type": "array", "items": {"type": "string"}},
+          "drift_delta": {"type": "string"},
+          "defer_reason": {"type": "string"}
+        }
+      }
+    }
+  }
+}

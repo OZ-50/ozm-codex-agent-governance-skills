@@ -1,0 +1,4 @@
+interface:
+  display_name: "OZM Repo Graph Reconstruction"
+  short_description: "Govern repo graph and reconstruction evidence."
+  default_prompt: "Use $ozm-repo-graph-reconstruction to check graph freshness, build source-backed reconstruction bundles, bound impact radius, and set claim ceilings before reference-guided code changes."

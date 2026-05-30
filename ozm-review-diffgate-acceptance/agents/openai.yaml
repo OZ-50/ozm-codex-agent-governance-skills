@@ -1,0 +1,4 @@
+interface:
+  display_name: "OZM Review Diffgate Acceptance"
+  short_description: "Review OZM diffs, proof, contracts, and claims"
+  default_prompt: "Use $ozm-review-diffgate-acceptance before positive OZM acceptance wording to check write-set, controller-truth mutation, Plan/Goal contract acceptance, draft quality diffgate, UI/frontend specialist posture, test integrity, anti-shortcut depth, audit carrier posture, reference execution anchors, and source-backed reference gap reduction."

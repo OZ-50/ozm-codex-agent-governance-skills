@@ -1,0 +1,187 @@
+{
+  "schemaVersion": "1.0.0",
+  "purpose": "Active OZM recurring failure family registry. It prevents repeated field failures from being handled only as hardening-log prose.",
+  "governance": {
+    "status": "candidate-control-surface",
+    "rule": "Each active family must have an owner child, route rule, eval case, prevention gate, and claim effect before it can be considered covered.",
+    "nonGoal": "This registry does not replace child SKILL.md rules, route-rules.json, eval cases, guards, or project-specific control docs."
+  },
+  "activeFamilies": [
+    {
+      "id": "child_hydration_epoch_break",
+      "status": "active",
+      "problem": "Route output or pre-compaction receipts are mistaken for current-turn child SKILL.md hydration.",
+      "owner_children": ["ozone-manager", "ozm-skill-hardening", "ozm-truth-boundary-management", "ozm-record-surface-management"],
+      "stop_ids": ["T0-HYDRATION", "T0-REENTRY", "T0-SKILL-AUDIT"],
+      "route_rule_ids": ["strict-post-compression-skill-reload", "target-session-skill-invocation-audit", "post-compression-audit-reentry"],
+      "eval_case_ids": ["route_strict_post_compression_skill_reload", "regression_target_session_synthetic-session_child_hydration_break", "regression_target_session_synthetic-session_pre_compaction_hydration_expired", "behavior_session_audit_flags_post_compaction_closeout_without_skill_load", "behavior_session_audit_requires_truth_boundary_after_compaction_audit_consumption"],
+      "prevention_gate": "Actual child SKILL.md hydration must be reconstructed after the latest compaction boundary before execution, audit consumption, closeout, or positive wording.",
+      "claim_effect": "child_skill_hydration_missing keeps evidence navigation-only until owner children are loaded."
+    },
+    {
+      "id": "post_audit_control_mutation_stale_pass",
+      "status": "active",
+      "problem": "A review/subagent/audit PASS is consumed, then controller/control surfaces are mutated and final closeout treats the old PASS as if it covered the final state.",
+      "owner_children": ["ozm-role-stack-coordination", "ozm-review-diffgate-acceptance", "ozm-record-surface-management", "ozm-closeout-handoff", "ozm-claim-ceiling"],
+      "stop_ids": ["T0-POST-AUDIT-MUTATION", "T0-AUDIT-CARRIER", "T0-CLOSEOUT", "T0-CLAIM"],
+      "route_rule_ids": ["post-audit-control-mutation-review", "subagent-tool-event-governance", "closeout-claim-ceiling-required"],
+      "eval_case_ids": ["behavior_session_audit_flags_post_compaction_closeout_without_skill_load", "behavior_session_audit_accepts_post_compaction_skill_loads_before_review_closeout", "behavior_session_audit_allows_post_pass_record_sync_only_append", "regression_target_session_synthetic-session_post_audit_control_mutation"],
+      "prevention_gate": "Any control-surface mutation after the latest PASS needs focused rereview, final control-surface audit, or an explicit record-sync-only/lowered ceiling before closeout.",
+      "claim_effect": "stale-pass-after-control-mutation limits final-state wording to pending-controller-gate or record-sync-only until the final state is reviewed."
+    },
+    {
+      "id": "current_phase_companion_suppression",
+      "status": "active",
+      "problem": "Current-phase-only wording suppresses mandatory companion children during control writes, audit use, closeout, next-packet admission, or positive claims.",
+      "owner_children": ["ozone-manager", "ozm-record-surface-management", "ozm-dispatch-freeze", "ozm-role-stack-coordination", "ozm-review-diffgate-acceptance", "ozm-closeout-handoff", "ozm-claim-ceiling"],
+      "stop_ids": ["T0-COMPANION", "T0-HYDRATION"],
+      "route_rule_ids": ["current-phase-companion-gate"],
+      "eval_case_ids": ["route_current_phase_only_companion_gate", "regression_default_budget_keeps_mandatory_companions"],
+      "prevention_gate": "Treat current-phase child as primary owner only; add support children when the next action crosses their ownership.",
+      "claim_effect": "Missing companion children block acceptance, controller consumption, and positive progress wording."
+    },
+    {
+      "id": "external_prerequisite_control_admission_companion_gap",
+      "status": "active",
+      "problem": "External-prerequisite diagnostic or fallback admission updates queue/current-state/report records without dispatch, record, closeout, and claim owners.",
+      "owner_children": ["ozm-external-prerequisite-gate", "ozm-dispatch-freeze", "ozm-record-surface-management", "ozm-closeout-handoff", "ozm-claim-ceiling"],
+      "stop_ids": ["T0-COMPANION", "T0-PLACEMENT", "T0-CLOSEOUT"],
+      "route_rule_ids": ["external-prerequisite-control-surface-admission"],
+      "eval_case_ids": ["route_external_prerequisite_control_surface_admission", "regression_external_prerequisite_diagnostic_admission_requires_companions"],
+      "prevention_gate": "Control-surface admission from prerequisite work must freeze write-set, record sync, stop state, and claim ceiling.",
+      "claim_effect": "Prerequisite readback can support diagnostic/fallback posture only until companion gates run."
+    },
+    {
+      "id": "scoped_forbidden_action_misread",
+      "status": "active",
+      "problem": "Scoped phrases such as 'do not implement provider source' are misread as global plan-only and suppress an authorized controller update.",
+      "owner_children": ["ozone-manager", "ozm-requirement-load", "ozm-dispatch-freeze", "ozm-claim-ceiling"],
+      "stop_ids": ["T0-ROLE"],
+      "route_rule_ids": ["plan-only-read-only", "external-prerequisite-control-surface-admission"],
+      "eval_case_ids": ["route_provider_prerequisite_scoped_forbidden_action", "regression_global_plan_only_not_suppressed_by_subject"],
+      "prevention_gate": "Separate request role from subject/action constraints; preserve subject routing while applying read-only role only when it is global.",
+      "claim_effect": "Global read-only blocks execution; scoped forbidden action narrows the write-set without closing admitted controller work."
+    },
+    {
+      "id": "control_weight_noise_auto_loop_method",
+      "status": "active",
+      "problem": "OZM control surfaces remain dominant after the task should be domain/source/runtime led, and auto-loop wording becomes an interface instead of an evaluator method.",
+      "owner_children": ["ozm-requirement-load", "ozm-dispatch-freeze", "ozm-record-surface-management", "ozm-recurring-failure-governance", "ozm-closeout-handoff"],
+      "stop_ids": ["T0-CONTROL-WEIGHT", "T0-CONTROL-NOISE", "T0-AUTO-METHOD", "T0-STANDING-AUTONOMY"],
+      "route_rule_ids": ["control-plane-weight-noise", "auto-loop-method-not-interface", "standing-autonomy-permission"],
+      "eval_case_ids": ["route_control_plane_weight_noise", "route_auto_loop_method_not_interface", "route_subagent_pass_standing_autonomy_next_packet"],
+      "prevention_gate": "Freeze dynamic control-plane weight, control-noise budget, evaluator method, bounded packet grain, and method-reset trigger before continuation.",
+      "claim_effect": "Loop progress is packet-scoped and cannot cross role, method, or claim gates just because standing autonomy exists."
+    },
+    {
+      "id": "evidence_gate_economy_cascade",
+      "status": "active",
+      "problem": "Long loops repeatedly refresh proof wrappers, hashes, audit receipts, or full gates after low-semantic-change edits.",
+      "owner_children": ["ozm-dispatch-freeze", "ozm-record-surface-management", "ozm-review-diffgate-acceptance", "ozm-closeout-handoff", "ozm-recurring-failure-governance"],
+      "stop_ids": ["T0-THROUGHPUT"],
+      "route_rule_ids": ["packet-gate-economy", "evidence-hash-cascade", "loop-throughput-efficiency"],
+      "eval_case_ids": ["route_packet_gate_economy", "route_evidence_hash_cascade", "route_loop_throughput_efficiency"],
+      "prevention_gate": "Classify change class, gate tier, invalidation inputs, stable evidence versus volatile navigation, full-gate trigger, and append-only audit receipt behavior.",
+      "claim_effect": "Scoped/evidence-sync gates can support iteration; acceptance claims still require the frozen full-gate trigger."
+    },
+    {
+      "id": "reference_depth_underimplementation",
+      "status": "active",
+      "problem": "Reference-guided work reaches route/name/policy parity but lacks runtime capability depth, negative paths, state/data-flow behavior, or source-backed gap reduction.",
+      "owner_children": ["ozm-requirement-load", "ozm-reference-method-grounding", "ozm-dispatch-freeze", "ozm-review-diffgate-acceptance", "ozm-claim-ceiling", "ozm-recurring-failure-governance"],
+      "stop_ids": ["T0-REFERENCE", "T0-METHOD-MAP", "T0-METHOD-ANCHOR", "T0-WRONG-DIR", "T0-REF-VALUE", "T0-SHALLOW"],
+      "route_rule_ids": ["reference-paper-method-grounding", "reference-method-adoption", "full-rewrite-reference-map"],
+      "eval_case_ids": ["route_reference_paper_method_grounding", "route_reference_method_adoption", "route_full_rewrite_reference_map", "regression_reference_method_wrong_direction", "regression_paper_method_requires_method_card", "regression_reference_packet_requires_anchor_ids", "regression_local_pass_not_reference_progress", "regression_mock_only_cannot_reduce_reference_gap"],
+      "prevention_gate": "Build reference maps, Paper Method Cards when papers govern execution, source-backed gap ledger, target truth runtime map, adoption matrix, execution anchors, anti-transplant constraints, and node-level depth floor before writer admission.",
+      "claim_effect": "Progress claims must reduce a source-backed reference gap or stay support/local/candidate only."
+    },
+    {
+      "id": "reference_paper_method_drift_without_anchor",
+      "status": "active",
+      "problem": "Paper or reference methodology is analyzed once, then later packets proceed without method atoms, execution anchors, source-backed gap ledger rows, or drift sentinel checks.",
+      "owner_children": ["ozm-requirement-load", "ozm-reference-method-grounding", "ozm-dispatch-freeze", "ozm-code-writing", "ozm-review-diffgate-acceptance", "ozm-closeout-handoff", "ozm-claim-ceiling", "ozm-recurring-failure-governance"],
+      "stop_ids": ["T0-REFERENCE", "T0-METHOD-MAP", "T0-METHOD-ANCHOR", "T0-WRONG-DIR", "T0-REF-VALUE", "T0-REENTRY"],
+      "route_rule_ids": ["reference-paper-method-grounding", "reference-method-adoption", "full-rewrite-reference-map", "post-compression-audit-reentry"],
+      "eval_case_ids": ["route_reference_paper_method_grounding", "regression_paper_method_requires_method_card", "regression_reference_packet_requires_anchor_ids", "regression_wrong_direction_after_reference_map_blocks_dispatch", "regression_multi_reference_requires_target_truth_map", "regression_method_anchor_survives_context_compression", "regression_closeout_lists_gap_reduction_not_generic_reference_wording", "outcome_reference_method_grounding_benchmark"],
+      "prevention_gate": "Paper/reference methods must compile into method cards, adoption contracts, gap ledgers, packet anchors, drift sentinels, and closeout gap transitions before they can govern execution.",
+      "claim_effect": "Missing anchors or unchanged gaps lower claims to background_only, support_only, local_truth_only, surface-prototype, or reference-depth-candidate."
+    },
+    {
+      "id": "controller_truth_and_plan_goal_mutation",
+      "status": "active",
+      "problem": "Writer or execution records modify Plan/Goal/master-plan/contracts to fit partial implementation, lowering requirements or self-validating results.",
+      "owner_children": ["ozm-requirement-load", "ozm-dispatch-freeze", "ozm-record-surface-management", "ozm-truth-boundary-management", "ozm-review-diffgate-acceptance", "ozm-closeout-handoff"],
+      "stop_ids": ["T0-CONTROLLER", "T0-PLAN-MATRIX"],
+      "route_rule_ids": ["controller-truth-document-split", "plan-contract-matrix", "draft-freeze-neutral-review"],
+      "eval_case_ids": ["route_controller_truth_document_split", "route_plan_contract_matrix", "route_draft_freeze_neutral_review"],
+      "prevention_gate": "Separate controller-truth docs from execution records; ordinary writer records candidate controller deltas and re-dispatches after accepted controller changes.",
+      "claim_effect": "Plan/Goal edits by writer lanes lower acceptance and require controller-update closeout."
+    },
+    {
+      "id": "shallow_document_drafting_without_evidence_loop",
+      "status": "active",
+      "problem": "Governed text artifacts become source summaries or confident prose without draft research, unknown-unknown discovery, claim/evidence mapping, reader/editor issue closure, or closed-loop receipt.",
+      "owner_children": ["ozm-document-drafting", "ozm-requirement-load", "ozm-record-surface-management", "ozm-role-stack-coordination", "ozm-review-diffgate-acceptance", "ozm-closeout-handoff", "ozm-claim-ceiling"],
+      "stop_ids": ["T0-DRAFT", "T0-DOC-STRENGTH", "T0-CLAIM"],
+      "route_rule_ids": ["document-drafting", "document-strength-gate", "draft-freeze-neutral-review"],
+      "eval_case_ids": ["route_document_drafting_depth_gate", "regression_code_shallow_not_document_drafting", "behavior_document_drafting_skill_exists", "outcome_document_draft_depth_benchmark"],
+      "prevention_gate": "Text drafting requires draft intake, research/question bank, concept/unknown ledger when needed, claim-evidence-argument matrix, draft issue registry, reader/editor verdict, and draft closed-loop receipt.",
+      "claim_effect": "Without evidence rows and issue-to-delta-to-verdict closure, text stays draft_candidate, evidence_incomplete, shallow_summary_only, or review_pending."
+    },
+    {
+      "id": "active_naming_path_portability_drift",
+      "status": "active",
+      "problem": "Versions, packet ids, unit ids, run ids, local paths, or claim wording leak into active source/config/data/UI/deployment surfaces.",
+      "owner_children": ["ozm-requirement-load", "ozm-dispatch-freeze", "ozm-record-surface-management", "ozm-review-diffgate-acceptance", "ozm-claim-ceiling"],
+      "stop_ids": ["T0-NAMING", "T0-PLACEMENT", "T0-CLOSEOUT"],
+      "route_rule_ids": ["active-naming-and-path-portability", "active-nonplanning-surface-sweep"],
+      "eval_case_ids": ["route_active_naming_and_path_portability", "route_active_nonplanning_surface_sweep"],
+      "prevention_gate": "Freeze active hygiene posture at dispatch and run active non-planning surface sweep before clean-baseline or deployment/maintenance claims.",
+      "claim_effect": "Clean-baseline, maintainer-safe, or deployment-safe claims stay lowered until active residue is fixed or explicitly scoped."
+    },
+    {
+      "id": "large_skill_library_recurrence_control",
+      "status": "active",
+      "problem": "OZM grows by accumulating repeated one-off fixes without a structured recurrence family, route rule, eval, and guard-backed prevention path.",
+      "owner_children": ["ozone-manager", "ozm-skill-hardening", "ozm-recurring-failure-governance", "ozm-record-surface-management"],
+      "stop_ids": ["T0-RECURRING"],
+      "route_rule_ids": ["large-skill-library-recurring-problems", "skill-hardening"],
+      "eval_case_ids": ["route_large_skill_library_recurring_problems", "behavior_recurring_failure_registry_exists"],
+      "prevention_gate": "New repeated OZM defects must land as a registry family or link to an existing one before adding more active prose.",
+      "claim_effect": "Skill-hardening claims remain candidate until registry, route, eval, and guard checks agree."
+    },
+    {
+      "id": "route_suppression_and_surface_activation",
+      "status": "active",
+      "problem": "A broad route keyword suppresses lexical/tag seed candidates, or a skill is counted as effective after route/load mention without downstream artifacts, blockers, receipts, script posture, or claim effect.",
+      "owner_children": ["ozone-manager", "ozm-skill-hardening", "ozm-wait-block-replay-replacement", "ozm-error-repair-debug", "ozm-new-project-setup", "ozm-claim-ceiling"],
+      "stop_ids": ["T0-SKILL-AUDIT", "T0-HYDRATION", "T0-RECURRING"],
+      "route_rule_ids": ["skill-activation-effectiveness-audit", "target-session-skill-invocation-audit", "wait-block-replay-replacement", "error-repair-debug", "new-project-setup"],
+      "eval_case_ids": ["route_skill_activation_effectiveness_audit", "route_wait_block_replay_replacement_nonstart", "route_error_repair_debug_root_cause", "route_new_project_setup_prestart", "outcome_skill_activation_non_surface_effect"],
+      "prevention_gate": "Low-confidence route rules may not suppress strong seed matches; activation audits must require an effect contract and downstream binding before positive skill-effectiveness wording.",
+      "claim_effect": "Skill effectiveness stays diagnostic when evidence is route-only, load-only, missing artifacts, missing script/downgrade, or unconsumed by downstream owners."
+    },
+    {
+      "id": "uncontrolled_capability_evolution_or_api_promotion",
+      "status": "active",
+      "problem": "Evo/self-improving-agent lessons, LLM API judgments, or single-trace improvements are promoted into active OZM behavior without candidate lifecycle, heldout/regression eval, rollback, or owner claim ceiling.",
+      "owner_children": ["ozm-capability-evolution-governance", "ozm-skill-hardening", "ozm-recurring-failure-governance", "ozm-review-diffgate-acceptance", "ozm-claim-ceiling"],
+      "stop_ids": ["T0-EVO", "T0-EXPERIENCE", "T0-RECURRING", "T0-CLAIM"],
+      "route_rule_ids": ["capability-evolution-governance", "experience-practice-loop"],
+      "eval_case_ids": ["route_capability_evolution_governance", "route_llm_api_evaluator_posture", "behavior_ozm_capability_evolution_skill_exists"],
+      "prevention_gate": "Capability evolution must create candidate/eval/promotion/rollback records; LLM API output is optional candidate evidence and cannot promote or execute changes by itself.",
+      "claim_effect": "Evolution claims stay at evolution_candidate, eval_incomplete, or api_evaluator_only until baseline, heldout/regression, review, rollback, and promotion receipt pass."
+    },
+    {
+      "id": "external_reviewer_skill_sprawl",
+      "status": "active",
+      "problem": "Standalone external reviewer skills are routed or loaded as independent authorities in OZM-governed work, causing duplicate review surfaces, acceptance ambiguity, and missing claim-ceiling handoff.",
+      "owner_children": ["ozm-expert-review-suite", "ozm-review-diffgate-acceptance", "ozm-skill-hardening", "ozm-claim-ceiling"],
+      "stop_ids": ["T0-AUDIT-CARRIER", "T0-SKILL-AUDIT", "T0-CLAIM"],
+      "route_rule_ids": ["expert-review-security-specialist", "expert-review-data-migration-specialist", "expert-review-performance-reliability-specialist", "expert-review-correctness-testing-api-specialist", "expert-review-adversarial-architecture-standards-specialist", "archived-donor-alias"],
+      "eval_case_ids": ["route_expert_review_security_absorbed", "route_expert_review_data_migration_absorbed", "route_expert_review_performance_reliability_absorbed", "route_expert_review_correctness_testing_api_absorbed", "route_expert_review_adversarial_architecture_standards_absorbed", "behavior_ozm_expert_review_suite_exists"],
+      "prevention_gate": "Route OZM-governed expert review through ozm-expert-review-suite; archived reviewer ids are donor history only and cannot produce pass/accepted wording directly.",
+      "claim_effect": "Expert findings remain candidate evidence until OZM review, closeout, and claim-ceiling owners consume them."
+    }
+  ]
+}

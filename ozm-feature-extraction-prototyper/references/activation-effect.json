@@ -1,0 +1,29 @@
+{
+  "schema": "ozm.activation_effect.v1",
+  "skill": "ozm-feature-extraction-prototyper",
+  "ownerQuestions": [
+    "Use for OZM-managed extraction of verified work into RFMC reusable capsules."
+  ],
+  "blocksActionWhen": [
+    "capsule lacks source proof, excluded scope, or promotion criteria",
+    "prototype is claimed as reusable production module"
+  ],
+  "requiredArtifacts": [
+    "feature_capsule",
+    "source_evidence_links",
+    "prototype_boundary_receipt"
+  ],
+  "downstreamBinding": [
+    "RFMC.catalog_entry",
+    "ozm-closeout-handoff.extraction_closeout"
+  ],
+  "proofOrScript": [
+    "manual capsule validation probe; no dedicated script"
+  ],
+  "claimEffects": [
+    "keeps extracted work at prototype_candidate until reuse validation is recorded"
+  ],
+  "nonSurfaceFailureCodes": [
+    "ozm-feature-extraction-prototyper_loaded_without_required_activation_effect"
+  ]
+}

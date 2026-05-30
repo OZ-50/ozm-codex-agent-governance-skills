@@ -1,0 +1,62 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "ozm.visual_evidence_pack.schema.json",
+  "title": "OZM visual_evidence_pack artifact schema",
+  "type": "object",
+  "required": [
+    "artifact_id",
+    "skill",
+    "claim_ceiling",
+    "evidence_refs",
+    "constraint_ids",
+    "bundle_items"
+  ],
+  "properties": {
+    "artifact_id": {
+      "type": "string",
+      "const": "visual_evidence_pack"
+    },
+    "skill": {
+      "type": "string",
+      "const": "ozm-ux-ui-expert-suite"
+    },
+    "claim_ceiling": {
+      "type": "string"
+    },
+    "evidence_refs": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "constraint_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "authority_class": {
+      "type": "string"
+    },
+    "downstream_consumers": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "stale_when": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "bundle_items": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": true
+      }
+    }
+  },
+  "additionalProperties": true
+}

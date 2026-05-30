@@ -1,0 +1,5502 @@
+{
+  "schemaVersion": "1.0.0",
+  "purpose": "Portable OZM skill-package manifest for distribution mode, optional dependencies, permissions, provenance, and script integrity.",
+  "distributionModes": {
+    "ozmOnly": {
+      "description": "Only ozone-manager plus active ozm-* child skills are packaged.",
+      "externalTargetPolicy": "optional_external_target",
+      "fallbackRequired": true
+    },
+    "fullSkillShelf": {
+      "description": "OZM runs inside a larger local skill shelf with preserved specialists and other non-OZM skills.",
+      "externalTargetPolicy": "hydrate_when_present",
+      "fallbackRequired": true
+    }
+  },
+  "packageProfiles": {
+    "internalOperatorLocal": {
+      "description": "Maintained local skill shelf; archive may retain operator-local history when marked historical-only."
+    },
+    "publicRedacted": {
+      "description": "Redistributable OZM-only package profile.",
+      "operatorLocalPathPolicy": "replace with <skills-root>, <codex-home>, <resolved-python>, <project-root>, <rfmc-root>, or archive historical marker",
+      "archivePolicy": "archive local paths must be historical-only and are not normal runtime instructions",
+      "privacyGate": [
+        "ozone-manager/scripts/ozm_package_scope_check.py",
+        "ozone-manager/scripts/prose_security_scan.py"
+      ]
+    }
+  },
+  "pathVariables": {
+    "<codex-home>": "Operator-local Codex home directory.",
+    "<skills-root>": "Active Codex skills root containing ozone-manager and ozm-* child skills.",
+    "<resolved-python>": "Operator-local Python interpreter resolved by the environment entrypoint or install process.",
+    "<project-root>": "The governed repository or task workspace root.",
+    "<rfmc-root>": "Optional operator-local reusable feature/module/component catalog root, configured outside the portable OZM package.",
+    "<skills-archive>": "Operator-local archive root for restored donor skills; not part of portable OZM runtime."
+  },
+  "optionalExternalTargets": {
+    "ui-ux-pro-max:data-backend": {
+      "fallbackTargets": [
+        "ozm-ux-ui-expert-suite",
+        "ozm-review-diffgate-acceptance",
+        "ozm-claim-ceiling"
+      ],
+      "mode": "optional_data_backend",
+      "reason": "Large local UI/UX search dataset backend; OZM routes load ozm-ux-ui-expert-suite first and lower the ceiling if this backend is absent."
+    },
+    "repo-knowledge-graph:graph-backend": {
+      "fallbackTargets": [
+        "ozm-repo-graph-reconstruction",
+        "ozm-reference-method-grounding",
+        "ozm-claim-ceiling"
+      ],
+      "mode": "archived_restore_backend",
+      "reason": "Archived repo graph specialist backend. OZM routes to ozm-repo-graph-reconstruction first; restore this donor only for explicit standalone archaeology or backend-parity investigation."
+    },
+    "repo-analysis-deep-reconstruction:reconstruction-backend": {
+      "fallbackTargets": [
+        "ozm-repo-graph-reconstruction",
+        "ozm-reference-method-grounding",
+        "ozm-claim-ceiling"
+      ],
+      "mode": "archived_restore_backend",
+      "reason": "Archived deep reconstruction specialist backend. OZM owns bundle schema, source anchors, mechanism fidelity, and claim ceiling; restore this donor only for explicit standalone archaeology."
+    },
+    "capability-evolver:evolution-backend": {
+      "fallbackTargets": [
+        "ozm-capability-evolution-governance",
+        "ozm-skill-hardening",
+        "ozm-claim-ceiling"
+      ],
+      "mode": "archived_restore_backend",
+      "reason": "Archived capability-evolution backend. OZM owns candidate lifecycle, eval, rollback, promotion, API posture, and claim ceiling; restore only for explicit donor archaeology."
+    },
+    "EvoAgentX:evolution-framework": {
+      "fallbackTargets": [
+        "ozm-capability-evolution-governance",
+        "ozm-recurring-failure-governance",
+        "ozm-claim-ceiling"
+      ],
+      "mode": "optional_framework_donor",
+      "reason": "Optional framework donor for workflow evolution concepts. OZM normal routing uses ozm-capability-evolution-governance and does not depend on the framework package."
+    }
+  },
+  "permissions": {
+    "allowed_tools": [
+      "read_files",
+      "rg_search",
+      "git_diff",
+      "local_python",
+      "apply_patch_for_skill_maintenance"
+    ],
+    "writes": [
+      "ozone-manager/references/activation-effect-contract-schema.md",
+      "ozone-manager/references/archive/skill-graph.full-shelf.local.json",
+      "ozone-manager/references/skill-graph.json",
+      "ozone-manager/references/skill-graph.ozm-only.json",
+      "ozone-manager/references/skill-technical-debt-ledger.json",
+      "ozone-manager/references/state-surface-schema.md",
+      "ozone-manager/references/audit-upgrade-gate-pack-20260528.md",
+      "ozone-manager/references/bootstrap-routing-details.md",
+      "ozm-requirement-load/references/intake-loop-and-contract-details.md",
+      "ozm-review-diffgate-acceptance/references/review-gate-details.md",
+      "ozm-record-surface-management/references/record-surface-rules.md",
+      "ozm-dispatch-freeze/references/dispatch-freeze-gate-details.md",
+      "ozm-closeout-handoff/references/closeout-gate-details.md",
+      "ozm-role-stack-coordination/references/role-stack-gate-details.md",
+      "ozm-skill-hardening/references/skill-hardening-gate-details.md",
+      "ozm-capability-evolution-governance/SKILL.md",
+      "ozm-capability-evolution-governance/references/*",
+      "ozm-capability-evolution-governance/scripts/evolution_candidate_check.py",
+      "temporary eval fixtures under the OS temp directory",
+      "user-authorized OZM skill files during hardening",
+      "ozone-manager/references/asset-runtime-manifest.json",
+      "ozone-manager/references/bootstrap-activation-effect.json",
+      "ozone-manager/references/schemas/*",
+      "ozm-*/references/*.schema.json",
+      "ozm-repo-graph-reconstruction/references/asset-runtime-policy.md",
+      "ozone-manager/references/skill-security-manifest.json",
+      "ozone-manager/references/eval-progress.jsonl",
+      "ozone-manager/references/eval-heartbeat.json",
+      "ozone-manager/scripts/contract_trigger_contamination_check.py",
+      "ozone-manager/scripts/behavioral_integrity_check.py",
+      "ozone-manager/scripts/ozm_chain_consistency_check.py",
+      "ozone-manager/scripts/outcome_oracle_check.py",
+      "ozone-manager/scripts/harness_variance_matrix_check.py",
+      "ozone-manager/scripts/release_scorecard.py",
+      "ozm-document-drafting/scripts/provenance_graph_check.py",
+      "ozone-manager/references/release-evidence-authority.json",
+      "ozone-manager/references/route-replay-corpus.jsonl",
+      "ozone-manager/references/harness-variance-matrix.json",
+      "ozone-manager/references/skill-edit-ledger.jsonl",
+      "ozone-manager/scripts/record_live_profile_evidence.py",
+      "ozone-manager/scripts/contract_schema_specificity_check.py",
+      "ozone-manager/scripts/test_fixtures/eval_partial_snapshot_check.py",
+      "ozone-manager/scripts/test_fixtures/gh_network_authorization_denial_check.py",
+      "ozm-document-drafting/scripts/claim_source_alignment_check.py",
+      "ozm-reference-method-grounding/scripts/paper_claim_source_span_check.py",
+      "ozm-*/references/activation-effect.json",
+      "ozm-*/references/skill-contract.json"
+    ],
+    "network": false,
+    "secrets_access": false,
+    "external_commands": [
+      "git",
+      "gh",
+      "jq",
+      "bash"
+    ],
+    "script_posture": "Local deterministic maintenance scripts. They are not a remote execution sandbox and must run with operator approval/context.",
+    "default_network": false
+  },
+  "trustedProvenance": {
+    "owner": "operator-local OZM skill shelf",
+    "reviewed_at": "2026-05-28",
+    "review_posture": "Internal maintained skill package; third-party redistribution must rerun script hash and optional dependency checks."
+  },
+  "scripts": {
+    "ozm-agent-runtime-architecture/scripts/runtime_boundary_trace_check.py": {
+      "allowed_effects": [
+        "read explicit OZM contract, eval, fixture, or package files and emit deterministic diagnostic findings"
+      ],
+      "read_scope": [
+        "explicitly supplied files, OZM package metadata, or temporary fixtures needed by this script"
+      ],
+      "write_scope": [],
+      "network": false,
+      "external_commands": [],
+      "stdout_data_class": "diagnostic_no_secret_json_or_text",
+      "env_allowlist": [
+        "PYTHONDONTWRITEBYTECODE"
+      ],
+      "secret_patterns_checked": [
+        "openai_api_key",
+        "generic_secret",
+        "private_key",
+        "bearer_token",
+        "password_assignment"
+      ],
+      "path_redaction": {
+        "operator_local_paths": "redact_or_mark_operator_local",
+        "secrets": "redact",
+        "stdout_paths": "relative_or_declared"
+      },
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "secret_redaction_required": true,
+      "requires_user_approval": false,
+      "disabled_by_default": false,
+      "capability": "local_only",
+      "sha256": "fb8006d82ff50f4b3120a0365c6774857afbea6a418ba3fa2d36f48252307d8c"
+    },
+    "ozm-agent-runtime-architecture/scripts/runtime_capability_verifier.py": {
+      "allowed_effects": [
+        "read explicit OZM contract, eval, fixture, or package files and emit deterministic diagnostic findings"
+      ],
+      "read_scope": [
+        "explicitly supplied files, OZM package metadata, or temporary fixtures needed by this script"
+      ],
+      "write_scope": [],
+      "network": false,
+      "external_commands": [],
+      "stdout_data_class": "diagnostic_no_secret_json_or_text",
+      "env_allowlist": [
+        "PYTHONDONTWRITEBYTECODE"
+      ],
+      "secret_patterns_checked": [
+        "openai_api_key",
+        "generic_secret",
+        "private_key",
+        "bearer_token",
+        "password_assignment"
+      ],
+      "path_redaction": {
+        "operator_local_paths": "redact_or_mark_operator_local",
+        "secrets": "redact",
+        "stdout_paths": "relative_or_declared"
+      },
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "secret_redaction_required": true,
+      "requires_user_approval": false,
+      "disabled_by_default": false,
+      "capability": "local_only",
+      "sha256": "13470175874cfeebd547ad789bb5ac50dfaddcb8ec7ebcca8d1e3760b3b54669"
+    },
+    "ozm-capability-evolution-governance/scripts/evolution_candidate_check.py": {
+      "allowed_effects": [
+        "read supplied capability-evolution candidate and eval report JSON",
+        "emit candidate/eval promotion readiness findings"
+      ],
+      "read_scope": [
+        "explicitly supplied candidate/eval files, OZM package metadata, or temporary fixtures needed by this script"
+      ],
+      "write_scope": [],
+      "network": false,
+      "external_commands": [],
+      "stdout_data_class": "diagnostic_no_secret_json_or_text",
+      "env_allowlist": [
+        "PYTHONDONTWRITEBYTECODE"
+      ],
+      "secret_patterns_checked": [
+        "openai_api_key",
+        "generic_secret",
+        "private_key",
+        "bearer_token",
+        "password_assignment"
+      ],
+      "path_redaction": {
+        "operator_local_paths": "redact_or_mark_operator_local",
+        "secrets": "redact",
+        "stdout_paths": "relative_or_declared"
+      },
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "secret_redaction_required": true,
+      "requires_user_approval": false,
+      "disabled_by_default": false,
+      "capability": "local_only",
+      "sha256": "06d536edb1145b1ee0ed248f55276656f6d950936eb7a5613d9348e21f7b93b8"
+    },
+    "ozm-capability-evolution-governance/scripts/skillopt_edit_ledger_check.py": {
+      "allowed_effects": [
+        "read explicit OZM contract, eval, fixture, or package files and emit deterministic diagnostic findings"
+      ],
+      "read_scope": [
+        "explicitly supplied files, OZM package metadata, or temporary fixtures needed by this script"
+      ],
+      "write_scope": [],
+      "network": false,
+      "external_commands": [],
+      "stdout_data_class": "diagnostic_no_secret_json_or_text",
+      "env_allowlist": [
+        "PYTHONDONTWRITEBYTECODE"
+      ],
+      "secret_patterns_checked": [
+        "openai_api_key",
+        "generic_secret",
+        "private_key",
+        "bearer_token",
+        "password_assignment"
+      ],
+      "path_redaction": {
+        "operator_local_paths": "redact_or_mark_operator_local",
+        "secrets": "redact",
+        "stdout_paths": "relative_or_declared"
+      },
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "secret_redaction_required": true,
+      "requires_user_approval": false,
+      "disabled_by_default": false,
+      "capability": "local_only",
+      "sha256": "52fb74ed05b71e23d93711852695f0378a03cf4f21b0bc1a50f11554ac5717b9"
+    },
+    "ozm-claim-ceiling/scripts/claim_ceiling_phrase_linter.py": {
+      "allowed_effects": [
+        "read explicit OZM contract, eval, fixture, or package files and emit deterministic diagnostic findings"
+      ],
+      "read_scope": [
+        "explicitly supplied files, OZM package metadata, or temporary fixtures needed by this script"
+      ],
+      "write_scope": [],
+      "network": false,
+      "external_commands": [],
+      "stdout_data_class": "diagnostic_no_secret_json_or_text",
+      "env_allowlist": [
+        "PYTHONDONTWRITEBYTECODE"
+      ],
+      "secret_patterns_checked": [
+        "openai_api_key",
+        "generic_secret",
+        "private_key",
+        "bearer_token",
+        "password_assignment"
+      ],
+      "path_redaction": {
+        "operator_local_paths": "redact_or_mark_operator_local",
+        "secrets": "redact",
+        "stdout_paths": "relative_or_declared"
+      },
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "secret_redaction_required": true,
+      "requires_user_approval": false,
+      "disabled_by_default": false,
+      "capability": "local_only",
+      "sha256": "b8b99e11c752de234dc3beb66d9e35d6fbdf77118dd7d2477762a59207ba886d"
+    },
+    "ozm-claim-ceiling/scripts/positive_claim_linter.py": {
+      "allowed_effects": [
+        "run deterministic OZM helper ozm-claim-ceiling/scripts/positive_claim_linter.py"
+      ],
+      "read_scope": [
+        "explicit_files",
+        "package_metadata",
+        "temp_fixtures"
+      ],
+      "write_scope": [],
+      "network": false,
+      "external_commands": [],
+      "stdout_data_class": "diagnostic_no_secret_json_or_text",
+      "env_allowlist": [
+        "PYTHONDONTWRITEBYTECODE"
+      ],
+      "secret_patterns_checked": [
+        "openai_api_key",
+        "generic_secret",
+        "private_key",
+        "bearer_token",
+        "password_assignment"
+      ],
+      "path_redaction": {
+        "operator_local_paths": "redact_or_mark_operator_local",
+        "secrets": "redact",
+        "stdout_paths": "relative_or_declared"
+      },
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "secret_redaction_required": true,
+      "requires_user_approval": false,
+      "disabled_by_default": false,
+      "capability": "local_only",
+      "sha256": "d464afe3f026c4f119491860b98921e86bc63df284b158d570b00bae9658f55b"
+    },
+    "ozm-closeout-handoff/scripts/closeout_constraint_residue_check.py": {
+      "allowed_effects": [
+        "read explicit OZM contract, eval, fixture, or package files and emit deterministic diagnostic findings"
+      ],
+      "read_scope": [
+        "explicitly supplied files, OZM package metadata, or temporary fixtures needed by this script"
+      ],
+      "write_scope": [],
+      "network": false,
+      "external_commands": [],
+      "stdout_data_class": "diagnostic_no_secret_json_or_text",
+      "env_allowlist": [
+        "PYTHONDONTWRITEBYTECODE"
+      ],
+      "secret_patterns_checked": [
+        "openai_api_key",
+        "generic_secret",
+        "private_key",
+        "bearer_token",
+        "password_assignment"
+      ],
+      "path_redaction": {
+        "operator_local_paths": "redact_or_mark_operator_local",
+        "secrets": "redact",
+        "stdout_paths": "relative_or_declared"
+      },
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "secret_redaction_required": true,
+      "requires_user_approval": false,
+      "disabled_by_default": false,
+      "capability": "local_only",
+      "sha256": "e92a6367972440f29d494e7f29ba1cefe09a9e4caafc4da08630d1f90940456e"
+    },
+    "ozm-closeout-handoff/scripts/closeout_receipt_check.py": {
+      "allowed_effects": [
+        "read explicit OZM contract, eval, fixture, or package files and emit deterministic diagnostic findings"
+      ],
+      "read_scope": [
+        "explicitly supplied files, OZM package metadata, or temporary fixtures needed by this script"
+      ],
+      "write_scope": [],
+      "network": false,
+      "external_commands": [],
+      "stdout_data_class": "diagnostic_no_secret_json_or_text",
+      "env_allowlist": [
+        "PYTHONDONTWRITEBYTECODE"
+      ],
+      "secret_patterns_checked": [
+        "openai_api_key",
+        "generic_secret",
+        "private_key",
+        "bearer_token",
+        "password_assignment"
+      ],
+      "path_redaction": {
+        "operator_local_paths": "redact_or_mark_operator_local",
+        "secrets": "redact",
+        "stdout_paths": "relative_or_declared"
+      },
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "secret_redaction_required": true,
+      "requires_user_approval": false,
+      "disabled_by_default": false,
+      "capability": "local_only",
+      "sha256": "25476a9d8ea223553a8cbbad36c64740c0723097de098877f1efb05605574ac0"
+    },
+    "ozm-code-writing/scripts/agentic_health_checks.py": {
+      "allowed_effects": [
+        "analyze touched source files for agentic navigability and structural health signals"
+      ],
+      "read_scope": [
+        "explicitly supplied files, OZM package metadata, or temporary fixtures needed by this script"
+      ],
+      "write_scope": [],
+      "network": false,
+      "external_commands": [],
+      "stdout_data_class": "diagnostic_no_secret_json_or_text",
+      "env_allowlist": [
+        "PYTHONDONTWRITEBYTECODE"
+      ],
+      "secret_patterns_checked": [
+        "openai_api_key",
+        "generic_secret",
+        "private_key",
+        "bearer_token",
+        "password_assignment"
+      ],
+      "path_redaction": {
+        "operator_local_paths": "redact_or_mark_operator_local",
+        "secrets": "redact",
+        "stdout_paths": "relative_or_declared"
+      },
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "secret_redaction_required": true,
+      "requires_user_approval": false,
+      "disabled_by_default": false,
+      "capability": "local_only",
+      "sha256": "7d343732a2e448a11a2ef48fb990f19a8d642f4e759a3b2c3417c99d8b189235"
+    },
+    "ozm-code-writing/scripts/code_health_gate.py": {
+      "allowed_effects": [
+        "read touched source files",
+        "emit OZM-local code health smoke-gate findings"
+      ],
+      "read_scope": [
+        "explicitly supplied files, OZM package metadata, or temporary fixtures needed by this script"
+      ],
+      "write_scope": [],
+      "network": false,
+      "external_commands": [],
+      "stdout_data_class": "diagnostic_no_secret_json_or_text",
+      "env_allowlist": [
+        "PYTHONDONTWRITEBYTECODE"
+      ],
+      "secret_patterns_checked": [
+        "openai_api_key",
+        "generic_secret",
+        "private_key",
+        "bearer_token",
+        "password_assignment"
+      ],
+      "path_redaction": {
+        "operator_local_paths": "redact_or_mark_operator_local",
+        "secrets": "redact",
+        "stdout_paths": "relative_or_declared"
+      },
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "secret_redaction_required": true,
+      "requires_user_approval": false,
+      "disabled_by_default": false,
+      "capability": "local_only",
+      "sha256": "4a890da440de212f929324e83b84f6b1bd4d1e910d22b156ace684e46ce7f1f0"
+    },
+    "ozm-context-engineering/scripts/compaction.py": {
+      "allowed_effects": [
+        "read supplied context/task text",
+        "emit compaction, masking, offload, and stable-prefix recommendations"
+      ],
+      "read_scope": [
+        "explicitly supplied files, OZM package metadata, or temporary fixtures needed by this script"
+      ],
+      "write_scope": [],
+      "network": false,
+      "external_commands": [],
+      "stdout_data_class": "diagnostic_no_secret_json_or_text",
+      "env_allowlist": [
+        "PYTHONDONTWRITEBYTECODE"
+      ],
+      "secret_patterns_checked": [
+        "openai_api_key",
+        "generic_secret",
+        "private_key",
+        "bearer_token",
+        "password_assignment"
+      ],
+      "path_redaction": {
+        "operator_local_paths": "redact_or_mark_operator_local",
+        "secrets": "redact",
+        "stdout_paths": "relative_or_declared"
+      },
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "secret_redaction_required": true,
+      "requires_user_approval": false,
+      "disabled_by_default": false,
+      "capability": "local_only",
+      "sha256": "da3e52b4b3fecd5ad7373ce49772b541b49edddc732b2437b2ef84da22798405"
+    },
+    "ozm-context-engineering/scripts/compression_evaluator.py": {
+      "allowed_effects": [
+        "read source and compressed context text",
+        "emit compression preservation and information-loss findings"
+      ],
+      "read_scope": [
+        "explicitly supplied files, OZM package metadata, or temporary fixtures needed by this script"
+      ],
+      "write_scope": [],
+      "network": false,
+      "external_commands": [],
+      "stdout_data_class": "diagnostic_no_secret_json_or_text",
+      "env_allowlist": [
+        "PYTHONDONTWRITEBYTECODE"
+      ],
+      "secret_patterns_checked": [
+        "openai_api_key",
+        "generic_secret",
+        "private_key",
+        "bearer_token",
+        "password_assignment"
+      ],
+      "path_redaction": {
+        "operator_local_paths": "redact_or_mark_operator_local",
+        "secrets": "redact",
+        "stdout_paths": "relative_or_declared"
+      },
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "secret_redaction_required": true,
+      "requires_user_approval": false,
+      "disabled_by_default": false,
+      "capability": "local_only",
+      "sha256": "d7b6bc24149f947f450af5d409b20a6ddfbce140cc52578191cf56a70973df89"
+    },
+    "ozm-context-engineering/scripts/context_manager.py": {
+      "allowed_effects": [
+        "read supplied context artifacts",
+        "emit token estimates and progressive-disclosure context packs"
+      ],
+      "read_scope": [
+        "explicitly supplied files, OZM package metadata, or temporary fixtures needed by this script"
+      ],
+      "write_scope": [],
+      "network": false,
+      "external_commands": [],
+      "stdout_data_class": "diagnostic_no_secret_json_or_text",
+      "env_allowlist": [
+        "PYTHONDONTWRITEBYTECODE"
+      ],
+      "secret_patterns_checked": [
+        "openai_api_key",
+        "generic_secret",
+        "private_key",
+        "bearer_token",
+        "password_assignment"
+      ],
+      "path_redaction": {
+        "operator_local_paths": "redact_or_mark_operator_local",
+        "secrets": "redact",
+        "stdout_paths": "relative_or_declared"
+      },
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "secret_redaction_required": true,
+      "requires_user_approval": false,
+      "disabled_by_default": false,
+      "capability": "local_only",
+      "sha256": "ed12987933333bffe158537308e94e41623d1277cb78afa708ede0bfd362766f"
+    },
+    "ozm-context-engineering/scripts/context_pack_manifest_check.py": {
+      "allowed_effects": [
+        "read explicit OZM contract, eval, fixture, or package files and emit deterministic diagnostic findings"
+      ],
+      "read_scope": [
+        "explicitly supplied files, OZM package metadata, or temporary fixtures needed by this script"
+      ],
+      "write_scope": [],
+      "network": false,
+      "external_commands": [],
+      "stdout_data_class": "diagnostic_no_secret_json_or_text",
+      "env_allowlist": [
+        "PYTHONDONTWRITEBYTECODE"
+      ],
+      "secret_patterns_checked": [
+        "openai_api_key",
+        "generic_secret",
+        "private_key",
+        "bearer_token",
+        "password_assignment"
+      ],
+      "path_redaction": {
+        "operator_local_paths": "redact_or_mark_operator_local",
+        "secrets": "redact",
+        "stdout_paths": "relative_or_declared"
+      },
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "secret_redaction_required": true,
+      "requires_user_approval": false,
+      "disabled_by_default": false,
+      "capability": "local_only",
+      "sha256": "720551a7a1bb0405db7dda81b6d5e09be6342a72279d09514a3e2dcbc80e15f3"
+    },
+    "ozm-context-engineering/scripts/degradation_detector.py": {
+      "allowed_effects": [
+        "read supplied context text",
+        "emit degradation, poisoning, lost-in-middle, and structure findings"
+      ],
+      "read_scope": [
+        "explicitly supplied files, OZM package metadata, or temporary fixtures needed by this script"
+      ],
+      "write_scope": [],
+      "network": false,
+      "external_commands": [],
+      "stdout_data_class": "diagnostic_no_secret_json_or_text",
+      "env_allowlist": [
+        "PYTHONDONTWRITEBYTECODE"
+      ],
+      "secret_patterns_checked": [
+        "openai_api_key",
+        "generic_secret",
+        "private_key",
+        "bearer_token",
+        "password_assignment"
+      ],
+      "path_redaction": {
+        "operator_local_paths": "redact_or_mark_operator_local",
+        "secrets": "redact",
+        "stdout_paths": "relative_or_declared"
+      },
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "secret_redaction_required": true,
+      "requires_user_approval": false,
+      "disabled_by_default": false,
+      "capability": "local_only",
+      "sha256": "a73e2ec095b4e0812c2438c2a421e0325e407a6d39d7bd22e14f84271951f2bb"
+    },
+    "ozm-context-engineering/scripts/filesystem_context.py": {
+      "allowed_effects": [
+        "read and manage explicitly supplied filesystem context metadata",
+        "emit scratch-pad, lifecycle, and retrieval-rule findings"
+      ],
+      "read_scope": [
+        "explicitly supplied files, OZM package metadata, or temporary fixtures needed by this script"
+      ],
+      "write_scope": [],
+      "network": false,
+      "external_commands": [],
+      "stdout_data_class": "diagnostic_no_secret_json_or_text",
+      "env_allowlist": [
+        "PYTHONDONTWRITEBYTECODE"
+      ],
+      "secret_patterns_checked": [
+        "openai_api_key",
+        "generic_secret",
+        "private_key",
+        "bearer_token",
+        "password_assignment"
+      ],
+      "path_redaction": {
+        "operator_local_paths": "redact_or_mark_operator_local",
+        "secrets": "redact",
+        "stdout_paths": "relative_or_declared"
+      },
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "secret_redaction_required": true,
+      "requires_user_approval": false,
+      "disabled_by_default": false,
+      "capability": "local_only",
+      "sha256": "1bc25861bfcedfae7c98d1cbaf63ead856108976c561b7c3a1874a279888091b"
+    },
+    "ozm-dispatch-freeze/scripts/dispatch_packet_contract_check.py": {
+      "allowed_effects": [
+        "read explicit OZM contract, eval, fixture, or package files and emit deterministic diagnostic findings"
+      ],
+      "read_scope": [
+        "explicitly supplied files, OZM package metadata, or temporary fixtures needed by this script"
+      ],
+      "write_scope": [],
+      "network": false,
+      "external_commands": [],
+      "stdout_data_class": "diagnostic_no_secret_json_or_text",
+      "env_allowlist": [
+        "PYTHONDONTWRITEBYTECODE"
+      ],
+      "secret_patterns_checked": [
+        "openai_api_key",
+        "generic_secret",
+        "private_key",
+        "bearer_token",
+        "password_assignment"
+      ],
+      "path_redaction": {
+        "operator_local_paths": "redact_or_mark_operator_local",
+        "secrets": "redact",
+        "stdout_paths": "relative_or_declared"
+      },
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "secret_redaction_required": true,
+      "requires_user_approval": false,
+      "disabled_by_default": false,
+      "capability": "local_only",
+      "sha256": "e82303d4872710c471a2efd98188859249b69fd196aa5df261d154c01c5a3841"
+    },
+    "ozm-document-drafting/scripts/citation_ast_map_check.py": {
+      "allowed_effects": [
+        "read explicit OZM contract, eval, fixture, or package files and emit deterministic diagnostic findings"
+      ],
+      "read_scope": [
+        "explicitly supplied files, OZM package metadata, or temporary fixtures needed by this script"
+      ],
+      "write_scope": [],
+      "network": false,
+      "external_commands": [],
+      "stdout_data_class": "diagnostic_no_secret_json_or_text",
+      "env_allowlist": [
+        "PYTHONDONTWRITEBYTECODE"
+      ],
+      "secret_patterns_checked": [
+        "openai_api_key",
+        "generic_secret",
+        "private_key",
+        "bearer_token",
+        "password_assignment"
+      ],
+      "path_redaction": {
+        "operator_local_paths": "redact_or_mark_operator_local",
+        "secrets": "redact",
+        "stdout_paths": "relative_or_declared"
+      },
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "secret_redaction_required": true,
+      "requires_user_approval": false,
+      "disabled_by_default": false,
+      "capability": "local_only",
+      "sha256": "2882a694ff01f4dd03805d7cf42cd32c4735938c9acd22e36080d97c9d120daa"
+    },
+    "ozm-document-drafting/scripts/claim_evidence_check.py": {
+      "allowed_effects": [
+        "read claim-evidence JSON matrix",
+        "emit structural claim/evidence findings"
+      ],
+      "read_scope": [
+        "explicitly supplied files, OZM package metadata, or temporary fixtures needed by this script"
+      ],
+      "write_scope": [],
+      "network": false,
+      "external_commands": [],
+      "stdout_data_class": "diagnostic_no_secret_json_or_text",
+      "env_allowlist": [
+        "PYTHONDONTWRITEBYTECODE"
+      ],
+      "secret_patterns_checked": [
+        "openai_api_key",
+        "generic_secret",
+        "private_key",
+        "bearer_token",
+        "password_assignment"
+      ],
+      "path_redaction": {
+        "operator_local_paths": "redact_or_mark_operator_local",
+        "secrets": "redact",
+        "stdout_paths": "relative_or_declared"
+      },
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "secret_redaction_required": true,
+      "requires_user_approval": false,
+      "disabled_by_default": false,
+      "capability": "local_only",
+      "sha256": "150c3e92529b7786913f9ef2730036d142b19fe9b7ae7482be2355281d11ea3b"
+    },
+    "ozm-document-drafting/scripts/draft_quality_gate.py": {
+      "allowed_effects": [
+        "read draft matrix, issue registry, and optional concept-map JSON",
+        "emit draft quality findings"
+      ],
+      "read_scope": [
+        "explicitly supplied files, OZM package metadata, or temporary fixtures needed by this script"
+      ],
+      "write_scope": [],
+      "network": false,
+      "external_commands": [],
+      "stdout_data_class": "diagnostic_no_secret_json_or_text",
+      "env_allowlist": [
+        "PYTHONDONTWRITEBYTECODE"
+      ],
+      "secret_patterns_checked": [
+        "openai_api_key",
+        "generic_secret",
+        "private_key",
+        "bearer_token",
+        "password_assignment"
+      ],
+      "path_redaction": {
+        "operator_local_paths": "redact_or_mark_operator_local",
+        "secrets": "redact",
+        "stdout_paths": "relative_or_declared"
+      },
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "secret_redaction_required": true,
+      "requires_user_approval": false,
+      "disabled_by_default": false,
+      "capability": "local_only",
+      "sha256": "f7ef412b31a340010f0c0d67525dacf0a3e55bfe943868d96ecf383814f21056"
+    },
+    "ozm-document-drafting/scripts/markdown_claim_source_check.py": {
+      "allowed_effects": [
+        "validate Markdown or citation claim map source spans and reasoning bridges"
+      ],
+      "read_scope": [
+        "explicitly supplied files, OZM package metadata, or temporary fixtures needed by this script"
+      ],
+      "write_scope": [],
+      "network": false,
+      "external_commands": [],
+      "stdout_data_class": "diagnostic_no_secret_json_or_text",
+      "env_allowlist": [
+        "PYTHONDONTWRITEBYTECODE"
+      ],
+      "secret_patterns_checked": [
+        "openai_api_key",
+        "generic_secret",
+        "private_key",
+        "bearer_token",
+        "password_assignment"
+      ],
+      "path_redaction": {
+        "operator_local_paths": "redact_or_mark_operator_local",
+        "secrets": "redact",
+        "stdout_paths": "relative_or_declared"
+      },
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "secret_redaction_required": true,
+      "requires_user_approval": false,
+      "disabled_by_default": false,
+      "capability": "local_only",
+      "sha256": "b8755a20aaf75fab3a422addec0835e341374ee2c3389903f9864dbb743825b7"
+    },
+    "ozm-document-drafting/scripts/provenance_graph_check.py": {
+      "allowed_effects": [
+        "read explicit OZM contract, eval, fixture, or package files and emit deterministic diagnostic findings"
+      ],
+      "read_scope": [
+        "explicitly supplied files, OZM package metadata, or temporary fixtures needed by this script"
+      ],
+      "write_scope": [],
+      "network": false,
+      "external_commands": [],
+      "stdout_data_class": "diagnostic_no_secret_json_or_text",
+      "env_allowlist": [
+        "PYTHONDONTWRITEBYTECODE"
+      ],
+      "secret_patterns_checked": [
+        "openai_api_key",
+        "generic_secret",
+        "private_key",
+        "bearer_token",
+        "password_assignment"
+      ],
+      "path_redaction": {
+        "operator_local_paths": "redact_or_mark_operator_local",
+        "secrets": "redact",
+        "stdout_paths": "relative_or_declared"
+      },
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "secret_redaction_required": true,
+      "requires_user_approval": false,
+      "disabled_by_default": false,
+      "capability": "local_only",
+      "sha256": "3e4c7a7250fc57337cf3f3ad7de2d836d6fca12c9c1ff667b56b03a3b916c3f0"
+    },
+    "ozm-document-drafting/scripts/source_poisoning_check.py": {
+      "allowed_effects": [
+        "run deterministic OZM helper ozm-document-drafting/scripts/source_poisoning_check.py"
+      ],
+      "read_scope": [
+        "explicitly supplied files, OZM package metadata, or temporary fixtures needed by this script"
+      ],
+      "write_scope": [],
+      "network": false,
+      "external_commands": [],
+      "stdout_data_class": "diagnostic_no_secret_json_or_text",
+      "env_allowlist": [
+        "PYTHONDONTWRITEBYTECODE"
+      ],
+      "secret_patterns_checked": [
+        "openai_api_key",
+        "generic_secret",
+        "private_key",
+        "bearer_token",
+        "password_assignment"
+      ],
+      "path_redaction": {
+        "operator_local_paths": "redact_or_mark_operator_local",
+        "secrets": "redact",
+        "stdout_paths": "relative_or_declared"
+      },
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "secret_redaction_required": true,
+      "requires_user_approval": false,
+      "disabled_by_default": false,
+      "capability": "local_only",
+      "sha256": "2f14da5d758fb0fc42326384ac11075cf3e0254634e1845a09518a60aab19362"
+    },
+    "ozm-error-repair-debug/scripts/repair_minimality_check.py": {
+      "allowed_effects": [
+        "read explicit OZM contract, eval, fixture, or package files and emit deterministic diagnostic findings"
+      ],
+      "read_scope": [
+        "explicitly supplied files, OZM package metadata, or temporary fixtures needed by this script"
+      ],
+      "write_scope": [],
+      "network": false,
+      "external_commands": [],
+      "stdout_data_class": "diagnostic_no_secret_json_or_text",
+      "env_allowlist": [
+        "PYTHONDONTWRITEBYTECODE"
+      ],
+      "secret_patterns_checked": [
+        "openai_api_key",
+        "generic_secret",
+        "private_key",
+        "bearer_token",
+        "password_assignment"
+      ],
+      "path_redaction": {
+        "operator_local_paths": "redact_or_mark_operator_local",
+        "secrets": "redact",
+        "stdout_paths": "relative_or_declared"
+      },
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "secret_redaction_required": true,
+      "requires_user_approval": false,
+      "disabled_by_default": false,
+      "capability": "local_only",
+      "sha256": "34a27a35fb99a98a78fc2196301a424bdd915d834a6af71077d5d91def14403e"
+    },
+    "ozm-expert-review-suite/scripts/expert_finding_check.py": {
+      "allowed_effects": [
+        "read explicit OZM contract, eval, fixture, or package files and emit deterministic diagnostic findings"
+      ],
+      "read_scope": [
+        "explicitly supplied files, OZM package metadata, or temporary fixtures needed by this script"
+      ],
+      "write_scope": [],
+      "network": false,
+      "external_commands": [],
+      "stdout_data_class": "diagnostic_no_secret_json_or_text",
+      "env_allowlist": [
+        "PYTHONDONTWRITEBYTECODE"
+      ],
+      "secret_patterns_checked": [
+        "openai_api_key",
+        "generic_secret",
+        "private_key",
+        "bearer_token",
+        "password_assignment"
+      ],
+      "path_redaction": {
+        "operator_local_paths": "redact_or_mark_operator_local",
+        "secrets": "redact",
+        "stdout_paths": "relative_or_declared"
+      },
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "secret_redaction_required": true,
+      "requires_user_approval": false,
+      "disabled_by_default": false,
+      "capability": "local_only",
+      "sha256": "3dca460df064565bdec18e2912f288e96357d35759f44b9d64d0f64e1c4a5391"
+    },
+    "ozm-expert-review-suite/scripts/get-pr-comments": {
+      "allowed_effects": [
+        "read GitHub PR comments through gh graphql",
+        "emit PR feedback JSON for OZM expert review"
+      ],
+      "read_scope": [
+        "explicitly supplied files, OZM package metadata, or temporary fixtures needed by this script"
+      ],
+      "write_scope": [],
+      "network": true,
+      "external_commands": [
+        "gh",
+        "jq",
+        "bash"
+      ],
+      "stdout_data_class": "diagnostic_no_secret_json_or_text",
+      "env_allowlist": [
+        "GH_TOKEN",
+        "GITHUB_TOKEN",
+        "OZM_ALLOW_GH_PR_TOOLS",
+        "PYTHONDONTWRITEBYTECODE"
+      ],
+      "secret_patterns_checked": [
+        "openai_api_key",
+        "generic_secret",
+        "private_key",
+        "bearer_token",
+        "password_assignment"
+      ],
+      "path_redaction": {
+        "operator_local_paths": "redact_or_mark_operator_local",
+        "secrets": "redact",
+        "stdout_paths": "relative_or_declared"
+      },
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "secret_redaction_required": true,
+      "requires_user_approval": true,
+      "disabled_by_default": true,
+      "capability": "gh_network_required",
+      "sha256": "6a6097a579b72626d9aefcf74864dd433daba874ff1fc088501d751074e6259e",
+      "authorization_env": "OZM_ALLOW_GH_PR_TOOLS"
+    },
+    "ozm-expert-review-suite/scripts/get-thread-for-comment": {
+      "allowed_effects": [
+        "read one GitHub review thread by comment id",
+        "emit PR thread JSON for OZM expert review"
+      ],
+      "read_scope": [
+        "explicitly supplied files, OZM package metadata, or temporary fixtures needed by this script"
+      ],
+      "write_scope": [],
+      "network": true,
+      "external_commands": [
+        "gh",
+        "jq",
+        "bash"
+      ],
+      "stdout_data_class": "diagnostic_no_secret_json_or_text",
+      "env_allowlist": [
+        "GH_TOKEN",
+        "GITHUB_TOKEN",
+        "OZM_ALLOW_GH_PR_TOOLS",
+        "PYTHONDONTWRITEBYTECODE"
+      ],
+      "secret_patterns_checked": [
+        "openai_api_key",
+        "generic_secret",
+        "private_key",
+        "bearer_token",
+        "password_assignment"
+      ],
+      "path_redaction": {
+        "operator_local_paths": "redact_or_mark_operator_local",
+        "secrets": "redact",
+        "stdout_paths": "relative_or_declared"
+      },
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "secret_redaction_required": true,
+      "requires_user_approval": true,
+      "disabled_by_default": true,
+      "capability": "gh_network_required",
+      "sha256": "43a6eac05f4a2b701a7e981ffb2b8be97afa4fa5c4a66ac974c813a815a20a32",
+      "authorization_env": "OZM_ALLOW_GH_PR_TOOLS"
+    },
+    "ozm-expert-review-suite/scripts/reply-to-pr-thread": {
+      "allowed_effects": [
+        "post a prepared reply to a GitHub PR review thread when explicitly authorized"
+      ],
+      "read_scope": [
+        "explicitly supplied files, OZM package metadata, or temporary fixtures needed by this script"
+      ],
+      "write_scope": [],
+      "network": true,
+      "external_commands": [
+        "gh",
+        "jq",
+        "bash"
+      ],
+      "stdout_data_class": "diagnostic_no_secret_json_or_text",
+      "env_allowlist": [
+        "GH_TOKEN",
+        "GITHUB_TOKEN",
+        "OZM_ALLOW_GH_PR_TOOLS",
+        "PYTHONDONTWRITEBYTECODE"
+      ],
+      "secret_patterns_checked": [
+        "openai_api_key",
+        "generic_secret",
+        "private_key",
+        "bearer_token",
+        "password_assignment"
+      ],
+      "path_redaction": {
+        "operator_local_paths": "redact_or_mark_operator_local",
+        "secrets": "redact",
+        "stdout_paths": "relative_or_declared"
+      },
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "secret_redaction_required": true,
+      "requires_user_approval": true,
+      "disabled_by_default": true,
+      "capability": "gh_network_required",
+      "sha256": "a6eab1a07328af236923002811a9d4619e3a01b976371d471ecc49ab870c784f",
+      "authorization_env": "OZM_ALLOW_GH_PR_TOOLS"
+    },
+    "ozm-expert-review-suite/scripts/resolve-pr-thread": {
+      "allowed_effects": [
+        "resolve a GitHub PR review thread when explicitly authorized"
+      ],
+      "read_scope": [
+        "explicitly supplied files, OZM package metadata, or temporary fixtures needed by this script"
+      ],
+      "write_scope": [],
+      "network": true,
+      "external_commands": [
+        "gh",
+        "jq",
+        "bash"
+      ],
+      "stdout_data_class": "diagnostic_no_secret_json_or_text",
+      "env_allowlist": [
+        "GH_TOKEN",
+        "GITHUB_TOKEN",
+        "OZM_ALLOW_GH_PR_TOOLS",
+        "PYTHONDONTWRITEBYTECODE"
+      ],
+      "secret_patterns_checked": [
+        "openai_api_key",
+        "generic_secret",
+        "private_key",
+        "bearer_token",
+        "password_assignment"
+      ],
+      "path_redaction": {
+        "operator_local_paths": "redact_or_mark_operator_local",
+        "secrets": "redact",
+        "stdout_paths": "relative_or_declared"
+      },
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "secret_redaction_required": true,
+      "requires_user_approval": true,
+      "disabled_by_default": true,
+      "capability": "gh_network_required",
+      "sha256": "59887070b1983d3a2004d7f7cae8c7abc66127c06a52399b8ecb6da62f45e20d",
+      "authorization_env": "OZM_ALLOW_GH_PR_TOOLS"
+    },
+    "ozm-external-prerequisite-gate/scripts/ambient_authority_ledger_check.py": {
+      "allowed_effects": [
+        "read explicit OZM contract, eval, fixture, or package files and emit deterministic diagnostic findings"
+      ],
+      "read_scope": [
+        "explicitly supplied files, OZM package metadata, or temporary fixtures needed by this script"
+      ],
+      "write_scope": [],
+      "network": false,
+      "external_commands": [],
+      "stdout_data_class": "diagnostic_no_secret_json_or_text",
+      "env_allowlist": [
+        "PYTHONDONTWRITEBYTECODE"
+      ],
+      "secret_patterns_checked": [
+        "openai_api_key",
+        "generic_secret",
+        "private_key",
+        "bearer_token",
+        "password_assignment"
+      ],
+      "path_redaction": {
+        "operator_local_paths": "redact_or_mark_operator_local",
+        "secrets": "redact",
+        "stdout_paths": "relative_or_declared"
+      },
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "secret_redaction_required": true,
+      "requires_user_approval": false,
+      "disabled_by_default": false,
+      "capability": "local_only",
+      "sha256": "7a0072367c2908efdba8412ca2f392bc59d2c185e9337a837e0f2d2e96157496"
+    },
+    "ozm-external-prerequisite-gate/scripts/credential_stdout_guard.py": {
+      "allowed_effects": [
+        "scan scripts for credential-like stdout leakage risks"
+      ],
+      "read_scope": [
+        "explicitly supplied files, OZM package metadata, or temporary fixtures needed by this script"
+      ],
+      "write_scope": [],
+      "network": false,
+      "external_commands": [],
+      "stdout_data_class": "diagnostic_no_secret_json_or_text",
+      "env_allowlist": [
+        "PYTHONDONTWRITEBYTECODE"
+      ],
+      "secret_patterns_checked": [
+        "openai_api_key",
+        "generic_secret",
+        "private_key",
+        "bearer_token",
+        "password_assignment"
+      ],
+      "path_redaction": {
+        "operator_local_paths": "redact_or_mark_operator_local",
+        "secrets": "redact",
+        "stdout_paths": "relative_or_declared"
+      },
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "secret_redaction_required": true,
+      "requires_user_approval": false,
+      "disabled_by_default": false,
+      "capability": "local_only",
+      "sha256": "c66738b8b08222e4376dde036bdee62910d68af4b838c2ff68274654dc4f24e2"
+    },
+    "ozm-external-prerequisite-gate/scripts/external_prerequisite_gate_check.py": {
+      "allowed_effects": [
+        "read explicit OZM contract, eval, fixture, or package files and emit deterministic diagnostic findings"
+      ],
+      "read_scope": [
+        "explicitly supplied files, OZM package metadata, or temporary fixtures needed by this script"
+      ],
+      "write_scope": [],
+      "network": false,
+      "external_commands": [],
+      "stdout_data_class": "diagnostic_no_secret_json_or_text",
+      "env_allowlist": [
+        "PYTHONDONTWRITEBYTECODE"
+      ],
+      "secret_patterns_checked": [
+        "openai_api_key",
+        "generic_secret",
+        "private_key",
+        "bearer_token",
+        "password_assignment"
+      ],
+      "path_redaction": {
+        "operator_local_paths": "redact_or_mark_operator_local",
+        "secrets": "redact",
+        "stdout_paths": "relative_or_declared"
+      },
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "secret_redaction_required": true,
+      "requires_user_approval": false,
+      "disabled_by_default": false,
+      "capability": "local_only",
+      "sha256": "d1e7381191cd2872a10563f6e416c31100e975878663cbe0baae7a5a4fb3948a"
+    },
+    "ozm-feature-extraction-prototyper/scripts/feature_capsule_check.py": {
+      "allowed_effects": [
+        "read explicit OZM contract, eval, fixture, or package files and emit deterministic diagnostic findings"
+      ],
+      "read_scope": [
+        "explicitly supplied files, OZM package metadata, or temporary fixtures needed by this script"
+      ],
+      "write_scope": [],
+      "network": false,
+      "external_commands": [],
+      "stdout_data_class": "diagnostic_no_secret_json_or_text",
+      "env_allowlist": [
+        "PYTHONDONTWRITEBYTECODE"
+      ],
+      "secret_patterns_checked": [
+        "openai_api_key",
+        "generic_secret",
+        "private_key",
+        "bearer_token",
+        "password_assignment"
+      ],
+      "path_redaction": {
+        "operator_local_paths": "redact_or_mark_operator_local",
+        "secrets": "redact",
+        "stdout_paths": "relative_or_declared"
+      },
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "secret_redaction_required": true,
+      "requires_user_approval": false,
+      "disabled_by_default": false,
+      "capability": "local_only",
+      "sha256": "c11c97add5aa9c64cb68f9919331f515248f181769697cad292807cb07e68d66"
+    },
+    "ozm-image2-skill/scripts/image2_asset_claim_check.py": {
+      "allowed_effects": [
+        "read explicit OZM contract, eval, fixture, or package files and emit deterministic diagnostic findings"
+      ],
+      "read_scope": [
+        "explicitly supplied files, OZM package metadata, or temporary fixtures needed by this script"
+      ],
+      "write_scope": [],
+      "network": false,
+      "external_commands": [],
+      "stdout_data_class": "diagnostic_no_secret_json_or_text",
+      "env_allowlist": [
+        "PYTHONDONTWRITEBYTECODE"
+      ],
+      "secret_patterns_checked": [
+        "openai_api_key",
+        "generic_secret",
+        "private_key",
+        "bearer_token",
+        "password_assignment"
+      ],
+      "path_redaction": {
+        "operator_local_paths": "redact_or_mark_operator_local",
+        "secrets": "redact",
+        "stdout_paths": "relative_or_declared"
+      },
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "secret_redaction_required": true,
+      "requires_user_approval": false,
+      "disabled_by_default": false,
+      "capability": "local_only",
+      "sha256": "b941b5bc6487b3c8e5cc14a8ee48ecd669dd25e948258cc651646969e82ba9f7"
+    },
+    "ozm-new-project-setup/scripts/project_boot_check.py": {
+      "allowed_effects": [
+        "read explicit OZM contract, eval, fixture, or package files and emit deterministic diagnostic findings"
+      ],
+      "read_scope": [
+        "explicitly supplied files, OZM package metadata, or temporary fixtures needed by this script"
+      ],
+      "write_scope": [],
+      "network": false,
+      "external_commands": [],
+      "stdout_data_class": "diagnostic_no_secret_json_or_text",
+      "env_allowlist": [
+        "PYTHONDONTWRITEBYTECODE"
+      ],
+      "secret_patterns_checked": [
+        "openai_api_key",
+        "generic_secret",
+        "private_key",
+        "bearer_token",
+        "password_assignment"
+      ],
+      "path_redaction": {
+        "operator_local_paths": "redact_or_mark_operator_local",
+        "secrets": "redact",
+        "stdout_paths": "relative_or_declared"
+      },
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "secret_redaction_required": true,
+      "requires_user_approval": false,
+      "disabled_by_default": false,
+      "capability": "local_only",
+      "sha256": "85c874dfe1d19b5ff05233e2b2b6b6a10296fbd7b187a585d072d030e64419ab"
+    },
+    "ozm-record-surface-management/scripts/record_surface_provenance_check.py": {
+      "allowed_effects": [
+        "read explicit OZM contract, eval, fixture, or package files and emit deterministic diagnostic findings"
+      ],
+      "read_scope": [
+        "explicitly supplied files, OZM package metadata, or temporary fixtures needed by this script"
+      ],
+      "write_scope": [],
+      "network": false,
+      "external_commands": [],
+      "stdout_data_class": "diagnostic_no_secret_json_or_text",
+      "env_allowlist": [
+        "PYTHONDONTWRITEBYTECODE"
+      ],
+      "secret_patterns_checked": [
+        "openai_api_key",
+        "generic_secret",
+        "private_key",
+        "bearer_token",
+        "password_assignment"
+      ],
+      "path_redaction": {
+        "operator_local_paths": "redact_or_mark_operator_local",
+        "secrets": "redact",
+        "stdout_paths": "relative_or_declared"
+      },
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "secret_redaction_required": true,
+      "requires_user_approval": false,
+      "disabled_by_default": false,
+      "capability": "local_only",
+      "sha256": "16c632c3b10cd6e663ed8986ec91619f3779d2d21173793cbc9beb37713f21ec"
+    },
+    "ozm-recurring-failure-governance/scripts/failure_to_regression_check.py": {
+      "allowed_effects": [
+        "read explicit OZM contract, eval, fixture, or package files and emit deterministic diagnostic findings"
+      ],
+      "read_scope": [
+        "explicitly supplied files, OZM package metadata, or temporary fixtures needed by this script"
+      ],
+      "write_scope": [],
+      "network": false,
+      "external_commands": [],
+      "stdout_data_class": "diagnostic_no_secret_json_or_text",
+      "env_allowlist": [
+        "PYTHONDONTWRITEBYTECODE"
+      ],
+      "secret_patterns_checked": [
+        "openai_api_key",
+        "generic_secret",
+        "private_key",
+        "bearer_token",
+        "password_assignment"
+      ],
+      "path_redaction": {
+        "operator_local_paths": "redact_or_mark_operator_local",
+        "secrets": "redact",
+        "stdout_paths": "relative_or_declared"
+      },
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "secret_redaction_required": true,
+      "requires_user_approval": false,
+      "disabled_by_default": false,
+      "capability": "local_only",
+      "sha256": "28d170b0d53b01cfd0017f6d34c88dea67b377e1e52fcc331b74cf160a3fbdcd"
+    },
+    "ozm-reference-method-grounding/scripts/method_anchor_check.py": {
+      "allowed_effects": [
+        "read execution anchor JSON",
+        "emit reference method anchor findings"
+      ],
+      "read_scope": [
+        "explicitly supplied files, OZM package metadata, or temporary fixtures needed by this script"
+      ],
+      "write_scope": [],
+      "network": false,
+      "external_commands": [],
+      "stdout_data_class": "diagnostic_no_secret_json_or_text",
+      "env_allowlist": [
+        "PYTHONDONTWRITEBYTECODE"
+      ],
+      "secret_patterns_checked": [
+        "openai_api_key",
+        "generic_secret",
+        "private_key",
+        "bearer_token",
+        "password_assignment"
+      ],
+      "path_redaction": {
+        "operator_local_paths": "redact_or_mark_operator_local",
+        "secrets": "redact",
+        "stdout_paths": "relative_or_declared"
+      },
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "secret_redaction_required": true,
+      "requires_user_approval": false,
+      "disabled_by_default": false,
+      "capability": "local_only",
+      "sha256": "0508771f86ddf43294b383a75307c668055199e9fdc6bc66dbd33693e4e58b60"
+    },
+    "ozm-reference-method-grounding/scripts/method_code_alignment_check.py": {
+      "allowed_effects": [
+        "read explicit OZM contract, eval, fixture, or package files and emit deterministic diagnostic findings"
+      ],
+      "read_scope": [
+        "explicitly supplied files, OZM package metadata, or temporary fixtures needed by this script"
+      ],
+      "write_scope": [],
+      "network": false,
+      "external_commands": [],
+      "stdout_data_class": "diagnostic_no_secret_json_or_text",
+      "env_allowlist": [
+        "PYTHONDONTWRITEBYTECODE"
+      ],
+      "secret_patterns_checked": [
+        "openai_api_key",
+        "generic_secret",
+        "private_key",
+        "bearer_token",
+        "password_assignment"
+      ],
+      "path_redaction": {
+        "operator_local_paths": "redact_or_mark_operator_local",
+        "secrets": "redact",
+        "stdout_paths": "relative_or_declared"
+      },
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "secret_redaction_required": true,
+      "requires_user_approval": false,
+      "disabled_by_default": false,
+      "capability": "local_only",
+      "sha256": "af32b4171d3a34ff0cb7ffc09882417d5eb013db4394b4f9ef6528b20fa7eabb"
+    },
+    "ozm-reference-method-grounding/scripts/paper_method_claim_verifier.py": {
+      "allowed_effects": [
+        "validate Paper Method Card method atoms for source span, adoption posture, and proof target"
+      ],
+      "read_scope": [
+        "explicitly supplied files, OZM package metadata, or temporary fixtures needed by this script"
+      ],
+      "write_scope": [],
+      "network": false,
+      "external_commands": [],
+      "stdout_data_class": "diagnostic_no_secret_json_or_text",
+      "env_allowlist": [
+        "PYTHONDONTWRITEBYTECODE"
+      ],
+      "secret_patterns_checked": [
+        "openai_api_key",
+        "generic_secret",
+        "private_key",
+        "bearer_token",
+        "password_assignment"
+      ],
+      "path_redaction": {
+        "operator_local_paths": "redact_or_mark_operator_local",
+        "secrets": "redact",
+        "stdout_paths": "relative_or_declared"
+      },
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "secret_redaction_required": true,
+      "requires_user_approval": false,
+      "disabled_by_default": false,
+      "capability": "local_only",
+      "sha256": "e5be04446cd121d756df93fedd03015c00908f20214357ff679a7b2ddbd98636"
+    },
+    "ozm-reference-method-grounding/scripts/reference_gap_check.py": {
+      "allowed_effects": [
+        "read source-backed gap ledger JSON",
+        "emit reference gap ledger findings"
+      ],
+      "read_scope": [
+        "explicitly supplied files, OZM package metadata, or temporary fixtures needed by this script"
+      ],
+      "write_scope": [],
+      "network": false,
+      "external_commands": [],
+      "stdout_data_class": "diagnostic_no_secret_json_or_text",
+      "env_allowlist": [
+        "PYTHONDONTWRITEBYTECODE"
+      ],
+      "secret_patterns_checked": [
+        "openai_api_key",
+        "generic_secret",
+        "private_key",
+        "bearer_token",
+        "password_assignment"
+      ],
+      "path_redaction": {
+        "operator_local_paths": "redact_or_mark_operator_local",
+        "secrets": "redact",
+        "stdout_paths": "relative_or_declared"
+      },
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "secret_redaction_required": true,
+      "requires_user_approval": false,
+      "disabled_by_default": false,
+      "capability": "local_only",
+      "sha256": "d47e472ae46982b588f20f2a9affb1bb5534795b6615dd58e6d3b822acb6c7a1"
+    },
+    "ozm-repo-graph-reconstruction/scripts/build_diff_overlay.py": {
+      "allowed_effects": [
+        "read repository source/graph inputs",
+        "emit repo graph or reconstruction findings"
+      ],
+      "read_scope": [
+        "explicitly supplied files, OZM package metadata, or temporary fixtures needed by this script"
+      ],
+      "write_scope": [],
+      "network": false,
+      "external_commands": [
+        "git"
+      ],
+      "stdout_data_class": "diagnostic_no_secret_json_or_text",
+      "env_allowlist": [
+        "PYTHONDONTWRITEBYTECODE"
+      ],
+      "secret_patterns_checked": [
+        "openai_api_key",
+        "generic_secret",
+        "private_key",
+        "bearer_token",
+        "password_assignment"
+      ],
+      "path_redaction": {
+        "operator_local_paths": "redact_or_mark_operator_local",
+        "secrets": "redact",
+        "stdout_paths": "relative_or_declared"
+      },
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "secret_redaction_required": true,
+      "requires_user_approval": false,
+      "disabled_by_default": false,
+      "capability": "local_only",
+      "sha256": "92ac47594a8a51e59c5589012958ad6033602337914f0f4eb7ce76435cf3a1df"
+    },
+    "ozm-repo-graph-reconstruction/scripts/build_js_ts_graph.py": {
+      "allowed_effects": [
+        "read repository source/graph inputs",
+        "emit repo graph or reconstruction findings"
+      ],
+      "read_scope": [
+        "explicitly supplied files, OZM package metadata, or temporary fixtures needed by this script"
+      ],
+      "write_scope": [],
+      "network": false,
+      "external_commands": [],
+      "stdout_data_class": "diagnostic_no_secret_json_or_text",
+      "env_allowlist": [
+        "PYTHONDONTWRITEBYTECODE"
+      ],
+      "secret_patterns_checked": [
+        "openai_api_key",
+        "generic_secret",
+        "private_key",
+        "bearer_token",
+        "password_assignment"
+      ],
+      "path_redaction": {
+        "operator_local_paths": "redact_or_mark_operator_local",
+        "secrets": "redact",
+        "stdout_paths": "relative_or_declared"
+      },
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "secret_redaction_required": true,
+      "requires_user_approval": false,
+      "disabled_by_default": false,
+      "capability": "local_only",
+      "sha256": "33e7f4fd719bebf8e133b2a582d0da9aea5b732abf1d14a6dfcfe15ceb59e286"
+    },
+    "ozm-repo-graph-reconstruction/scripts/embedding_search_lib.py": {
+      "allowed_effects": [
+        "read repository source/graph inputs",
+        "emit repo graph or reconstruction findings"
+      ],
+      "read_scope": [
+        "explicitly supplied files, OZM package metadata, or temporary fixtures needed by this script"
+      ],
+      "write_scope": [],
+      "network": false,
+      "external_commands": [],
+      "stdout_data_class": "diagnostic_no_secret_json_or_text",
+      "env_allowlist": [
+        "PYTHONDONTWRITEBYTECODE"
+      ],
+      "secret_patterns_checked": [
+        "openai_api_key",
+        "generic_secret",
+        "private_key",
+        "bearer_token",
+        "password_assignment"
+      ],
+      "path_redaction": {
+        "operator_local_paths": "redact_or_mark_operator_local",
+        "secrets": "redact",
+        "stdout_paths": "relative_or_declared"
+      },
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "secret_redaction_required": true,
+      "requires_user_approval": false,
+      "disabled_by_default": false,
+      "capability": "local_only",
+      "sha256": "3ff854611c6d188ce8a513072b74c9aad4cace6d5f3a3e1c63881bc3afcd9cbc"
+    },
+    "ozm-repo-graph-reconstruction/scripts/explain_graph_component.py": {
+      "allowed_effects": [
+        "read repository source/graph inputs",
+        "emit repo graph or reconstruction findings"
+      ],
+      "read_scope": [
+        "explicitly supplied files, OZM package metadata, or temporary fixtures needed by this script"
+      ],
+      "write_scope": [],
+      "network": false,
+      "external_commands": [],
+      "stdout_data_class": "diagnostic_no_secret_json_or_text",
+      "env_allowlist": [
+        "PYTHONDONTWRITEBYTECODE"
+      ],
+      "secret_patterns_checked": [
+        "openai_api_key",
+        "generic_secret",
+        "private_key",
+        "bearer_token",
+        "password_assignment"
+      ],
+      "path_redaction": {
+        "operator_local_paths": "redact_or_mark_operator_local",
+        "secrets": "redact",
+        "stdout_paths": "relative_or_declared"
+      },
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "secret_redaction_required": true,
+      "requires_user_approval": false,
+      "disabled_by_default": false,
+      "capability": "local_only",
+      "sha256": "38478b2fe6cfced8d1f5bc17dcbc60b312cd9e8ac1f8b379d11ff70759959a12"
+    },
+    "ozm-repo-graph-reconstruction/scripts/graph_query_lib.py": {
+      "allowed_effects": [
+        "read repository source/graph inputs",
+        "emit repo graph or reconstruction findings"
+      ],
+      "read_scope": [
+        "explicitly supplied files, OZM package metadata, or temporary fixtures needed by this script"
+      ],
+      "write_scope": [],
+      "network": false,
+      "external_commands": [],
+      "stdout_data_class": "diagnostic_no_secret_json_or_text",
+      "env_allowlist": [
+        "PYTHONDONTWRITEBYTECODE"
+      ],
+      "secret_patterns_checked": [
+        "openai_api_key",
+        "generic_secret",
+        "private_key",
+        "bearer_token",
+        "password_assignment"
+      ],
+      "path_redaction": {
+        "operator_local_paths": "redact_or_mark_operator_local",
+        "secrets": "redact",
+        "stdout_paths": "relative_or_declared"
+      },
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "secret_redaction_required": true,
+      "requires_user_approval": false,
+      "disabled_by_default": false,
+      "capability": "local_only",
+      "sha256": "ea76ee2f771bd20491b90a85721a17952c0212de342df08b2df20a40686c0cee"
+    },
+    "ozm-repo-graph-reconstruction/scripts/init_reconstruction_bundle.py": {
+      "allowed_effects": [
+        "read repository source/graph inputs",
+        "emit repo graph or reconstruction findings"
+      ],
+      "read_scope": [
+        "explicitly supplied files, OZM package metadata, or temporary fixtures needed by this script"
+      ],
+      "write_scope": [],
+      "network": false,
+      "external_commands": [],
+      "stdout_data_class": "diagnostic_no_secret_json_or_text",
+      "env_allowlist": [
+        "PYTHONDONTWRITEBYTECODE"
+      ],
+      "secret_patterns_checked": [
+        "openai_api_key",
+        "generic_secret",
+        "private_key",
+        "bearer_token",
+        "password_assignment"
+      ],
+      "path_redaction": {
+        "operator_local_paths": "redact_or_mark_operator_local",
+        "secrets": "redact",
+        "stdout_paths": "relative_or_declared"
+      },
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "secret_redaction_required": true,
+      "requires_user_approval": false,
+      "disabled_by_default": false,
+      "capability": "local_only",
+      "sha256": "927b9e5ba246fa8ae47be79f067f7d51e308c872342bc33d2725b0cae8c5d65b"
+    },
+    "ozm-repo-graph-reconstruction/scripts/quick_smoke_minimal.py": {
+      "allowed_effects": [
+        "read repository source/graph inputs",
+        "emit repo graph or reconstruction findings"
+      ],
+      "read_scope": [
+        "explicitly supplied files, OZM package metadata, or temporary fixtures needed by this script"
+      ],
+      "write_scope": [],
+      "network": false,
+      "external_commands": [
+        "<resolved-python>"
+      ],
+      "stdout_data_class": "diagnostic_no_secret_json_or_text",
+      "env_allowlist": [
+        "PYTHONDONTWRITEBYTECODE"
+      ],
+      "secret_patterns_checked": [
+        "openai_api_key",
+        "generic_secret",
+        "private_key",
+        "bearer_token",
+        "password_assignment"
+      ],
+      "path_redaction": {
+        "operator_local_paths": "redact_or_mark_operator_local",
+        "secrets": "redact",
+        "stdout_paths": "relative_or_declared"
+      },
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "secret_redaction_required": true,
+      "requires_user_approval": false,
+      "disabled_by_default": false,
+      "capability": "local_only",
+      "sha256": "34f99cabeef1861973ed9fae653cc6983472b38eb372fda4e98de636a678211c"
+    },
+    "ozm-repo-graph-reconstruction/scripts/quick_smoke_understand.py": {
+      "allowed_effects": [
+        "read repository source/graph inputs",
+        "emit repo graph or reconstruction findings"
+      ],
+      "read_scope": [
+        "explicitly supplied files, OZM package metadata, or temporary fixtures needed by this script"
+      ],
+      "write_scope": [],
+      "network": false,
+      "external_commands": [
+        "<resolved-python>"
+      ],
+      "stdout_data_class": "diagnostic_no_secret_json_or_text",
+      "env_allowlist": [
+        "PYTHONDONTWRITEBYTECODE"
+      ],
+      "secret_patterns_checked": [
+        "openai_api_key",
+        "generic_secret",
+        "private_key",
+        "bearer_token",
+        "password_assignment"
+      ],
+      "path_redaction": {
+        "operator_local_paths": "redact_or_mark_operator_local",
+        "secrets": "redact",
+        "stdout_paths": "relative_or_declared"
+      },
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "secret_redaction_required": true,
+      "requires_user_approval": false,
+      "disabled_by_default": false,
+      "capability": "local_only",
+      "sha256": "d97da37e33ed6cd53c37542a401a769c598bc8edcabadc9d43cd74379c233743"
+    },
+    "ozm-repo-graph-reconstruction/scripts/repo_graph_runtime_lib.py": {
+      "allowed_effects": [
+        "read repository source/graph inputs",
+        "emit repo graph or reconstruction findings"
+      ],
+      "read_scope": [
+        "explicitly supplied files, OZM package metadata, or temporary fixtures needed by this script"
+      ],
+      "write_scope": [],
+      "network": false,
+      "external_commands": [
+        "<resolved-python>",
+        "git"
+      ],
+      "stdout_data_class": "diagnostic_no_secret_json_or_text",
+      "env_allowlist": [
+        "PYTHONDONTWRITEBYTECODE"
+      ],
+      "secret_patterns_checked": [
+        "openai_api_key",
+        "generic_secret",
+        "private_key",
+        "bearer_token",
+        "password_assignment"
+      ],
+      "path_redaction": {
+        "operator_local_paths": "redact_or_mark_operator_local",
+        "secrets": "redact",
+        "stdout_paths": "relative_or_declared"
+      },
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "secret_redaction_required": true,
+      "requires_user_approval": false,
+      "disabled_by_default": false,
+      "capability": "local_only",
+      "sha256": "f760bfbff39fbf78da004ee4582a2fcd721360fc40c8cde3ebd6c68208847871"
+    },
+    "ozm-repo-graph-reconstruction/scripts/run_understand.py": {
+      "allowed_effects": [
+        "read repository source/graph inputs",
+        "emit repo graph or reconstruction findings"
+      ],
+      "read_scope": [
+        "explicitly supplied files, OZM package metadata, or temporary fixtures needed by this script"
+      ],
+      "write_scope": [],
+      "network": false,
+      "external_commands": [],
+      "stdout_data_class": "diagnostic_no_secret_json_or_text",
+      "env_allowlist": [
+        "PYTHONDONTWRITEBYTECODE"
+      ],
+      "secret_patterns_checked": [
+        "openai_api_key",
+        "generic_secret",
+        "private_key",
+        "bearer_token",
+        "password_assignment"
+      ],
+      "path_redaction": {
+        "operator_local_paths": "redact_or_mark_operator_local",
+        "secrets": "redact",
+        "stdout_paths": "relative_or_declared"
+      },
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "secret_redaction_required": true,
+      "requires_user_approval": false,
+      "disabled_by_default": false,
+      "capability": "local_only",
+      "sha256": "453bbd19a9eefb93def2025ef09d7f1cdb9a6cd4945a4f0b6a67dd4930258e00"
+    },
+    "ozm-repo-graph-reconstruction/scripts/search_graph.py": {
+      "allowed_effects": [
+        "read repository source/graph inputs",
+        "emit repo graph or reconstruction findings"
+      ],
+      "read_scope": [
+        "explicitly supplied files, OZM package metadata, or temporary fixtures needed by this script"
+      ],
+      "write_scope": [],
+      "network": false,
+      "external_commands": [],
+      "stdout_data_class": "diagnostic_no_secret_json_or_text",
+      "env_allowlist": [
+        "PYTHONDONTWRITEBYTECODE"
+      ],
+      "secret_patterns_checked": [
+        "openai_api_key",
+        "generic_secret",
+        "private_key",
+        "bearer_token",
+        "password_assignment"
+      ],
+      "path_redaction": {
+        "operator_local_paths": "redact_or_mark_operator_local",
+        "secrets": "redact",
+        "stdout_paths": "relative_or_declared"
+      },
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "secret_redaction_required": true,
+      "requires_user_approval": false,
+      "disabled_by_default": false,
+      "capability": "local_only",
+      "sha256": "2328fa9de88adc5667ad532e11dfe02d6c0ed98847909e509139d902a818d65d"
+    },
+    "ozm-repo-graph-reconstruction/scripts/validate_reconstruction_bundle.py": {
+      "allowed_effects": [
+        "read repository source/graph inputs",
+        "emit repo graph or reconstruction findings"
+      ],
+      "read_scope": [
+        "explicitly supplied files, OZM package metadata, or temporary fixtures needed by this script"
+      ],
+      "write_scope": [],
+      "network": false,
+      "external_commands": [],
+      "stdout_data_class": "diagnostic_no_secret_json_or_text",
+      "env_allowlist": [
+        "PYTHONDONTWRITEBYTECODE"
+      ],
+      "secret_patterns_checked": [
+        "openai_api_key",
+        "generic_secret",
+        "private_key",
+        "bearer_token",
+        "password_assignment"
+      ],
+      "path_redaction": {
+        "operator_local_paths": "redact_or_mark_operator_local",
+        "secrets": "redact",
+        "stdout_paths": "relative_or_declared"
+      },
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "secret_redaction_required": true,
+      "requires_user_approval": false,
+      "disabled_by_default": false,
+      "capability": "local_only",
+      "sha256": "3e94f0a4cd244c0dce5fa85b953e8147f54a5bcfcfb86fe9bd905595a39611be"
+    },
+    "ozm-repo-instruction-surface-management/scripts/instruction_surface_trust_check.py": {
+      "allowed_effects": [
+        "scan repo instruction surfaces for trust labels and payload-less attack phrases"
+      ],
+      "read_scope": [
+        "explicitly supplied files, OZM package metadata, or temporary fixtures needed by this script"
+      ],
+      "write_scope": [],
+      "network": false,
+      "external_commands": [],
+      "stdout_data_class": "diagnostic_no_secret_json_or_text",
+      "env_allowlist": [
+        "PYTHONDONTWRITEBYTECODE"
+      ],
+      "secret_patterns_checked": [
+        "openai_api_key",
+        "generic_secret",
+        "private_key",
+        "bearer_token",
+        "password_assignment"
+      ],
+      "path_redaction": {
+        "operator_local_paths": "redact_or_mark_operator_local",
+        "secrets": "redact",
+        "stdout_paths": "relative_or_declared"
+      },
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "secret_redaction_required": true,
+      "requires_user_approval": false,
+      "disabled_by_default": false,
+      "capability": "local_only",
+      "sha256": "ba70c0476b8324fc7f125dda28905bd5365200ebbd85c81f8ed95fd787cd33fd"
+    },
+    "ozm-requirement-load/scripts/requirement_intake_contract_check.py": {
+      "allowed_effects": [
+        "read explicit OZM contract, eval, fixture, or package files and emit deterministic diagnostic findings"
+      ],
+      "read_scope": [
+        "explicitly supplied files, OZM package metadata, or temporary fixtures needed by this script"
+      ],
+      "write_scope": [],
+      "network": false,
+      "external_commands": [],
+      "stdout_data_class": "diagnostic_no_secret_json_or_text",
+      "env_allowlist": [
+        "PYTHONDONTWRITEBYTECODE"
+      ],
+      "secret_patterns_checked": [
+        "openai_api_key",
+        "generic_secret",
+        "private_key",
+        "bearer_token",
+        "password_assignment"
+      ],
+      "path_redaction": {
+        "operator_local_paths": "redact_or_mark_operator_local",
+        "secrets": "redact",
+        "stdout_paths": "relative_or_declared"
+      },
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "secret_redaction_required": true,
+      "requires_user_approval": false,
+      "disabled_by_default": false,
+      "capability": "local_only",
+      "sha256": "f4c8594321b040aa4a1a86420aec9c10394ded523738f758f72004e216e16f68"
+    },
+    "ozm-review-diffgate-acceptance/scripts/review_diffgate_verdict_check.py": {
+      "allowed_effects": [
+        "read explicit OZM contract, eval, fixture, or package files and emit deterministic diagnostic findings"
+      ],
+      "read_scope": [
+        "explicitly supplied files, OZM package metadata, or temporary fixtures needed by this script"
+      ],
+      "write_scope": [],
+      "network": false,
+      "external_commands": [],
+      "stdout_data_class": "diagnostic_no_secret_json_or_text",
+      "env_allowlist": [
+        "PYTHONDONTWRITEBYTECODE"
+      ],
+      "secret_patterns_checked": [
+        "openai_api_key",
+        "generic_secret",
+        "private_key",
+        "bearer_token",
+        "password_assignment"
+      ],
+      "path_redaction": {
+        "operator_local_paths": "redact_or_mark_operator_local",
+        "secrets": "redact",
+        "stdout_paths": "relative_or_declared"
+      },
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "secret_redaction_required": true,
+      "requires_user_approval": false,
+      "disabled_by_default": false,
+      "capability": "local_only",
+      "sha256": "5ae9587dbacd80ff67edc7edbde31db415a60ae4c6655d040d224493edf1f6cf"
+    },
+    "ozm-role-stack-coordination/scripts/role_stack_event_trace_check.py": {
+      "allowed_effects": [
+        "read explicit OZM contract, eval, fixture, or package files and emit deterministic diagnostic findings"
+      ],
+      "read_scope": [
+        "explicitly supplied files, OZM package metadata, or temporary fixtures needed by this script"
+      ],
+      "write_scope": [],
+      "network": false,
+      "external_commands": [],
+      "stdout_data_class": "diagnostic_no_secret_json_or_text",
+      "env_allowlist": [
+        "PYTHONDONTWRITEBYTECODE"
+      ],
+      "secret_patterns_checked": [
+        "openai_api_key",
+        "generic_secret",
+        "private_key",
+        "bearer_token",
+        "password_assignment"
+      ],
+      "path_redaction": {
+        "operator_local_paths": "redact_or_mark_operator_local",
+        "secrets": "redact",
+        "stdout_paths": "relative_or_declared"
+      },
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "secret_redaction_required": true,
+      "requires_user_approval": false,
+      "disabled_by_default": false,
+      "capability": "local_only",
+      "sha256": "37ce5dc0b72f9d600d02aedcb58a43d66a87db7f7f6c2e924196cd0aef75ec4c"
+    },
+    "ozm-text-io-integrity/scripts/assemble_text_chunks.py": {
+      "allowed_effects": [
+        "read explicitly supplied chunk files",
+        "assemble text with explicit encoding, newline, and size guards"
+      ],
+      "read_scope": [
+        "explicitly supplied files, OZM package metadata, or temporary fixtures needed by this script"
+      ],
+      "write_scope": [],
+      "network": false,
+      "external_commands": [],
+      "stdout_data_class": "diagnostic_no_secret_json_or_text",
+      "env_allowlist": [
+        "PYTHONDONTWRITEBYTECODE"
+      ],
+      "secret_patterns_checked": [
+        "openai_api_key",
+        "generic_secret",
+        "private_key",
+        "bearer_token",
+        "password_assignment"
+      ],
+      "path_redaction": {
+        "operator_local_paths": "redact_or_mark_operator_local",
+        "secrets": "redact",
+        "stdout_paths": "relative_or_declared"
+      },
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "secret_redaction_required": true,
+      "requires_user_approval": false,
+      "disabled_by_default": false,
+      "capability": "local_only",
+      "sha256": "1f9e45e47b0a503b789fb1f20811b1acf029d8817211e667457c94579b84041b"
+    },
+    "ozm-text-io-integrity/scripts/safe_write_text.py": {
+      "allowed_effects": [
+        "read supplied text/stdin and target file conventions",
+        "write text with explicit encoding, newline, and size guards"
+      ],
+      "read_scope": [
+        "explicitly supplied files, OZM package metadata, or temporary fixtures needed by this script"
+      ],
+      "write_scope": [],
+      "network": false,
+      "external_commands": [],
+      "stdout_data_class": "diagnostic_no_secret_json_or_text",
+      "env_allowlist": [
+        "PYTHONDONTWRITEBYTECODE"
+      ],
+      "secret_patterns_checked": [
+        "openai_api_key",
+        "generic_secret",
+        "private_key",
+        "bearer_token",
+        "password_assignment"
+      ],
+      "path_redaction": {
+        "operator_local_paths": "redact_or_mark_operator_local",
+        "secrets": "redact",
+        "stdout_paths": "relative_or_declared"
+      },
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "secret_redaction_required": true,
+      "requires_user_approval": false,
+      "disabled_by_default": false,
+      "capability": "local_only",
+      "sha256": "27f51247b42783ed65e3acdc0691a15944d152da66219aba859220e2c3e9d4d9"
+    },
+    "ozm-text-io-integrity/scripts/split_text_chunks.py": {
+      "allowed_effects": [
+        "read explicitly supplied candidate text",
+        "emit ordered chunk files for safer transport"
+      ],
+      "read_scope": [
+        "explicitly supplied files, OZM package metadata, or temporary fixtures needed by this script"
+      ],
+      "write_scope": [],
+      "network": false,
+      "external_commands": [],
+      "stdout_data_class": "diagnostic_no_secret_json_or_text",
+      "env_allowlist": [
+        "PYTHONDONTWRITEBYTECODE"
+      ],
+      "secret_patterns_checked": [
+        "openai_api_key",
+        "generic_secret",
+        "private_key",
+        "bearer_token",
+        "password_assignment"
+      ],
+      "path_redaction": {
+        "operator_local_paths": "redact_or_mark_operator_local",
+        "secrets": "redact",
+        "stdout_paths": "relative_or_declared"
+      },
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "secret_redaction_required": true,
+      "requires_user_approval": false,
+      "disabled_by_default": false,
+      "capability": "local_only",
+      "sha256": "a8ec00beaa5c3b8bb5c2b95d66fc67876276a48c5aa5c3fbd122cf88f9a030a8"
+    },
+    "ozm-text-io-integrity/scripts/text_chunk_manifest_check.py": {
+      "allowed_effects": [
+        "read explicit OZM contract, eval, fixture, or package files and emit deterministic diagnostic findings"
+      ],
+      "read_scope": [
+        "explicitly supplied files, OZM package metadata, or temporary fixtures needed by this script"
+      ],
+      "write_scope": [],
+      "network": false,
+      "external_commands": [],
+      "stdout_data_class": "diagnostic_no_secret_json_or_text",
+      "env_allowlist": [
+        "PYTHONDONTWRITEBYTECODE"
+      ],
+      "secret_patterns_checked": [
+        "openai_api_key",
+        "generic_secret",
+        "private_key",
+        "bearer_token",
+        "password_assignment"
+      ],
+      "path_redaction": {
+        "operator_local_paths": "redact_or_mark_operator_local",
+        "secrets": "redact",
+        "stdout_paths": "relative_or_declared"
+      },
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "secret_redaction_required": true,
+      "requires_user_approval": false,
+      "disabled_by_default": false,
+      "capability": "local_only",
+      "sha256": "ec993fc910958038ea649ab91753340f8d8066fa46e8d7582a0cfadfbed5e6ee"
+    },
+    "ozm-text-io-integrity/scripts/text_preflight.py": {
+      "allowed_effects": [
+        "read explicitly supplied text file",
+        "emit encoding, BOM, newline, suspicious character, and line-length findings"
+      ],
+      "read_scope": [
+        "explicitly supplied files, OZM package metadata, or temporary fixtures needed by this script"
+      ],
+      "write_scope": [],
+      "network": false,
+      "external_commands": [],
+      "stdout_data_class": "diagnostic_no_secret_json_or_text",
+      "env_allowlist": [
+        "PYTHONDONTWRITEBYTECODE"
+      ],
+      "secret_patterns_checked": [
+        "openai_api_key",
+        "generic_secret",
+        "private_key",
+        "bearer_token",
+        "password_assignment"
+      ],
+      "path_redaction": {
+        "operator_local_paths": "redact_or_mark_operator_local",
+        "secrets": "redact",
+        "stdout_paths": "relative_or_declared"
+      },
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "secret_redaction_required": true,
+      "requires_user_approval": false,
+      "disabled_by_default": false,
+      "capability": "local_only",
+      "sha256": "33c48f59d6b4bdb68692f20910d6dec00d0b7c4fa73810092eebbc8a26d6d38e"
+    },
+    "ozm-truth-boundary-management/scripts/truth_boundary_conflict_check.py": {
+      "allowed_effects": [
+        "read explicit OZM contract, eval, fixture, or package files and emit deterministic diagnostic findings"
+      ],
+      "read_scope": [
+        "explicitly supplied files, OZM package metadata, or temporary fixtures needed by this script"
+      ],
+      "write_scope": [],
+      "network": false,
+      "external_commands": [],
+      "stdout_data_class": "diagnostic_no_secret_json_or_text",
+      "env_allowlist": [
+        "PYTHONDONTWRITEBYTECODE"
+      ],
+      "secret_patterns_checked": [
+        "openai_api_key",
+        "generic_secret",
+        "private_key",
+        "bearer_token",
+        "password_assignment"
+      ],
+      "path_redaction": {
+        "operator_local_paths": "redact_or_mark_operator_local",
+        "secrets": "redact",
+        "stdout_paths": "relative_or_declared"
+      },
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "secret_redaction_required": true,
+      "requires_user_approval": false,
+      "disabled_by_default": false,
+      "capability": "local_only",
+      "sha256": "5a16ebb0adb1ab4efdb744bb7295ba18bded6422f895b15e7bcf01a169a60ffe"
+    },
+    "ozm-ux-ui-expert-suite/scripts/visual_evidence_pack_check.py": {
+      "allowed_effects": [
+        "read explicit OZM contract, eval, fixture, or package files and emit deterministic diagnostic findings"
+      ],
+      "read_scope": [
+        "explicitly supplied files, OZM package metadata, or temporary fixtures needed by this script"
+      ],
+      "write_scope": [],
+      "network": false,
+      "external_commands": [],
+      "stdout_data_class": "diagnostic_no_secret_json_or_text",
+      "env_allowlist": [
+        "PYTHONDONTWRITEBYTECODE"
+      ],
+      "secret_patterns_checked": [
+        "openai_api_key",
+        "generic_secret",
+        "private_key",
+        "bearer_token",
+        "password_assignment"
+      ],
+      "path_redaction": {
+        "operator_local_paths": "redact_or_mark_operator_local",
+        "secrets": "redact",
+        "stdout_paths": "relative_or_declared"
+      },
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "secret_redaction_required": true,
+      "requires_user_approval": false,
+      "disabled_by_default": false,
+      "capability": "local_only",
+      "sha256": "e56cc365e9a96d069a0eaa520765beda2d45a48fd96ed120caf4de8ee4bc99d8"
+    },
+    "ozm-wait-block-replay-replacement/scripts/lane_state_check.py": {
+      "allowed_effects": [
+        "read explicit OZM contract, eval, fixture, or package files and emit deterministic diagnostic findings"
+      ],
+      "read_scope": [
+        "explicitly supplied files, OZM package metadata, or temporary fixtures needed by this script"
+      ],
+      "write_scope": [],
+      "network": false,
+      "external_commands": [],
+      "stdout_data_class": "diagnostic_no_secret_json_or_text",
+      "env_allowlist": [
+        "PYTHONDONTWRITEBYTECODE"
+      ],
+      "secret_patterns_checked": [
+        "openai_api_key",
+        "generic_secret",
+        "private_key",
+        "bearer_token",
+        "password_assignment"
+      ],
+      "path_redaction": {
+        "operator_local_paths": "redact_or_mark_operator_local",
+        "secrets": "redact",
+        "stdout_paths": "relative_or_declared"
+      },
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "secret_redaction_required": true,
+      "requires_user_approval": false,
+      "disabled_by_default": false,
+      "capability": "local_only",
+      "sha256": "0f33f5ae5574564c36d06cedecf5a103507a36859f1528f12586230f523afb50"
+    },
+    "ozone-manager/scripts/asset_runtime_manifest_check.py": {
+      "allowed_effects": [
+        "validate executable asset runtime manifest posture"
+      ],
+      "read_scope": [
+        "OZM skill package assets, temporary fixtures, and asset-runtime-manifest JSON"
+      ],
+      "write_scope": [],
+      "network": false,
+      "external_commands": [],
+      "stdout_data_class": "diagnostic_no_secret_json_or_text",
+      "env_allowlist": [
+        "PYTHONDONTWRITEBYTECODE"
+      ],
+      "secret_patterns_checked": [
+        "openai_api_key",
+        "generic_secret",
+        "private_key",
+        "bearer_token",
+        "password_assignment"
+      ],
+      "path_redaction": {
+        "operator_local_paths": "redact_or_mark_operator_local",
+        "secrets": "redact",
+        "stdout_paths": "relative_or_declared"
+      },
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "secret_redaction_required": true,
+      "requires_user_approval": false,
+      "disabled_by_default": false,
+      "capability": "local_only",
+      "sha256": "f623731b13e4ea0bb62a7ff71c06bf25e3add80319269d1b99a2fe86d18ef16c"
+    },
+    "ozone-manager/scripts/behavioral_integrity_check.py": {
+      "allowed_effects": [
+        "read explicit OZM contract, eval, fixture, or package files and emit deterministic diagnostic findings"
+      ],
+      "read_scope": [
+        "explicitly supplied files, OZM package metadata, or temporary fixtures needed by this script"
+      ],
+      "write_scope": [],
+      "network": false,
+      "external_commands": [],
+      "stdout_data_class": "diagnostic_no_secret_json_or_text",
+      "env_allowlist": [
+        "PYTHONDONTWRITEBYTECODE"
+      ],
+      "secret_patterns_checked": [
+        "openai_api_key",
+        "generic_secret",
+        "private_key",
+        "bearer_token",
+        "password_assignment"
+      ],
+      "path_redaction": {
+        "operator_local_paths": "redact_or_mark_operator_local",
+        "secrets": "redact",
+        "stdout_paths": "relative_or_declared"
+      },
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "secret_redaction_required": true,
+      "requires_user_approval": false,
+      "disabled_by_default": false,
+      "capability": "local_only",
+      "sha256": "522d830f722e564594ead733d4954d3eb59d14e5d379e03e5014399fbd094a34"
+    },
+    "ozone-manager/scripts/constraint_ledger_check.py": {
+      "allowed_effects": [
+        "validate constraint-state ledger inheritance and consumer binding"
+      ],
+      "read_scope": [
+        "explicitly supplied files, OZM package metadata, or temporary fixtures needed by this script"
+      ],
+      "write_scope": [],
+      "network": false,
+      "external_commands": [],
+      "stdout_data_class": "diagnostic_no_secret_json_or_text",
+      "env_allowlist": [
+        "PYTHONDONTWRITEBYTECODE"
+      ],
+      "secret_patterns_checked": [
+        "openai_api_key",
+        "generic_secret",
+        "private_key",
+        "bearer_token",
+        "password_assignment"
+      ],
+      "path_redaction": {
+        "operator_local_paths": "redact_or_mark_operator_local",
+        "secrets": "redact",
+        "stdout_paths": "relative_or_declared"
+      },
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "secret_redaction_required": true,
+      "requires_user_approval": false,
+      "disabled_by_default": false,
+      "capability": "local_only",
+      "sha256": "9929c8c6be86215ad62768b71cd5fe0bcfb448c793a0ad84386416f271ad0735"
+    },
+    "ozone-manager/scripts/constraint_ledger_merge_check.py": {
+      "allowed_effects": [
+        "read explicit OZM contract, eval, fixture, or package files and emit deterministic diagnostic findings"
+      ],
+      "read_scope": [
+        "explicitly supplied files, OZM package metadata, or temporary fixtures needed by this script"
+      ],
+      "write_scope": [],
+      "network": false,
+      "external_commands": [],
+      "stdout_data_class": "diagnostic_no_secret_json_or_text",
+      "env_allowlist": [
+        "PYTHONDONTWRITEBYTECODE"
+      ],
+      "secret_patterns_checked": [
+        "openai_api_key",
+        "generic_secret",
+        "private_key",
+        "bearer_token",
+        "password_assignment"
+      ],
+      "path_redaction": {
+        "operator_local_paths": "redact_or_mark_operator_local",
+        "secrets": "redact",
+        "stdout_paths": "relative_or_declared"
+      },
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "secret_redaction_required": true,
+      "requires_user_approval": false,
+      "disabled_by_default": false,
+      "capability": "local_only",
+      "sha256": "1a0b705d11fc883bf38c077b31a84658e0aacbad4e543eca18bf67a741cd5d88"
+    },
+    "ozone-manager/scripts/contract_trigger_contamination_check.py": {
+      "allowed_effects": [
+        "read explicit OZM contract, eval, fixture, or package files and emit deterministic diagnostic findings"
+      ],
+      "read_scope": [
+        "explicitly supplied files, OZM package metadata, or temporary fixtures needed by this script"
+      ],
+      "write_scope": [],
+      "network": false,
+      "external_commands": [],
+      "stdout_data_class": "diagnostic_no_secret_json_or_text",
+      "env_allowlist": [
+        "PYTHONDONTWRITEBYTECODE"
+      ],
+      "secret_patterns_checked": [
+        "openai_api_key",
+        "generic_secret",
+        "private_key",
+        "bearer_token",
+        "password_assignment"
+      ],
+      "path_redaction": {
+        "operator_local_paths": "redact_or_mark_operator_local",
+        "secrets": "redact",
+        "stdout_paths": "relative_or_declared"
+      },
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "secret_redaction_required": true,
+      "requires_user_approval": false,
+      "disabled_by_default": false,
+      "capability": "local_only",
+      "sha256": "5ef03ebcc6dbfaf72a24bc0a704ba87fd38abb5827bb20fe2cbc388a235d1c9e"
+    },
+    "ozone-manager/scripts/eval_harness_health_check.py": {
+      "allowed_effects": [
+        "read explicit OZM contract, eval, fixture, or package files and emit deterministic diagnostic findings"
+      ],
+      "read_scope": [
+        "explicitly supplied files, OZM package metadata, or temporary fixtures needed by this script"
+      ],
+      "write_scope": [],
+      "network": false,
+      "external_commands": [],
+      "stdout_data_class": "diagnostic_no_secret_json_or_text",
+      "env_allowlist": [
+        "PYTHONDONTWRITEBYTECODE"
+      ],
+      "secret_patterns_checked": [
+        "openai_api_key",
+        "generic_secret",
+        "private_key",
+        "bearer_token",
+        "password_assignment"
+      ],
+      "path_redaction": {
+        "operator_local_paths": "redact_or_mark_operator_local",
+        "secrets": "redact",
+        "stdout_paths": "relative_or_declared"
+      },
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "secret_redaction_required": true,
+      "requires_user_approval": false,
+      "disabled_by_default": false,
+      "capability": "local_only",
+      "sha256": "dcf47ad45581ecd1c13f9d20d87a4be7827be5780a57690bfb66f0091f747f00"
+    },
+    "ozone-manager/scripts/eval_runner_watchdog.py": {
+      "allowed_effects": [
+        "run ozm_eval_suite.py under a parent watchdog",
+        "write eval progress, heartbeat, output, and manifest artifacts"
+      ],
+      "read_scope": [
+        "explicitly supplied files, OZM package metadata, or temporary fixtures needed by this script"
+      ],
+      "write_scope": [
+        "ozone-manager/references/eval-progress.jsonl",
+        "ozone-manager/references/eval-heartbeat.json",
+        "ozone-manager/references/eval-run-manifest.json",
+        "ozone-manager/references/eval-last-run.json"
+      ],
+      "network": false,
+      "external_commands": [
+        "<resolved-python>"
+      ],
+      "stdout_data_class": "diagnostic_no_secret_json_or_text",
+      "env_allowlist": [
+        "PYTHONDONTWRITEBYTECODE"
+      ],
+      "secret_patterns_checked": [
+        "openai_api_key",
+        "generic_secret",
+        "private_key",
+        "bearer_token",
+        "password_assignment"
+      ],
+      "path_redaction": {
+        "operator_local_paths": "redact_or_mark_operator_local",
+        "secrets": "redact",
+        "stdout_paths": "relative_or_declared"
+      },
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "secret_redaction_required": true,
+      "requires_user_approval": false,
+      "disabled_by_default": false,
+      "capability": "local_only",
+      "sha256": "f1e08ad6657df5b4d079efa0cd7e5f927096849c5c4e3d42139168d183032443"
+    },
+    "ozone-manager/scripts/harness_variance_matrix_check.py": {
+      "allowed_effects": [
+        "read explicit OZM contract, eval, fixture, or package files and emit deterministic diagnostic findings"
+      ],
+      "read_scope": [
+        "explicitly supplied files, OZM package metadata, or temporary fixtures needed by this script"
+      ],
+      "write_scope": [],
+      "network": false,
+      "external_commands": [],
+      "stdout_data_class": "diagnostic_no_secret_json_or_text",
+      "env_allowlist": [
+        "PYTHONDONTWRITEBYTECODE"
+      ],
+      "secret_patterns_checked": [
+        "openai_api_key",
+        "generic_secret",
+        "private_key",
+        "bearer_token",
+        "password_assignment"
+      ],
+      "path_redaction": {
+        "operator_local_paths": "redact_or_mark_operator_local",
+        "secrets": "redact",
+        "stdout_paths": "relative_or_declared"
+      },
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "secret_redaction_required": true,
+      "requires_user_approval": false,
+      "disabled_by_default": false,
+      "capability": "local_only",
+      "sha256": "a514fc68998cb5b0d22e23639f2e963a04b058b63f5cc63a21b07cb9e0f63a6c"
+    },
+    "ozone-manager/scripts/outcome_oracle_check.py": {
+      "allowed_effects": [
+        "read explicit OZM contract, eval, fixture, or package files and emit deterministic diagnostic findings"
+      ],
+      "read_scope": [
+        "explicitly supplied files, OZM package metadata, or temporary fixtures needed by this script"
+      ],
+      "write_scope": [],
+      "network": false,
+      "external_commands": [],
+      "stdout_data_class": "diagnostic_no_secret_json_or_text",
+      "env_allowlist": [
+        "PYTHONDONTWRITEBYTECODE"
+      ],
+      "secret_patterns_checked": [
+        "openai_api_key",
+        "generic_secret",
+        "private_key",
+        "bearer_token",
+        "password_assignment"
+      ],
+      "path_redaction": {
+        "operator_local_paths": "redact_or_mark_operator_local",
+        "secrets": "redact",
+        "stdout_paths": "relative_or_declared"
+      },
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "secret_redaction_required": true,
+      "requires_user_approval": false,
+      "disabled_by_default": false,
+      "capability": "local_only",
+      "sha256": "6281369a3b3c88dcbd3121bfb18bdfdc22d35018552c8ecb398f68138e587a96"
+    },
+    "ozone-manager/scripts/ozm_build_package.py": {
+      "allowed_effects": [
+        "read active OZM package inputs",
+        "run local deterministic checks",
+        "write OZM-only zip and generated PACKAGE-LEDGER.json"
+      ],
+      "read_scope": [
+        "explicitly supplied files, OZM package metadata, or temporary fixtures needed by this script"
+      ],
+      "write_scope": [
+        "<dist>/ozm-skills-*.zip",
+        "PACKAGE-LEDGER.json inside staging directory"
+      ],
+      "network": false,
+      "external_commands": [
+        "<resolved-python>"
+      ],
+      "stdout_data_class": "diagnostic_no_secret_json_or_text",
+      "env_allowlist": [
+        "PYTHONDONTWRITEBYTECODE"
+      ],
+      "secret_patterns_checked": [
+        "openai_api_key",
+        "generic_secret",
+        "private_key",
+        "bearer_token",
+        "password_assignment"
+      ],
+      "path_redaction": {
+        "operator_local_paths": "redact_or_mark_operator_local",
+        "secrets": "redact",
+        "stdout_paths": "relative_or_declared"
+      },
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "secret_redaction_required": true,
+      "requires_user_approval": false,
+      "disabled_by_default": false,
+      "capability": "local_only",
+      "sha256": "60f167e37042b2153f8fbb10e20cbeee2537e426f2e2e804bf8440e447e76f36"
+    },
+    "ozone-manager/scripts/ozm_chain_consistency_check.py": {
+      "allowed_effects": [
+        "read explicit OZM contract, eval, fixture, or package files and emit deterministic diagnostic findings"
+      ],
+      "read_scope": [
+        "explicitly supplied files, OZM package metadata, or temporary fixtures needed by this script"
+      ],
+      "write_scope": [],
+      "network": false,
+      "external_commands": [],
+      "stdout_data_class": "diagnostic_no_secret_json_or_text",
+      "env_allowlist": [
+        "PYTHONDONTWRITEBYTECODE"
+      ],
+      "secret_patterns_checked": [
+        "openai_api_key",
+        "generic_secret",
+        "private_key",
+        "bearer_token",
+        "password_assignment"
+      ],
+      "path_redaction": {
+        "operator_local_paths": "redact_or_mark_operator_local",
+        "secrets": "redact",
+        "stdout_paths": "relative_or_declared"
+      },
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "secret_redaction_required": true,
+      "requires_user_approval": false,
+      "disabled_by_default": false,
+      "capability": "local_only",
+      "sha256": "09bcdb83d3b0d0d2fdf351b505a2330a181b052c561fa0ebbed9d7aaea39d02f"
+    },
+    "ozone-manager/scripts/ozm_clean_package.py": {
+      "allowed_effects": [
+        "run deterministic OZM helper ozone-manager/scripts/ozm_clean_package.py"
+      ],
+      "read_scope": [
+        "explicitly supplied files, OZM package metadata, or temporary fixtures needed by this script"
+      ],
+      "write_scope": [],
+      "network": false,
+      "external_commands": [],
+      "stdout_data_class": "diagnostic_no_secret_json_or_text",
+      "env_allowlist": [
+        "PYTHONDONTWRITEBYTECODE"
+      ],
+      "secret_patterns_checked": [
+        "openai_api_key",
+        "generic_secret",
+        "private_key",
+        "bearer_token",
+        "password_assignment"
+      ],
+      "path_redaction": {
+        "operator_local_paths": "redact_or_mark_operator_local",
+        "secrets": "redact",
+        "stdout_paths": "relative_or_declared"
+      },
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "secret_redaction_required": true,
+      "requires_user_approval": false,
+      "disabled_by_default": false,
+      "capability": "local_only",
+      "sha256": "305aed6bd5322e363d0217767858a41cf54f63cd1a6d78591eb18e3dffb400a0"
+    },
+    "ozone-manager/scripts/ozm_codex_hook.py": {
+      "allowed_effects": [
+        "read hook stdin",
+        "emit hook decision JSON",
+        "invoke local guard checks"
+      ],
+      "read_scope": [
+        "explicitly supplied files, OZM package metadata, or temporary fixtures needed by this script"
+      ],
+      "write_scope": [],
+      "network": false,
+      "external_commands": [],
+      "stdout_data_class": "diagnostic_no_secret_json_or_text",
+      "env_allowlist": [
+        "PYTHONDONTWRITEBYTECODE",
+        "OZM_REQUEST_ROLE"
+      ],
+      "secret_patterns_checked": [
+        "openai_api_key",
+        "generic_secret",
+        "private_key",
+        "bearer_token",
+        "password_assignment"
+      ],
+      "path_redaction": {
+        "operator_local_paths": "redact_or_mark_operator_local",
+        "secrets": "redact",
+        "stdout_paths": "relative_or_declared"
+      },
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "secret_redaction_required": true,
+      "requires_user_approval": false,
+      "disabled_by_default": false,
+      "capability": "local_only",
+      "sha256": "83adb9d5d7f4f46a4b2335505d7b9813d94270c514179c1f8660a9d743191c61"
+    },
+    "ozone-manager/scripts/ozm_eval_semantic_cases.py": {
+      "allowed_effects": [
+        "run deterministic OZM helper ozone-manager/scripts/ozm_eval_semantic_cases.py"
+      ],
+      "read_scope": [
+        "explicitly supplied files, OZM package metadata, or temporary fixtures needed by this script"
+      ],
+      "write_scope": [],
+      "network": false,
+      "external_commands": [],
+      "stdout_data_class": "diagnostic_no_secret_json_or_text",
+      "env_allowlist": [
+        "PYTHONDONTWRITEBYTECODE"
+      ],
+      "secret_patterns_checked": [
+        "openai_api_key",
+        "generic_secret",
+        "private_key",
+        "bearer_token",
+        "password_assignment"
+      ],
+      "path_redaction": {
+        "operator_local_paths": "redact_or_mark_operator_local",
+        "secrets": "redact",
+        "stdout_paths": "relative_or_declared"
+      },
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "secret_redaction_required": true,
+      "requires_user_approval": false,
+      "disabled_by_default": false,
+      "capability": "local_only",
+      "sha256": "2fd401a242b29e43b9ce3703a67a994e594f2e8ef85d826a4452b368ba8027f9"
+    },
+    "ozone-manager/scripts/ozm_eval_suite.py": {
+      "allowed_effects": [
+        "read eval JSONL",
+        "create temporary eval fixtures",
+        "run local guard and route evaluators",
+        "write progress, heartbeat, and eval run manifests"
+      ],
+      "read_scope": [
+        "explicitly supplied files, OZM package metadata, or temporary fixtures needed by this script"
+      ],
+      "write_scope": [
+        "temporary eval fixtures",
+        "ozone-manager/references/eval-last-run.json when --output/default all-suite output is used",
+        "explicit --progress-jsonl, --heartbeat-json, and --eval-run-manifest paths"
+      ],
+      "network": false,
+      "external_commands": [
+        "<resolved-python>"
+      ],
+      "stdout_data_class": "diagnostic_no_secret_json_or_text",
+      "env_allowlist": [
+        "PYTHONDONTWRITEBYTECODE"
+      ],
+      "secret_patterns_checked": [
+        "openai_api_key",
+        "generic_secret",
+        "private_key",
+        "bearer_token",
+        "password_assignment"
+      ],
+      "path_redaction": {
+        "operator_local_paths": "redact_or_mark_operator_local",
+        "secrets": "redact",
+        "stdout_paths": "relative_or_declared"
+      },
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "secret_redaction_required": true,
+      "requires_user_approval": false,
+      "disabled_by_default": false,
+      "capability": "local_only",
+      "sha256": "9f383e635b1407d493f83434a73752826a9def2f4f0a135914f880218d57701f"
+    },
+    "ozone-manager/scripts/ozm_guard.py": {
+      "allowed_effects": [
+        "read supplied project files",
+        "run git diff/status when available",
+        "emit guard findings"
+      ],
+      "read_scope": [
+        "explicitly supplied files, OZM package metadata, or temporary fixtures needed by this script"
+      ],
+      "write_scope": [],
+      "network": false,
+      "external_commands": [
+        "<resolved-python>",
+        "git"
+      ],
+      "stdout_data_class": "diagnostic_no_secret_json_or_text",
+      "env_allowlist": [
+        "PYTHONDONTWRITEBYTECODE"
+      ],
+      "secret_patterns_checked": [
+        "openai_api_key",
+        "generic_secret",
+        "private_key",
+        "bearer_token",
+        "password_assignment"
+      ],
+      "path_redaction": {
+        "operator_local_paths": "redact_or_mark_operator_local",
+        "secrets": "redact",
+        "stdout_paths": "relative_or_declared"
+      },
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "secret_redaction_required": true,
+      "requires_user_approval": false,
+      "disabled_by_default": false,
+      "capability": "local_only",
+      "sha256": "cdf926328897656c7d71aef421899ebd23be4b9b872dff75c5afeb10d171e6f4"
+    },
+    "ozone-manager/scripts/ozm_guard_checks.py": {
+      "allowed_effects": [
+        "pure text/path checks imported by ozm_guard.py"
+      ],
+      "read_scope": [
+        "explicitly supplied files, OZM package metadata, or temporary fixtures needed by this script"
+      ],
+      "write_scope": [],
+      "network": false,
+      "external_commands": [],
+      "stdout_data_class": "diagnostic_no_secret_json_or_text",
+      "env_allowlist": [
+        "PYTHONDONTWRITEBYTECODE"
+      ],
+      "secret_patterns_checked": [
+        "openai_api_key",
+        "generic_secret",
+        "private_key",
+        "bearer_token",
+        "password_assignment"
+      ],
+      "path_redaction": {
+        "operator_local_paths": "redact_or_mark_operator_local",
+        "secrets": "redact",
+        "stdout_paths": "relative_or_declared"
+      },
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "secret_redaction_required": true,
+      "requires_user_approval": false,
+      "disabled_by_default": false,
+      "capability": "local_only",
+      "sha256": "16df696b6702d4783d5b7d8d2ff204131afc9cbbd1906b109588a693e10ed925"
+    },
+    "ozone-manager/scripts/ozm_json_contracts.py": {
+      "allowed_effects": [
+        "read explicit OZM contract, eval, fixture, or package files and emit deterministic diagnostic findings"
+      ],
+      "read_scope": [
+        "explicitly supplied files, OZM package metadata, or temporary fixtures needed by this script"
+      ],
+      "write_scope": [],
+      "network": false,
+      "external_commands": [],
+      "stdout_data_class": "diagnostic_no_secret_json_or_text",
+      "env_allowlist": [
+        "PYTHONDONTWRITEBYTECODE"
+      ],
+      "secret_patterns_checked": [
+        "openai_api_key",
+        "generic_secret",
+        "private_key",
+        "bearer_token",
+        "password_assignment"
+      ],
+      "path_redaction": {
+        "operator_local_paths": "redact_or_mark_operator_local",
+        "secrets": "redact",
+        "stdout_paths": "relative_or_declared"
+      },
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "secret_redaction_required": true,
+      "requires_user_approval": false,
+      "disabled_by_default": false,
+      "capability": "local_only",
+      "sha256": "51363c3ad1d3d263caaf3fe4970ca46e804015a6c8754dde094448b283f66687"
+    },
+    "ozone-manager/scripts/ozm_package_scope_check.py": {
+      "allowed_effects": [
+        "read OZM package inputs",
+        "emit deterministic maintenance findings"
+      ],
+      "read_scope": [
+        "explicitly supplied files, OZM package metadata, or temporary fixtures needed by this script"
+      ],
+      "write_scope": [],
+      "network": false,
+      "external_commands": [],
+      "stdout_data_class": "diagnostic_no_secret_json_or_text",
+      "env_allowlist": [
+        "PYTHONDONTWRITEBYTECODE"
+      ],
+      "secret_patterns_checked": [
+        "openai_api_key",
+        "generic_secret",
+        "private_key",
+        "bearer_token",
+        "password_assignment"
+      ],
+      "path_redaction": {
+        "operator_local_paths": "redact_or_mark_operator_local",
+        "secrets": "redact",
+        "stdout_paths": "relative_or_declared"
+      },
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "secret_redaction_required": true,
+      "requires_user_approval": false,
+      "disabled_by_default": false,
+      "capability": "local_only",
+      "sha256": "2e27b67cc3f925c2d3ac3791b5c1d716795f851c259f15defba9bbccdeebda06"
+    },
+    "ozone-manager/scripts/ozm_process_eval.py": {
+      "allowed_effects": [
+        "run deterministic OZM helper ozone-manager/scripts/ozm_process_eval.py"
+      ],
+      "read_scope": [
+        "explicitly supplied files, OZM package metadata, or temporary fixtures needed by this script"
+      ],
+      "write_scope": [],
+      "network": false,
+      "external_commands": [],
+      "stdout_data_class": "diagnostic_no_secret_json_or_text",
+      "env_allowlist": [
+        "PYTHONDONTWRITEBYTECODE"
+      ],
+      "secret_patterns_checked": [
+        "openai_api_key",
+        "generic_secret",
+        "private_key",
+        "bearer_token",
+        "password_assignment"
+      ],
+      "path_redaction": {
+        "operator_local_paths": "redact_or_mark_operator_local",
+        "secrets": "redact",
+        "stdout_paths": "relative_or_declared"
+      },
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "secret_redaction_required": true,
+      "requires_user_approval": false,
+      "disabled_by_default": false,
+      "capability": "local_only",
+      "sha256": "8a04020a85fe214f4c12e69d0a8944ad9949d4169faaa1f7ef5bf72d55d64f2c"
+    },
+    "ozone-manager/scripts/ozm_session_audit.py": {
+      "allowed_effects": [
+        "read Codex session JSONL",
+        "emit session audit JSON"
+      ],
+      "read_scope": [
+        "explicitly supplied files, OZM package metadata, or temporary fixtures needed by this script"
+      ],
+      "write_scope": [],
+      "network": false,
+      "external_commands": [],
+      "stdout_data_class": "diagnostic_no_secret_json_or_text",
+      "env_allowlist": [
+        "PYTHONDONTWRITEBYTECODE"
+      ],
+      "secret_patterns_checked": [
+        "openai_api_key",
+        "generic_secret",
+        "private_key",
+        "bearer_token",
+        "password_assignment"
+      ],
+      "path_redaction": {
+        "operator_local_paths": "redact_or_mark_operator_local",
+        "secrets": "redact",
+        "stdout_paths": "relative_or_declared"
+      },
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "secret_redaction_required": true,
+      "requires_user_approval": false,
+      "disabled_by_default": false,
+      "capability": "local_only",
+      "sha256": "a9ea01c86e775659d99a774c26e716a8b93aca90820f5880cf478de298e1fd63"
+    },
+    "ozone-manager/scripts/ozm_skill_graph.py": {
+      "allowed_effects": [
+        "read skill metadata and route rules",
+        "write generated skill-graph.json or skill-graph.ozm-only.json on build",
+        "emit deterministic route query results"
+      ],
+      "read_scope": [
+        "explicitly supplied files, OZM package metadata, or temporary fixtures needed by this script"
+      ],
+      "write_scope": [
+        "ozone-manager/references/skill-graph.json when build is requested",
+        "ozone-manager/references/skill-graph.ozm-only.json when build is requested"
+      ],
+      "network": false,
+      "external_commands": [],
+      "stdout_data_class": "diagnostic_no_secret_json_or_text",
+      "env_allowlist": [
+        "PYTHONDONTWRITEBYTECODE"
+      ],
+      "secret_patterns_checked": [
+        "openai_api_key",
+        "generic_secret",
+        "private_key",
+        "bearer_token",
+        "password_assignment"
+      ],
+      "path_redaction": {
+        "operator_local_paths": "redact_or_mark_operator_local",
+        "secrets": "redact",
+        "stdout_paths": "relative_or_declared"
+      },
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "secret_redaction_required": true,
+      "requires_user_approval": false,
+      "disabled_by_default": false,
+      "capability": "local_only",
+      "sha256": "f032ac69627147d67f36d5447916231ba5623e2bfeaf7b7b634036813b7aa5e7"
+    },
+    "ozone-manager/scripts/ozm_skill_health_checks.py": {
+      "allowed_effects": [
+        "read active OZM skill files",
+        "validate package manifest, evals, route rules, and manager/child script hashes"
+      ],
+      "read_scope": [
+        "explicitly supplied files, OZM package metadata, or temporary fixtures needed by this script"
+      ],
+      "write_scope": [],
+      "network": false,
+      "external_commands": [
+        "<resolved-python>",
+        "git"
+      ],
+      "stdout_data_class": "diagnostic_no_secret_json_or_text",
+      "env_allowlist": [
+        "PYTHONDONTWRITEBYTECODE"
+      ],
+      "secret_patterns_checked": [
+        "openai_api_key",
+        "generic_secret",
+        "private_key",
+        "bearer_token",
+        "password_assignment"
+      ],
+      "path_redaction": {
+        "operator_local_paths": "redact_or_mark_operator_local",
+        "secrets": "redact",
+        "stdout_paths": "relative_or_declared"
+      },
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "secret_redaction_required": true,
+      "requires_user_approval": false,
+      "disabled_by_default": false,
+      "capability": "local_only",
+      "sha256": "b0f775e3868e5e7274e1bb6595666e42dc71900e21098ef2217de3b93c8c84ec"
+    },
+    "ozone-manager/scripts/ozm_skill_manifest_checks.py": {
+      "allowed_effects": [
+        "run deterministic OZM helper ozone-manager/scripts/ozm_skill_manifest_checks.py"
+      ],
+      "read_scope": [
+        "explicitly supplied files, OZM package metadata, or temporary fixtures needed by this script"
+      ],
+      "write_scope": [],
+      "network": false,
+      "external_commands": [],
+      "stdout_data_class": "diagnostic_no_secret_json_or_text",
+      "env_allowlist": [
+        "PYTHONDONTWRITEBYTECODE"
+      ],
+      "secret_patterns_checked": [
+        "openai_api_key",
+        "generic_secret",
+        "private_key",
+        "bearer_token",
+        "password_assignment"
+      ],
+      "path_redaction": {
+        "operator_local_paths": "redact_or_mark_operator_local",
+        "secrets": "redact",
+        "stdout_paths": "relative_or_declared"
+      },
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "secret_redaction_required": true,
+      "requires_user_approval": false,
+      "disabled_by_default": false,
+      "capability": "local_only",
+      "sha256": "d6e7bbb7a6c12e20680388dad08ef7fdf48fbd0bc00469b13484df2026c04748"
+    },
+    "ozone-manager/scripts/packet_contract_check.py": {
+      "allowed_effects": [
+        "validate dispatch packet contracts before writer admission"
+      ],
+      "read_scope": [
+        "explicitly supplied files, OZM package metadata, or temporary fixtures needed by this script"
+      ],
+      "write_scope": [],
+      "network": false,
+      "external_commands": [],
+      "stdout_data_class": "diagnostic_no_secret_json_or_text",
+      "env_allowlist": [
+        "PYTHONDONTWRITEBYTECODE"
+      ],
+      "secret_patterns_checked": [
+        "openai_api_key",
+        "generic_secret",
+        "private_key",
+        "bearer_token",
+        "password_assignment"
+      ],
+      "path_redaction": {
+        "operator_local_paths": "redact_or_mark_operator_local",
+        "secrets": "redact",
+        "stdout_paths": "relative_or_declared"
+      },
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "secret_redaction_required": true,
+      "requires_user_approval": false,
+      "disabled_by_default": false,
+      "capability": "local_only",
+      "sha256": "27af96e2014f6f4ce88926e5236453beff3accd6b4938d9fb413271c521fea71"
+    },
+    "ozone-manager/scripts/prose_security_scan.py": {
+      "allowed_effects": [
+        "read explicit OZM contract, eval, fixture, or package files and emit deterministic diagnostic findings"
+      ],
+      "read_scope": [
+        "explicitly supplied files, OZM package metadata, or temporary fixtures needed by this script"
+      ],
+      "write_scope": [],
+      "network": false,
+      "external_commands": [],
+      "stdout_data_class": "diagnostic_no_secret_json_or_text",
+      "env_allowlist": [
+        "PYTHONDONTWRITEBYTECODE"
+      ],
+      "secret_patterns_checked": [
+        "openai_api_key",
+        "generic_secret",
+        "private_key",
+        "bearer_token",
+        "password_assignment"
+      ],
+      "path_redaction": {
+        "operator_local_paths": "redact_or_mark_operator_local",
+        "secrets": "redact",
+        "stdout_paths": "relative_or_declared"
+      },
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "secret_redaction_required": true,
+      "requires_user_approval": false,
+      "disabled_by_default": false,
+      "capability": "local_only",
+      "sha256": "39129839740b7247968e5ec07a42587de5c2c8d4cf14529fc702f744cbd7b73c"
+    },
+    "ozone-manager/scripts/release_scorecard.py": {
+      "allowed_effects": [
+        "read package evidence",
+        "run release-critical local fixtures in live/strict mode",
+        "emit deterministic release scorecard"
+      ],
+      "read_scope": [
+        "explicitly supplied files, OZM package metadata, or temporary fixtures needed by this script"
+      ],
+      "write_scope": [],
+      "network": false,
+      "external_commands": [
+        "<resolved-python>"
+      ],
+      "stdout_data_class": "diagnostic_no_secret_json_or_text",
+      "env_allowlist": [
+        "PYTHONDONTWRITEBYTECODE"
+      ],
+      "secret_patterns_checked": [
+        "openai_api_key",
+        "generic_secret",
+        "private_key",
+        "bearer_token",
+        "password_assignment"
+      ],
+      "path_redaction": {
+        "operator_local_paths": "redact_or_mark_operator_local",
+        "secrets": "redact",
+        "stdout_paths": "relative_or_declared"
+      },
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "secret_redaction_required": true,
+      "requires_user_approval": false,
+      "disabled_by_default": false,
+      "capability": "local_only",
+      "sha256": "4b9a9ea28be727c1e93addff940ae17f2588ee280eb4dd64371f44f9b8185106"
+    },
+    "ozone-manager/scripts/resolve_paths.py": {
+      "allowed_effects": [
+        "read environment variables and current working directory",
+        "emit portable OZM path variable values"
+      ],
+      "read_scope": [
+        "explicitly supplied files, OZM package metadata, or temporary fixtures needed by this script"
+      ],
+      "write_scope": [],
+      "network": false,
+      "external_commands": [],
+      "stdout_data_class": "diagnostic_no_secret_json_or_text",
+      "env_allowlist": [
+        "PYTHONDONTWRITEBYTECODE",
+        "CODEX_HOME",
+        "CODEX_SKILLS_ROOT"
+      ],
+      "secret_patterns_checked": [
+        "openai_api_key",
+        "generic_secret",
+        "private_key",
+        "bearer_token",
+        "password_assignment"
+      ],
+      "path_redaction": {
+        "operator_local_paths": "redact_or_mark_operator_local",
+        "secrets": "redact",
+        "stdout_paths": "relative_or_declared"
+      },
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "secret_redaction_required": true,
+      "requires_user_approval": false,
+      "disabled_by_default": false,
+      "capability": "local_only",
+      "sha256": "cad44f03188ddd570140930b5428998c2d890a793d237cca797f17c48a96a1d3"
+    },
+    "ozone-manager/scripts/route_latency_bench.py": {
+      "allowed_effects": [
+        "measure deterministic OZM route latency, owner bundle, and black-hole score"
+      ],
+      "read_scope": [
+        "explicitly supplied files, OZM package metadata, or temporary fixtures needed by this script"
+      ],
+      "write_scope": [],
+      "network": false,
+      "external_commands": [],
+      "stdout_data_class": "diagnostic_no_secret_json_or_text",
+      "env_allowlist": [
+        "PYTHONDONTWRITEBYTECODE"
+      ],
+      "secret_patterns_checked": [
+        "openai_api_key",
+        "generic_secret",
+        "private_key",
+        "bearer_token",
+        "password_assignment"
+      ],
+      "path_redaction": {
+        "operator_local_paths": "redact_or_mark_operator_local",
+        "secrets": "redact",
+        "stdout_paths": "relative_or_declared"
+      },
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "secret_redaction_required": true,
+      "requires_user_approval": false,
+      "disabled_by_default": false,
+      "capability": "local_only",
+      "sha256": "00c1a92f3c82926d0348688812f042ab517911cc541f14fe841a20ec85be65e2"
+    },
+    "ozone-manager/scripts/skill_contract_schema_check.py": {
+      "allowed_effects": [
+        "validate current child skill contracts and activation-effect alignment"
+      ],
+      "read_scope": [
+        "explicitly supplied files, OZM package metadata, or temporary fixtures needed by this script"
+      ],
+      "write_scope": [],
+      "network": false,
+      "external_commands": [],
+      "stdout_data_class": "diagnostic_no_secret_json_or_text",
+      "env_allowlist": [
+        "PYTHONDONTWRITEBYTECODE"
+      ],
+      "secret_patterns_checked": [
+        "openai_api_key",
+        "generic_secret",
+        "private_key",
+        "bearer_token",
+        "password_assignment"
+      ],
+      "path_redaction": {
+        "operator_local_paths": "redact_or_mark_operator_local",
+        "secrets": "redact",
+        "stdout_paths": "relative_or_declared"
+      },
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "secret_redaction_required": true,
+      "requires_user_approval": false,
+      "disabled_by_default": false,
+      "capability": "local_only",
+      "sha256": "99636cb7a6492e290527fde92459c73dca19041cef04f24478589b0484fd1124"
+    },
+    "ozone-manager/scripts/skill_debt_scorecard.py": {
+      "allowed_effects": [
+        "read OZM skill technical-debt ledger and emit deterministic scorecard findings"
+      ],
+      "read_scope": [
+        "ozone-manager/references/skill-technical-debt-ledger.json or explicitly supplied ledger"
+      ],
+      "write_scope": [],
+      "network": false,
+      "external_commands": [],
+      "stdout_data_class": "diagnostic_no_secret_json_or_text",
+      "env_allowlist": [
+        "PYTHONDONTWRITEBYTECODE"
+      ],
+      "secret_patterns_checked": [
+        "openai_api_key",
+        "generic_secret",
+        "private_key",
+        "bearer_token",
+        "password_assignment"
+      ],
+      "path_redaction": {
+        "operator_local_paths": "redact_or_mark_operator_local",
+        "secrets": "redact",
+        "stdout_paths": "relative_or_declared"
+      },
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "secret_redaction_required": true,
+      "requires_user_approval": false,
+      "disabled_by_default": false,
+      "capability": "local_only",
+      "sha256": "3d0e459d54013300aeb6309d8c11958077af428642f146029538fdaa742eff43"
+    },
+    "ozone-manager/scripts/test_fixtures/asset_runtime_manifest_global_write_negative.py": {
+      "allowed_effects": [
+        "run local deterministic eval-harness regression fixture and emit JSON diagnostics"
+      ],
+      "read_scope": [
+        "OZM skill package assets, temporary fixtures, and asset-runtime-manifest JSON"
+      ],
+      "write_scope": [
+        "temporary eval fixtures under the OS temp directory"
+      ],
+      "network": false,
+      "external_commands": [],
+      "stdout_data_class": "diagnostic_no_secret_json_or_text",
+      "env_allowlist": [
+        "PYTHONDONTWRITEBYTECODE"
+      ],
+      "secret_patterns_checked": [
+        "openai_api_key",
+        "generic_secret",
+        "private_key",
+        "bearer_token",
+        "password_assignment"
+      ],
+      "path_redaction": {
+        "operator_local_paths": "redact_or_mark_operator_local",
+        "secrets": "redact",
+        "stdout_paths": "relative_or_declared"
+      },
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "secret_redaction_required": true,
+      "requires_user_approval": false,
+      "disabled_by_default": false,
+      "capability": "local_only",
+      "sha256": "7e3087a125484f5e5d30b986c95f8b57c22675b9498e29d9b4ed704b5babb1ec"
+    },
+    "ozone-manager/scripts/test_fixtures/asset_runtime_manifest_negative.py": {
+      "allowed_effects": [
+        "run local deterministic eval-harness regression fixture and emit JSON diagnostics"
+      ],
+      "read_scope": [
+        "OZM skill package assets, temporary fixtures, and asset-runtime-manifest JSON"
+      ],
+      "write_scope": [
+        "temporary eval fixtures under the OS temp directory"
+      ],
+      "network": false,
+      "external_commands": [],
+      "stdout_data_class": "diagnostic_no_secret_json_or_text",
+      "env_allowlist": [
+        "PYTHONDONTWRITEBYTECODE"
+      ],
+      "secret_patterns_checked": [
+        "openai_api_key",
+        "generic_secret",
+        "private_key",
+        "bearer_token",
+        "password_assignment"
+      ],
+      "path_redaction": {
+        "operator_local_paths": "redact_or_mark_operator_local",
+        "secrets": "redact",
+        "stdout_paths": "relative_or_declared"
+      },
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "secret_redaction_required": true,
+      "requires_user_approval": false,
+      "disabled_by_default": false,
+      "capability": "local_only",
+      "sha256": "0a4efc7f212f3e32185b45cc4f61be7869739a700c4a654172df8c2d3ecaf00a"
+    },
+    "ozone-manager/scripts/test_fixtures/eval_benchmark_contract_count_check.py": {
+      "allowed_effects": [
+        "run local deterministic eval-harness regression fixture and emit JSON diagnostics"
+      ],
+      "read_scope": [
+        "explicitly supplied files, OZM package metadata, or temporary fixtures needed by this script"
+      ],
+      "write_scope": [
+        "temporary eval fixtures under the OS temp directory"
+      ],
+      "network": false,
+      "external_commands": [],
+      "stdout_data_class": "diagnostic_no_secret_json_or_text",
+      "env_allowlist": [
+        "PYTHONDONTWRITEBYTECODE"
+      ],
+      "secret_patterns_checked": [
+        "openai_api_key",
+        "generic_secret",
+        "private_key",
+        "bearer_token",
+        "password_assignment"
+      ],
+      "path_redaction": {
+        "operator_local_paths": "redact_or_mark_operator_local",
+        "secrets": "redact",
+        "stdout_paths": "relative_or_declared"
+      },
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "secret_redaction_required": true,
+      "requires_user_approval": false,
+      "disabled_by_default": false,
+      "capability": "local_only",
+      "sha256": "4f2e61c165ed05911082c8eca0582dbacd0375bc81bbea1cd47ee58067e96660"
+    },
+    "ozone-manager/scripts/test_fixtures/eval_benchmark_no_spawn_check.py": {
+      "allowed_effects": [
+        "run local deterministic eval-harness regression fixture and emit JSON diagnostics"
+      ],
+      "read_scope": [
+        "explicitly supplied files, OZM package metadata, or temporary fixtures needed by this script"
+      ],
+      "write_scope": [
+        "temporary eval fixtures under the OS temp directory"
+      ],
+      "network": false,
+      "external_commands": [],
+      "stdout_data_class": "diagnostic_no_secret_json_or_text",
+      "env_allowlist": [
+        "PYTHONDONTWRITEBYTECODE"
+      ],
+      "secret_patterns_checked": [
+        "openai_api_key",
+        "generic_secret",
+        "private_key",
+        "bearer_token",
+        "password_assignment"
+      ],
+      "path_redaction": {
+        "operator_local_paths": "redact_or_mark_operator_local",
+        "secrets": "redact",
+        "stdout_paths": "relative_or_declared"
+      },
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "secret_redaction_required": true,
+      "requires_user_approval": false,
+      "disabled_by_default": false,
+      "capability": "local_only",
+      "sha256": "ee1715bfa12f46eceaa7fb63406c9bd2c4490504e24c970172de656c6edad0f8"
+    },
+    "ozone-manager/scripts/test_fixtures/eval_harness_exit_check.py": {
+      "allowed_effects": [
+        "run local deterministic eval-harness regression fixture and emit JSON diagnostics"
+      ],
+      "read_scope": [
+        "OZM package metadata and temporary fixtures needed by this script"
+      ],
+      "write_scope": [
+        "temporary eval fixtures under the OS temp directory"
+      ],
+      "network": false,
+      "external_commands": [],
+      "stdout_data_class": "diagnostic_no_secret_json_or_text",
+      "env_allowlist": [
+        "PYTHONDONTWRITEBYTECODE"
+      ],
+      "secret_patterns_checked": [
+        "openai_api_key",
+        "generic_secret",
+        "private_key",
+        "bearer_token",
+        "password_assignment"
+      ],
+      "path_redaction": {
+        "operator_local_paths": "redact_or_mark_operator_local",
+        "secrets": "redact",
+        "stdout_paths": "relative_or_declared"
+      },
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "secret_redaction_required": true,
+      "requires_user_approval": false,
+      "disabled_by_default": false,
+      "capability": "local_only",
+      "sha256": "d7cc2105703156b12972217d0548c84770c6d6769c257597c2f49d0883f72029"
+    },
+    "ozone-manager/scripts/test_fixtures/hang_forever.py": {
+      "allowed_effects": [
+        "run local deterministic eval-harness regression fixture and emit JSON diagnostics"
+      ],
+      "read_scope": [
+        "OZM package metadata and temporary fixtures needed by this script"
+      ],
+      "write_scope": [
+        "temporary eval fixtures under the OS temp directory"
+      ],
+      "network": false,
+      "external_commands": [],
+      "stdout_data_class": "diagnostic_no_secret_json_or_text",
+      "env_allowlist": [
+        "PYTHONDONTWRITEBYTECODE"
+      ],
+      "secret_patterns_checked": [
+        "openai_api_key",
+        "generic_secret",
+        "private_key",
+        "bearer_token",
+        "password_assignment"
+      ],
+      "path_redaction": {
+        "operator_local_paths": "redact_or_mark_operator_local",
+        "secrets": "redact",
+        "stdout_paths": "relative_or_declared"
+      },
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "secret_redaction_required": true,
+      "requires_user_approval": false,
+      "disabled_by_default": false,
+      "capability": "local_only",
+      "sha256": "45d9b9933bb469519f3570f1003b242832ae6acb349b78667c4a8eb33cde3aad"
+    },
+    "ozone-manager/scripts/test_fixtures/import_no_bytecode_check.py": {
+      "allowed_effects": [
+        "run local deterministic eval-harness regression fixture and emit JSON diagnostics"
+      ],
+      "read_scope": [
+        "explicitly supplied files, OZM package metadata, or temporary fixtures needed by this script"
+      ],
+      "write_scope": [
+        "temporary eval fixtures under the OS temp directory"
+      ],
+      "network": false,
+      "external_commands": [],
+      "stdout_data_class": "diagnostic_no_secret_json_or_text",
+      "env_allowlist": [
+        "PYTHONDONTWRITEBYTECODE"
+      ],
+      "secret_patterns_checked": [
+        "openai_api_key",
+        "generic_secret",
+        "private_key",
+        "bearer_token",
+        "password_assignment"
+      ],
+      "path_redaction": {
+        "operator_local_paths": "redact_or_mark_operator_local",
+        "secrets": "redact",
+        "stdout_paths": "relative_or_declared"
+      },
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "secret_redaction_required": true,
+      "requires_user_approval": false,
+      "disabled_by_default": false,
+      "capability": "local_only",
+      "sha256": "117a53727794ddf15fc21f0c0b86d152becaaa2dc6b37bac94e655f8e6724064"
+    },
+    "ozone-manager/scripts/build_harness_variance_matrix.py": {
+      "allowed_effects": [
+        "read explicit OZM contract, eval, fixture, or package files and emit deterministic diagnostic findings"
+      ],
+      "read_scope": [
+        "explicitly supplied files, OZM package metadata, or temporary fixtures needed by this script"
+      ],
+      "write_scope": [
+        "explicit --out harness variance matrix JSON"
+      ],
+      "network": false,
+      "external_commands": [],
+      "stdout_data_class": "diagnostic_no_secret_json_or_text",
+      "env_allowlist": [
+        "PYTHONDONTWRITEBYTECODE",
+        "PYTHONPYCACHEPREFIX"
+      ],
+      "secret_patterns_checked": [
+        "openai_api_key",
+        "generic_secret",
+        "private_key",
+        "bearer_token",
+        "password_assignment"
+      ],
+      "path_redaction": {
+        "operator_local_paths": "redact_or_mark_operator_local",
+        "secrets": "redact",
+        "stdout_paths": "relative_or_declared"
+      },
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "secret_redaction_required": true,
+      "requires_user_approval": false,
+      "disabled_by_default": false,
+      "capability": "local_only",
+      "sha256": "47e31af6998c4e1711f31e28987dc8b36d41594047bba457f25e24d6dadbcc14"
+    },
+    "ozone-manager/scripts/build_route_index.py": {
+      "allowed_effects": [
+        "read explicit OZM contract, eval, fixture, or package files and emit deterministic diagnostic findings"
+      ],
+      "read_scope": [
+        "explicitly supplied files, OZM package metadata, or temporary fixtures needed by this script"
+      ],
+      "write_scope": [
+        "explicit --out route-index JSONL"
+      ],
+      "network": false,
+      "external_commands": [],
+      "stdout_data_class": "diagnostic_no_secret_json_or_text",
+      "env_allowlist": [
+        "PYTHONDONTWRITEBYTECODE",
+        "PYTHONPYCACHEPREFIX"
+      ],
+      "secret_patterns_checked": [
+        "openai_api_key",
+        "generic_secret",
+        "private_key",
+        "bearer_token",
+        "password_assignment"
+      ],
+      "path_redaction": {
+        "operator_local_paths": "redact_or_mark_operator_local",
+        "secrets": "redact",
+        "stdout_paths": "relative_or_declared"
+      },
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "secret_redaction_required": true,
+      "requires_user_approval": false,
+      "disabled_by_default": false,
+      "capability": "local_only",
+      "sha256": "64f8bffb6e26f71e22d099c32259d0b51e80b4f90e4e9271967fea861b2bdf23"
+    },
+    "ozone-manager/scripts/contract_schema_coverage_check.py": {
+      "allowed_effects": [
+        "read explicit OZM contract, eval, fixture, or package files and emit deterministic diagnostic findings"
+      ],
+      "read_scope": [
+        "explicitly supplied files, OZM package metadata, or temporary fixtures needed by this script"
+      ],
+      "write_scope": [],
+      "network": false,
+      "external_commands": [],
+      "stdout_data_class": "diagnostic_no_secret_json_or_text",
+      "env_allowlist": [
+        "PYTHONDONTWRITEBYTECODE",
+        "PYTHONPYCACHEPREFIX"
+      ],
+      "secret_patterns_checked": [
+        "openai_api_key",
+        "generic_secret",
+        "private_key",
+        "bearer_token",
+        "password_assignment"
+      ],
+      "path_redaction": {
+        "operator_local_paths": "redact_or_mark_operator_local",
+        "secrets": "redact",
+        "stdout_paths": "relative_or_declared"
+      },
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "secret_redaction_required": true,
+      "requires_user_approval": false,
+      "disabled_by_default": false,
+      "capability": "local_only",
+      "sha256": "7b416ca2c72be1492c8b94300289ae1814951e0dac0964e02ea63d18476ea196"
+    },
+    "ozone-manager/scripts/eval_artifact_freshness_check.py": {
+      "allowed_effects": [
+        "read explicit OZM contract, eval, fixture, or package files and emit deterministic diagnostic findings"
+      ],
+      "read_scope": [
+        "explicitly supplied files, OZM package metadata, or temporary fixtures needed by this script"
+      ],
+      "write_scope": [],
+      "network": false,
+      "external_commands": [],
+      "stdout_data_class": "diagnostic_no_secret_json_or_text",
+      "env_allowlist": [
+        "PYTHONDONTWRITEBYTECODE",
+        "PYTHONPYCACHEPREFIX"
+      ],
+      "secret_patterns_checked": [
+        "openai_api_key",
+        "generic_secret",
+        "private_key",
+        "bearer_token",
+        "password_assignment"
+      ],
+      "path_redaction": {
+        "operator_local_paths": "redact_or_mark_operator_local",
+        "secrets": "redact",
+        "stdout_paths": "relative_or_declared"
+      },
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "secret_redaction_required": true,
+      "requires_user_approval": false,
+      "disabled_by_default": false,
+      "capability": "local_only",
+      "sha256": "c6ce0e34e7ec6fbedecbc2414c3718611475f62387abda8c84fd5ce1621a8302"
+    },
+    "ozone-manager/scripts/no_bytecode_context.py": {
+      "allowed_effects": [
+        "read explicit OZM contract, eval, fixture, or package files and emit deterministic diagnostic findings"
+      ],
+      "read_scope": [
+        "explicitly supplied files, OZM package metadata, or temporary fixtures needed by this script"
+      ],
+      "write_scope": [],
+      "network": false,
+      "external_commands": [
+        "python -B target command supplied by operator"
+      ],
+      "stdout_data_class": "diagnostic_no_secret_json_or_text",
+      "env_allowlist": [
+        "PYTHONDONTWRITEBYTECODE",
+        "PYTHONPYCACHEPREFIX"
+      ],
+      "secret_patterns_checked": [
+        "openai_api_key",
+        "generic_secret",
+        "private_key",
+        "bearer_token",
+        "password_assignment"
+      ],
+      "path_redaction": {
+        "operator_local_paths": "redact_or_mark_operator_local",
+        "secrets": "redact",
+        "stdout_paths": "relative_or_declared"
+      },
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "secret_redaction_required": true,
+      "requires_user_approval": false,
+      "disabled_by_default": false,
+      "capability": "local_only",
+      "sha256": "48977367f6c71595d03c7654e911b687d3c6abe29cfac4878b47901d289c0485"
+    },
+    "ozone-manager/scripts/route_index_check.py": {
+      "allowed_effects": [
+        "read explicit OZM contract, eval, fixture, or package files and emit deterministic diagnostic findings"
+      ],
+      "read_scope": [
+        "explicitly supplied files, OZM package metadata, or temporary fixtures needed by this script"
+      ],
+      "write_scope": [],
+      "network": false,
+      "external_commands": [],
+      "stdout_data_class": "diagnostic_no_secret_json_or_text",
+      "env_allowlist": [
+        "PYTHONDONTWRITEBYTECODE",
+        "PYTHONPYCACHEPREFIX"
+      ],
+      "secret_patterns_checked": [
+        "openai_api_key",
+        "generic_secret",
+        "private_key",
+        "bearer_token",
+        "password_assignment"
+      ],
+      "path_redaction": {
+        "operator_local_paths": "redact_or_mark_operator_local",
+        "secrets": "redact",
+        "stdout_paths": "relative_or_declared"
+      },
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "secret_redaction_required": true,
+      "requires_user_approval": false,
+      "disabled_by_default": false,
+      "capability": "local_only",
+      "sha256": "e02d8f9eadea1f305cddb04f4cf8b74bd9d5137894b2756446ed660bb9a8ee9d"
+    },
+    "ozone-manager/scripts/route_query_schema_check.py": {
+      "allowed_effects": [
+        "read explicit OZM contract, eval, fixture, or package files and emit deterministic diagnostic findings"
+      ],
+      "read_scope": [
+        "explicitly supplied files, OZM package metadata, or temporary fixtures needed by this script"
+      ],
+      "write_scope": [],
+      "network": false,
+      "external_commands": [],
+      "stdout_data_class": "diagnostic_no_secret_json_or_text",
+      "env_allowlist": [
+        "PYTHONDONTWRITEBYTECODE",
+        "PYTHONPYCACHEPREFIX"
+      ],
+      "secret_patterns_checked": [
+        "openai_api_key",
+        "generic_secret",
+        "private_key",
+        "bearer_token",
+        "password_assignment"
+      ],
+      "path_redaction": {
+        "operator_local_paths": "redact_or_mark_operator_local",
+        "secrets": "redact",
+        "stdout_paths": "relative_or_declared"
+      },
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "secret_redaction_required": true,
+      "requires_user_approval": false,
+      "disabled_by_default": false,
+      "capability": "local_only",
+      "sha256": "97042111fd072d30b303a603ee8cda5a4dd32460973bad3fa75ece4b1edc5d46"
+    },
+    "ozm-document-drafting/scripts/document_claim_source_map_check.py": {
+      "allowed_effects": [
+        "read explicit OZM contract, eval, fixture, or package files and emit deterministic diagnostic findings"
+      ],
+      "read_scope": [
+        "explicitly supplied files, OZM package metadata, or temporary fixtures needed by this script"
+      ],
+      "write_scope": [],
+      "network": false,
+      "external_commands": [],
+      "stdout_data_class": "diagnostic_no_secret_json_or_text",
+      "env_allowlist": [
+        "PYTHONDONTWRITEBYTECODE",
+        "PYTHONPYCACHEPREFIX"
+      ],
+      "secret_patterns_checked": [
+        "openai_api_key",
+        "generic_secret",
+        "private_key",
+        "bearer_token",
+        "password_assignment"
+      ],
+      "path_redaction": {
+        "operator_local_paths": "redact_or_mark_operator_local",
+        "secrets": "redact",
+        "stdout_paths": "relative_or_declared"
+      },
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "secret_redaction_required": true,
+      "requires_user_approval": false,
+      "disabled_by_default": false,
+      "capability": "local_only",
+      "sha256": "a33a3037b40e928c28b4160f78f490924e6e860f48c46fe34af3577feed58128"
+    },
+    "ozm-expert-review-suite/scripts/expert_review_verdict_check.py": {
+      "allowed_effects": [
+        "read explicit OZM contract, eval, fixture, or package files and emit deterministic diagnostic findings"
+      ],
+      "read_scope": [
+        "explicitly supplied files, OZM package metadata, or temporary fixtures needed by this script"
+      ],
+      "write_scope": [],
+      "network": false,
+      "external_commands": [],
+      "stdout_data_class": "diagnostic_no_secret_json_or_text",
+      "env_allowlist": [
+        "PYTHONDONTWRITEBYTECODE",
+        "PYTHONPYCACHEPREFIX"
+      ],
+      "secret_patterns_checked": [
+        "openai_api_key",
+        "generic_secret",
+        "private_key",
+        "bearer_token",
+        "password_assignment"
+      ],
+      "path_redaction": {
+        "operator_local_paths": "redact_or_mark_operator_local",
+        "secrets": "redact",
+        "stdout_paths": "relative_or_declared"
+      },
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "secret_redaction_required": true,
+      "requires_user_approval": false,
+      "disabled_by_default": false,
+      "capability": "local_only",
+      "sha256": "837daf6d657da0ee948e6c11ba8e74eb853d5a18cdccd903cb80001a80845aa5"
+    },
+    "ozm-image2-skill/scripts/image_prompt_boundary_check.py": {
+      "allowed_effects": [
+        "read explicit OZM contract, eval, fixture, or package files and emit deterministic diagnostic findings"
+      ],
+      "read_scope": [
+        "explicitly supplied files, OZM package metadata, or temporary fixtures needed by this script"
+      ],
+      "write_scope": [],
+      "network": false,
+      "external_commands": [],
+      "stdout_data_class": "diagnostic_no_secret_json_or_text",
+      "env_allowlist": [
+        "PYTHONDONTWRITEBYTECODE",
+        "PYTHONPYCACHEPREFIX"
+      ],
+      "secret_patterns_checked": [
+        "openai_api_key",
+        "generic_secret",
+        "private_key",
+        "bearer_token",
+        "password_assignment"
+      ],
+      "path_redaction": {
+        "operator_local_paths": "redact_or_mark_operator_local",
+        "secrets": "redact",
+        "stdout_paths": "relative_or_declared"
+      },
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "secret_redaction_required": true,
+      "requires_user_approval": false,
+      "disabled_by_default": false,
+      "capability": "local_only",
+      "sha256": "f03c5cbc576f694a80b4e1d00e0d12e551ad827bf3d0dab39acbac84e3bfff98"
+    },
+    "ozm-repo-instruction-surface-management/scripts/repo_instruction_surface_check.py": {
+      "allowed_effects": [
+        "read explicit OZM contract, eval, fixture, or package files and emit deterministic diagnostic findings"
+      ],
+      "read_scope": [
+        "explicitly supplied files, OZM package metadata, or temporary fixtures needed by this script"
+      ],
+      "write_scope": [],
+      "network": false,
+      "external_commands": [],
+      "stdout_data_class": "diagnostic_no_secret_json_or_text",
+      "env_allowlist": [
+        "PYTHONDONTWRITEBYTECODE",
+        "PYTHONPYCACHEPREFIX"
+      ],
+      "secret_patterns_checked": [
+        "openai_api_key",
+        "generic_secret",
+        "private_key",
+        "bearer_token",
+        "password_assignment"
+      ],
+      "path_redaction": {
+        "operator_local_paths": "redact_or_mark_operator_local",
+        "secrets": "redact",
+        "stdout_paths": "relative_or_declared"
+      },
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "secret_redaction_required": true,
+      "requires_user_approval": false,
+      "disabled_by_default": false,
+      "capability": "local_only",
+      "sha256": "a818cc69d8de3a1c35b66dfc19305d4734367f3624f7a6d9becc3c9e640f4978"
+    },
+    "ozm-skill-hardening/scripts/hardening_delta_check.py": {
+      "allowed_effects": [
+        "read explicit OZM contract, eval, fixture, or package files and emit deterministic diagnostic findings"
+      ],
+      "read_scope": [
+        "explicitly supplied files, OZM package metadata, or temporary fixtures needed by this script"
+      ],
+      "write_scope": [],
+      "network": false,
+      "external_commands": [],
+      "stdout_data_class": "diagnostic_no_secret_json_or_text",
+      "env_allowlist": [
+        "PYTHONDONTWRITEBYTECODE",
+        "PYTHONPYCACHEPREFIX"
+      ],
+      "secret_patterns_checked": [
+        "openai_api_key",
+        "generic_secret",
+        "private_key",
+        "bearer_token",
+        "password_assignment"
+      ],
+      "path_redaction": {
+        "operator_local_paths": "redact_or_mark_operator_local",
+        "secrets": "redact",
+        "stdout_paths": "relative_or_declared"
+      },
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "secret_redaction_required": true,
+      "requires_user_approval": false,
+      "disabled_by_default": false,
+      "capability": "local_only",
+      "sha256": "2d49cb524fc000f14d837a276abbd45afb4b0955592cc864c1b24a18070ccbca"
+    },
+    "ozm-ux-ui-expert-suite/scripts/ux_visual_evidence_check.py": {
+      "allowed_effects": [
+        "read explicit OZM contract, eval, fixture, or package files and emit deterministic diagnostic findings"
+      ],
+      "read_scope": [
+        "explicitly supplied files, OZM package metadata, or temporary fixtures needed by this script"
+      ],
+      "write_scope": [],
+      "network": false,
+      "external_commands": [],
+      "stdout_data_class": "diagnostic_no_secret_json_or_text",
+      "env_allowlist": [
+        "PYTHONDONTWRITEBYTECODE",
+        "PYTHONPYCACHEPREFIX"
+      ],
+      "secret_patterns_checked": [
+        "openai_api_key",
+        "generic_secret",
+        "private_key",
+        "bearer_token",
+        "password_assignment"
+      ],
+      "path_redaction": {
+        "operator_local_paths": "redact_or_mark_operator_local",
+        "secrets": "redact",
+        "stdout_paths": "relative_or_declared"
+      },
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "secret_redaction_required": true,
+      "requires_user_approval": false,
+      "disabled_by_default": false,
+      "capability": "local_only",
+      "sha256": "c5b64f1795d71007c1ea3ad939eb43dee6a80621d1c2b617973abaa6dad2fc3c"
+    },
+    "ozone-manager/scripts/ozm_eval_process_runner.py": {
+      "allowed_effects": [
+        "run isolated OZM eval cases in a subprocess worker",
+        "kill timed-out worker processes and return diagnostic JSON"
+      ],
+      "read_scope": [
+        "temporary eval payload JSON",
+        "explicit OZM skill root and graph data passed by ozm_eval_suite.py"
+      ],
+      "write_scope": [
+        "temporary worker payload under the OS temp directory"
+      ],
+      "network": false,
+      "external_commands": [
+        "<resolved-python>"
+      ],
+      "stdout_data_class": "diagnostic_no_secret_json_or_text",
+      "env_allowlist": [
+        "PYTHONDONTWRITEBYTECODE",
+        "PYTHONPYCACHEPREFIX"
+      ],
+      "secret_patterns_checked": [
+        "openai_api_key",
+        "generic_secret",
+        "private_key",
+        "bearer_token",
+        "password_assignment"
+      ],
+      "path_redaction": {
+        "operator_local_paths": "redact_or_mark_operator_local",
+        "secrets": "redact",
+        "stdout_paths": "relative_or_declared"
+      },
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "secret_redaction_required": true,
+      "requires_user_approval": false,
+      "disabled_by_default": false,
+      "capability": "local_only",
+      "sha256": "eb074034f8ffcba8d070c0db1f1a63708eea935ff366f1620ea6e4aa49c7bcd1"
+    },
+    "ozone-manager/scripts/ozm_eval_run_manifest.py": {
+      "allowed_effects": [
+        "hash OZM eval files, route graph, and runner script for eval-run manifest creation"
+      ],
+      "read_scope": [
+        "explicit eval JSONL files",
+        "explicit route graph",
+        "ozm_eval_suite.py"
+      ],
+      "write_scope": [],
+      "network": false,
+      "external_commands": [],
+      "stdout_data_class": "diagnostic_no_secret_json_or_text",
+      "env_allowlist": [
+        "PYTHONDONTWRITEBYTECODE",
+        "PYTHONPYCACHEPREFIX"
+      ],
+      "secret_patterns_checked": [
+        "openai_api_key",
+        "generic_secret",
+        "private_key",
+        "bearer_token",
+        "password_assignment"
+      ],
+      "path_redaction": {
+        "operator_local_paths": "redact_or_mark_operator_local",
+        "secrets": "redact",
+        "stdout_paths": "relative_or_declared"
+      },
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "secret_redaction_required": true,
+      "requires_user_approval": false,
+      "disabled_by_default": false,
+      "capability": "local_only",
+      "sha256": "840dbb2163f5ddb9aa15831372a1d34310896dca8bee0fd63b56d6ac601aac56"
+    },
+    "ozone-manager/scripts/executable_surface_coverage_check.py": {
+      "allowed_effects": [
+        "read explicit OZM contract, eval, fixture, or package files and emit deterministic diagnostic findings"
+      ],
+      "read_scope": [
+        "explicitly supplied files, OZM package metadata, or temporary fixtures needed by this script"
+      ],
+      "write_scope": [],
+      "network": false,
+      "external_commands": [],
+      "stdout_data_class": "diagnostic_no_secret_json_or_text",
+      "env_allowlist": [
+        "PYTHONDONTWRITEBYTECODE"
+      ],
+      "secret_patterns_checked": [
+        "openai_api_key",
+        "generic_secret",
+        "private_key",
+        "bearer_token",
+        "password_assignment"
+      ],
+      "path_redaction": {
+        "operator_local_paths": "redact_or_mark_operator_local",
+        "secrets": "redact",
+        "stdout_paths": "relative_or_declared"
+      },
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "secret_redaction_required": true,
+      "requires_user_approval": false,
+      "disabled_by_default": false,
+      "capability": "local_only",
+      "sha256": "a04ea5a35ef0e7a8754612a8872a26439e0be55e1858e3f0a49d7a01cbf01974"
+    },
+    "ozone-manager/scripts/harness_platform_matrix_check.py": {
+      "allowed_effects": [
+        "read explicit OZM contract, eval, fixture, or package files and emit deterministic diagnostic findings"
+      ],
+      "read_scope": [
+        "explicitly supplied files, OZM package metadata, or temporary fixtures needed by this script"
+      ],
+      "write_scope": [],
+      "network": false,
+      "external_commands": [],
+      "stdout_data_class": "diagnostic_no_secret_json_or_text",
+      "env_allowlist": [
+        "PYTHONDONTWRITEBYTECODE"
+      ],
+      "secret_patterns_checked": [
+        "openai_api_key",
+        "generic_secret",
+        "private_key",
+        "bearer_token",
+        "password_assignment"
+      ],
+      "path_redaction": {
+        "operator_local_paths": "redact_or_mark_operator_local",
+        "secrets": "redact",
+        "stdout_paths": "relative_or_declared"
+      },
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "secret_redaction_required": true,
+      "requires_user_approval": false,
+      "disabled_by_default": false,
+      "capability": "local_only",
+      "sha256": "8eb8a1750a4c66640f30ef3fb33418e009aac3320604ebefacaac9740b64254b"
+    },
+    "ozone-manager/scripts/ozm_py.py": {
+      "allowed_effects": [
+        "launch an OZM Python script with bytecode disabled"
+      ],
+      "read_scope": [
+        "explicitly supplied files, OZM package metadata, or temporary fixtures needed by this script"
+      ],
+      "write_scope": [],
+      "network": false,
+      "external_commands": [
+        "<resolved-python>"
+      ],
+      "stdout_data_class": "diagnostic_no_secret_json_or_text",
+      "env_allowlist": [
+        "PYTHONDONTWRITEBYTECODE"
+      ],
+      "secret_patterns_checked": [
+        "openai_api_key",
+        "generic_secret",
+        "private_key",
+        "bearer_token",
+        "password_assignment"
+      ],
+      "path_redaction": {
+        "operator_local_paths": "redact_or_mark_operator_local",
+        "secrets": "redact",
+        "stdout_paths": "relative_or_declared"
+      },
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "secret_redaction_required": true,
+      "requires_user_approval": false,
+      "disabled_by_default": false,
+      "capability": "local_only",
+      "sha256": "6132e8193f7c3609231c0487d499872c5b24536894fa9445b45650feeb8ada8b"
+    },
+    "ozone-manager/scripts/scenario_bundle_check.py": {
+      "allowed_effects": [
+        "read one supplied scenario bundle JSON and validate route/artifact/stage/proof/claim fields"
+      ],
+      "read_scope": [
+        "explicitly supplied files, OZM package metadata, or temporary fixtures needed by this script"
+      ],
+      "write_scope": [],
+      "network": false,
+      "external_commands": [],
+      "stdout_data_class": "diagnostic_no_secret_json_or_text",
+      "env_allowlist": [
+        "PYTHONDONTWRITEBYTECODE"
+      ],
+      "secret_patterns_checked": [
+        "openai_api_key",
+        "generic_secret",
+        "private_key",
+        "bearer_token",
+        "password_assignment"
+      ],
+      "path_redaction": {
+        "operator_local_paths": "redact_or_mark_operator_local",
+        "secrets": "redact",
+        "stdout_paths": "relative_or_declared"
+      },
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "secret_redaction_required": true,
+      "requires_user_approval": false,
+      "disabled_by_default": false,
+      "capability": "local_only",
+      "sha256": "bbc8682bbdb7af8bec8d4dca48687b6a28dd81a910a58fbb82fb52e88741334d"
+    },
+    "ozone-manager/scripts/test_fixtures/eval_all_runtime_budget_check.py": {
+      "allowed_effects": [
+        "run local deterministic eval-harness regression fixture and emit JSON diagnostics"
+      ],
+      "read_scope": [
+        "explicitly supplied files, OZM package metadata, or temporary fixtures needed by this script"
+      ],
+      "write_scope": [
+        "temporary eval fixtures under the OS temp directory"
+      ],
+      "network": false,
+      "external_commands": [],
+      "stdout_data_class": "diagnostic_no_secret_json_or_text",
+      "env_allowlist": [
+        "PYTHONDONTWRITEBYTECODE"
+      ],
+      "secret_patterns_checked": [
+        "openai_api_key",
+        "generic_secret",
+        "private_key",
+        "bearer_token",
+        "password_assignment"
+      ],
+      "path_redaction": {
+        "operator_local_paths": "redact_or_mark_operator_local",
+        "secrets": "redact",
+        "stdout_paths": "relative_or_declared"
+      },
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "secret_redaction_required": true,
+      "requires_user_approval": false,
+      "disabled_by_default": false,
+      "capability": "local_only",
+      "sha256": "883cf9a6145cac9c025ff336eafe9f7f5f4946d67ea0e356e108086e617ea665"
+    },
+    "ozone-manager/scripts/test_fixtures/eval_benchmark_no_spawn_slow_startup_check.py": {
+      "allowed_effects": [
+        "run local deterministic eval-harness regression fixture and emit JSON diagnostics"
+      ],
+      "read_scope": [
+        "explicitly supplied files, OZM package metadata, or temporary fixtures needed by this script"
+      ],
+      "write_scope": [
+        "temporary eval fixtures under the OS temp directory"
+      ],
+      "network": false,
+      "external_commands": [],
+      "stdout_data_class": "diagnostic_no_secret_json_or_text",
+      "env_allowlist": [
+        "PYTHONDONTWRITEBYTECODE"
+      ],
+      "secret_patterns_checked": [
+        "openai_api_key",
+        "generic_secret",
+        "private_key",
+        "bearer_token",
+        "password_assignment"
+      ],
+      "path_redaction": {
+        "operator_local_paths": "redact_or_mark_operator_local",
+        "secrets": "redact",
+        "stdout_paths": "relative_or_declared"
+      },
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "secret_redaction_required": true,
+      "requires_user_approval": false,
+      "disabled_by_default": false,
+      "capability": "local_only",
+      "sha256": "57ca960d32042c8125318db006fb3ccdd0d27ae409732eebb44a9838102c982a"
+    },
+    "ozone-manager/scripts/test_fixtures/eval_suite_timeout_probe_check.py": {
+      "allowed_effects": [
+        "run local deterministic eval-harness regression fixture and emit JSON diagnostics"
+      ],
+      "read_scope": [
+        "explicitly supplied files, OZM package metadata, or temporary fixtures needed by this script"
+      ],
+      "write_scope": [
+        "temporary eval fixtures under the OS temp directory"
+      ],
+      "network": false,
+      "external_commands": [],
+      "stdout_data_class": "diagnostic_no_secret_json_or_text",
+      "env_allowlist": [
+        "PYTHONDONTWRITEBYTECODE"
+      ],
+      "secret_patterns_checked": [
+        "openai_api_key",
+        "generic_secret",
+        "private_key",
+        "bearer_token",
+        "password_assignment"
+      ],
+      "path_redaction": {
+        "operator_local_paths": "redact_or_mark_operator_local",
+        "secrets": "redact",
+        "stdout_paths": "relative_or_declared"
+      },
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "secret_redaction_required": true,
+      "requires_user_approval": false,
+      "disabled_by_default": false,
+      "capability": "local_only",
+      "sha256": "00dc80a0920231797ca0e91d657f69a3235fbb01878c2003851452bc201cadb0"
+    },
+    "ozone-manager/scripts/test_fixtures/plain_import_dirty_tree_check.py": {
+      "allowed_effects": [
+        "run local deterministic eval-harness regression fixture and emit JSON diagnostics"
+      ],
+      "read_scope": [
+        "explicitly supplied files, OZM package metadata, or temporary fixtures needed by this script"
+      ],
+      "write_scope": [
+        "temporary eval fixtures under the OS temp directory"
+      ],
+      "network": false,
+      "external_commands": [
+        "<resolved-python>"
+      ],
+      "stdout_data_class": "diagnostic_no_secret_json_or_text",
+      "env_allowlist": [
+        "PYTHONDONTWRITEBYTECODE"
+      ],
+      "secret_patterns_checked": [
+        "openai_api_key",
+        "generic_secret",
+        "private_key",
+        "bearer_token",
+        "password_assignment"
+      ],
+      "path_redaction": {
+        "operator_local_paths": "redact_or_mark_operator_local",
+        "secrets": "redact",
+        "stdout_paths": "relative_or_declared"
+      },
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "secret_redaction_required": true,
+      "requires_user_approval": false,
+      "disabled_by_default": false,
+      "capability": "local_only",
+      "sha256": "cb2e8de072592bda406284532183f656b9d490a17c85f2463123ddf6dbb54097"
+    },
+    "ozone-manager/scripts/cross_artifact_freshness_check.py": {
+      "allowed_effects": [
+        "read explicit OZM contract, eval, fixture, or package files and emit deterministic diagnostic findings"
+      ],
+      "read_scope": [
+        "explicitly supplied files, OZM package metadata, or temporary fixtures needed by this script"
+      ],
+      "write_scope": [],
+      "network": false,
+      "external_commands": [],
+      "stdout_data_class": "diagnostic_no_secret_json_or_text",
+      "env_allowlist": [
+        "PYTHONDONTWRITEBYTECODE"
+      ],
+      "secret_patterns_checked": [
+        "openai_api_key",
+        "generic_secret",
+        "private_key",
+        "bearer_token",
+        "password_assignment"
+      ],
+      "path_redaction": {
+        "operator_local_paths": "redact_or_mark_operator_local",
+        "secrets": "redact",
+        "stdout_paths": "relative_or_declared"
+      },
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "secret_redaction_required": true,
+      "requires_user_approval": false,
+      "disabled_by_default": false,
+      "capability": "local_only",
+      "sha256": "4ce70e953e32cc8fc756ca6946ce8959dddc0c06e3a443e9b6b0f0d48856a2c8"
+    },
+    "ozone-manager/scripts/eval_latency_budget_check.py": {
+      "allowed_effects": [
+        "read explicit OZM contract, eval, fixture, or package files and emit deterministic diagnostic findings"
+      ],
+      "read_scope": [
+        "explicitly supplied files, OZM package metadata, or temporary fixtures needed by this script"
+      ],
+      "write_scope": [],
+      "network": false,
+      "external_commands": [],
+      "stdout_data_class": "diagnostic_no_secret_json_or_text",
+      "env_allowlist": [
+        "PYTHONDONTWRITEBYTECODE"
+      ],
+      "secret_patterns_checked": [
+        "openai_api_key",
+        "generic_secret",
+        "private_key",
+        "bearer_token",
+        "password_assignment"
+      ],
+      "path_redaction": {
+        "operator_local_paths": "redact_or_mark_operator_local",
+        "secrets": "redact",
+        "stdout_paths": "relative_or_declared"
+      },
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "secret_redaction_required": true,
+      "requires_user_approval": false,
+      "disabled_by_default": false,
+      "capability": "local_only",
+      "sha256": "cd77f8fa7e6c1190092c05fab1c120ec2ab787442c5effc26965a6dd67e3da53"
+    },
+    "ozone-manager/scripts/release_evidence_authority_check.py": {
+      "allowed_effects": [
+        "read explicit OZM contract, eval, fixture, or package files and emit deterministic diagnostic findings"
+      ],
+      "read_scope": [
+        "explicitly supplied files, OZM package metadata, or temporary fixtures needed by this script"
+      ],
+      "write_scope": [],
+      "network": false,
+      "external_commands": [],
+      "stdout_data_class": "diagnostic_no_secret_json_or_text",
+      "env_allowlist": [
+        "PYTHONDONTWRITEBYTECODE"
+      ],
+      "secret_patterns_checked": [
+        "openai_api_key",
+        "generic_secret",
+        "private_key",
+        "bearer_token",
+        "password_assignment"
+      ],
+      "path_redaction": {
+        "operator_local_paths": "redact_or_mark_operator_local",
+        "secrets": "redact",
+        "stdout_paths": "relative_or_declared"
+      },
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "secret_redaction_required": true,
+      "requires_user_approval": false,
+      "disabled_by_default": false,
+      "capability": "local_only",
+      "sha256": "b560ec374d33a667054a96c5888a23f9b85c070dd74a4d75c70ec6f18be1de08"
+    },
+    "ozone-manager/scripts/route_replay_corpus_check.py": {
+      "allowed_effects": [
+        "read explicit OZM contract, eval, fixture, or package files and emit deterministic diagnostic findings"
+      ],
+      "read_scope": [
+        "explicitly supplied files, OZM package metadata, or temporary fixtures needed by this script"
+      ],
+      "write_scope": [],
+      "network": false,
+      "external_commands": [],
+      "stdout_data_class": "diagnostic_no_secret_json_or_text",
+      "env_allowlist": [
+        "PYTHONDONTWRITEBYTECODE"
+      ],
+      "secret_patterns_checked": [
+        "openai_api_key",
+        "generic_secret",
+        "private_key",
+        "bearer_token",
+        "password_assignment"
+      ],
+      "path_redaction": {
+        "operator_local_paths": "redact_or_mark_operator_local",
+        "secrets": "redact",
+        "stdout_paths": "relative_or_declared"
+      },
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "secret_redaction_required": true,
+      "requires_user_approval": false,
+      "disabled_by_default": false,
+      "capability": "local_only",
+      "sha256": "b1bdb2e919dfc25d6fe8f7ff94ca216320e492a4432ecae85dfd83ac3f79e80d"
+    },
+    "ozone-manager/scripts/skill_edit_ledger_check.py": {
+      "allowed_effects": [
+        "read explicit OZM contract, eval, fixture, or package files and emit deterministic diagnostic findings"
+      ],
+      "read_scope": [
+        "explicitly supplied files, OZM package metadata, or temporary fixtures needed by this script"
+      ],
+      "write_scope": [],
+      "network": false,
+      "external_commands": [],
+      "stdout_data_class": "diagnostic_no_secret_json_or_text",
+      "env_allowlist": [
+        "PYTHONDONTWRITEBYTECODE"
+      ],
+      "secret_patterns_checked": [
+        "openai_api_key",
+        "generic_secret",
+        "private_key",
+        "bearer_token",
+        "password_assignment"
+      ],
+      "path_redaction": {
+        "operator_local_paths": "redact_or_mark_operator_local",
+        "secrets": "redact",
+        "stdout_paths": "relative_or_declared"
+      },
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "secret_redaction_required": true,
+      "requires_user_approval": false,
+      "disabled_by_default": false,
+      "capability": "local_only",
+      "sha256": "2145074bed769dc62d7489ac3ab273f437cea93572d4e0d86879fd9e1ba5942c"
+    },
+    "ozone-manager/scripts/ozm_eval_script_fixture.py": {
+      "allowed_effects": [
+        "read explicit OZM contract, eval, fixture, or package files and emit deterministic diagnostic findings"
+      ],
+      "read_scope": [
+        "explicitly supplied files, OZM package metadata, or temporary fixtures needed by this script"
+      ],
+      "write_scope": [],
+      "network": false,
+      "external_commands": [],
+      "stdout_data_class": "diagnostic_no_secret_json_or_text",
+      "env_allowlist": [
+        "PYTHONDONTWRITEBYTECODE"
+      ],
+      "secret_patterns_checked": [
+        "openai_api_key",
+        "generic_secret",
+        "private_key",
+        "bearer_token",
+        "password_assignment"
+      ],
+      "path_redaction": {
+        "operator_local_paths": "redact_or_mark_operator_local",
+        "secrets": "redact",
+        "stdout_paths": "relative_or_declared"
+      },
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "secret_redaction_required": true,
+      "requires_user_approval": false,
+      "disabled_by_default": false,
+      "capability": "local_only",
+      "sha256": "1944f767aebb70577f7938608a70d9327f31ddd33879db419723175e8b7934dd"
+    },
+    "ozm-document-drafting/scripts/claim_source_alignment_check.py": {
+      "allowed_effects": [
+        "read explicit OZM contract, eval, fixture, or package files and emit deterministic diagnostic findings"
+      ],
+      "read_scope": [
+        "explicitly supplied files, OZM package metadata, or temporary fixtures needed by this script"
+      ],
+      "write_scope": [],
+      "network": false,
+      "external_commands": [],
+      "stdout_data_class": "diagnostic_no_secret_json_or_text",
+      "env_allowlist": [
+        "PYTHONDONTWRITEBYTECODE"
+      ],
+      "secret_patterns_checked": [
+        "openai_api_key",
+        "generic_secret",
+        "private_key",
+        "bearer_token",
+        "password_assignment"
+      ],
+      "path_redaction": {
+        "operator_local_paths": "redact_or_mark_operator_local",
+        "secrets": "redact",
+        "stdout_paths": "relative_or_declared"
+      },
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "secret_redaction_required": true,
+      "requires_user_approval": false,
+      "disabled_by_default": false,
+      "capability": "local_only",
+      "sha256": "1da930b09065e690d3a159a5219df273e91e56c6042ff02f739ad45d2719cebc"
+    },
+    "ozm-reference-method-grounding/scripts/paper_claim_source_span_check.py": {
+      "allowed_effects": [
+        "read explicit OZM contract, eval, fixture, or package files and emit deterministic diagnostic findings"
+      ],
+      "read_scope": [
+        "explicitly supplied files, OZM package metadata, or temporary fixtures needed by this script"
+      ],
+      "write_scope": [],
+      "network": false,
+      "external_commands": [],
+      "stdout_data_class": "diagnostic_no_secret_json_or_text",
+      "env_allowlist": [
+        "PYTHONDONTWRITEBYTECODE"
+      ],
+      "secret_patterns_checked": [
+        "openai_api_key",
+        "generic_secret",
+        "private_key",
+        "bearer_token",
+        "password_assignment"
+      ],
+      "path_redaction": {
+        "operator_local_paths": "redact_or_mark_operator_local",
+        "secrets": "redact",
+        "stdout_paths": "relative_or_declared"
+      },
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "secret_redaction_required": true,
+      "requires_user_approval": false,
+      "disabled_by_default": false,
+      "capability": "local_only",
+      "sha256": "257f17af077282077b2d27d5352300a85a32e05c3a0b987cd343d54263341d23"
+    },
+    "ozone-manager/scripts/contract_schema_specificity_check.py": {
+      "allowed_effects": [
+        "read explicit OZM contract, eval, fixture, or package files and emit deterministic diagnostic findings"
+      ],
+      "read_scope": [
+        "explicitly supplied files, OZM package metadata, or temporary fixtures needed by this script"
+      ],
+      "write_scope": [],
+      "network": false,
+      "external_commands": [],
+      "stdout_data_class": "diagnostic_no_secret_json_or_text",
+      "env_allowlist": [
+        "PYTHONDONTWRITEBYTECODE"
+      ],
+      "secret_patterns_checked": [
+        "openai_api_key",
+        "generic_secret",
+        "private_key",
+        "bearer_token",
+        "password_assignment"
+      ],
+      "path_redaction": {
+        "operator_local_paths": "redact_or_mark_operator_local",
+        "secrets": "redact",
+        "stdout_paths": "relative_or_declared"
+      },
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "secret_redaction_required": true,
+      "requires_user_approval": false,
+      "disabled_by_default": false,
+      "capability": "local_only",
+      "sha256": "eaeafb8c7fc8a3c35f886e21bf38956840342c38942bca330a85d85ddf5308e1"
+    },
+    "ozone-manager/scripts/record_live_profile_evidence.py": {
+      "allowed_effects": [
+        "record current live runtime evidence into release-evidence-authority.json after a passing eval result"
+      ],
+      "read_scope": [
+        "explicitly supplied files, OZM package metadata, or temporary fixtures needed by this script"
+      ],
+      "write_scope": [
+        "ozone-manager/references/release-evidence-authority.json"
+      ],
+      "network": false,
+      "external_commands": [],
+      "stdout_data_class": "diagnostic_no_secret_json_or_text",
+      "env_allowlist": [
+        "PYTHONDONTWRITEBYTECODE"
+      ],
+      "secret_patterns_checked": [
+        "openai_api_key",
+        "generic_secret",
+        "private_key",
+        "bearer_token",
+        "password_assignment"
+      ],
+      "path_redaction": {
+        "operator_local_paths": "redact_or_mark_operator_local",
+        "secrets": "redact",
+        "stdout_paths": "relative_or_declared"
+      },
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "secret_redaction_required": true,
+      "requires_user_approval": false,
+      "disabled_by_default": false,
+      "capability": "local_only",
+      "sha256": "a2cbad9d0beb9f0d73ca10e5edc29f3ad1e73e56ddaafdc62f400aea8dbdd5b1"
+    },
+    "ozone-manager/scripts/test_fixtures/eval_partial_snapshot_check.py": {
+      "allowed_effects": [
+        "read explicit OZM contract, eval, fixture, or package files and emit deterministic diagnostic findings"
+      ],
+      "read_scope": [
+        "explicitly supplied files, OZM package metadata, or temporary fixtures needed by this script"
+      ],
+      "write_scope": [],
+      "network": false,
+      "external_commands": [],
+      "stdout_data_class": "diagnostic_no_secret_json_or_text",
+      "env_allowlist": [
+        "PYTHONDONTWRITEBYTECODE"
+      ],
+      "secret_patterns_checked": [
+        "openai_api_key",
+        "generic_secret",
+        "private_key",
+        "bearer_token",
+        "password_assignment"
+      ],
+      "path_redaction": {
+        "operator_local_paths": "redact_or_mark_operator_local",
+        "secrets": "redact",
+        "stdout_paths": "relative_or_declared"
+      },
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "secret_redaction_required": true,
+      "requires_user_approval": false,
+      "disabled_by_default": false,
+      "capability": "local_only",
+      "sha256": "c62634362cd14c0e237f1266da2942330b47a66f45bc6cf25d560344717d15d3"
+    },
+    "ozone-manager/scripts/test_fixtures/gh_network_authorization_denial_check.py": {
+      "allowed_effects": [
+        "read explicit OZM contract, eval, fixture, or package files and emit deterministic diagnostic findings"
+      ],
+      "read_scope": [
+        "explicitly supplied files, OZM package metadata, or temporary fixtures needed by this script"
+      ],
+      "write_scope": [],
+      "network": false,
+      "external_commands": [
+        "bash"
+      ],
+      "stdout_data_class": "diagnostic_no_secret_json_or_text",
+      "env_allowlist": [
+        "PYTHONDONTWRITEBYTECODE"
+      ],
+      "secret_patterns_checked": [
+        "openai_api_key",
+        "generic_secret",
+        "private_key",
+        "bearer_token",
+        "password_assignment"
+      ],
+      "path_redaction": {
+        "operator_local_paths": "redact_or_mark_operator_local",
+        "secrets": "redact",
+        "stdout_paths": "relative_or_declared"
+      },
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "secret_redaction_required": true,
+      "requires_user_approval": false,
+      "disabled_by_default": false,
+      "capability": "local_only",
+      "sha256": "8a34138ee74bf935041a9bdc0d573890f743d359186eb834c30b986ec410b3bf"
+    },
+    "ozone-manager/scripts/ozm_eval_live_snapshot.py": {
+      "allowed_effects": [
+        "read explicit OZM contract, eval, fixture, or package files and emit deterministic diagnostic findings"
+      ],
+      "read_scope": [
+        "explicitly supplied files, OZM package metadata, or temporary fixtures needed by this script"
+      ],
+      "write_scope": [],
+      "network": false,
+      "external_commands": [],
+      "stdout_data_class": "diagnostic_no_secret_json_or_text",
+      "env_allowlist": [
+        "PYTHONDONTWRITEBYTECODE"
+      ],
+      "secret_patterns_checked": [
+        "openai_api_key",
+        "generic_secret",
+        "private_key",
+        "bearer_token",
+        "password_assignment"
+      ],
+      "path_redaction": {
+        "operator_local_paths": "redact_or_mark_operator_local",
+        "secrets": "redact",
+        "stdout_paths": "relative_or_declared"
+      },
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "secret_redaction_required": true,
+      "requires_user_approval": false,
+      "disabled_by_default": false,
+      "capability": "local_only",
+      "sha256": "e75aa73cd3d29b2f3df30f573edf90e83ef0f8366fee8749fcba8abbead61ec4"
+    }
+  },
+  "bytecodePolicy": {
+    "cleanPackageNoBytecode": true,
+    "allPythonCommandsUseBFlag": true,
+    "postEvalNoBytecode": true
+  },
+  "activeEvalArtifacts": [
+    "ozone-manager/references/eval-last-run.json",
+    "ozone-manager/references/eval-outcome-smoke.json",
+    "ozone-manager/references/eval-run-manifest.json",
+    "ozone-manager/references/eval-heartbeat.json",
+    "ozone-manager/references/harness-variance-matrix.json"
+  ],
+  "historicalEvalArtifacts": [
+    "ozone-manager/references/archive/eval-outcome-smoke-legacy-20260529.json"
+  ],
+  "activeArtifactFreshnessCheck": true,
+  "releaseEvidenceAuthority": "ozone-manager/references/release-evidence-authority.json",
+  "routeReplayCorpus": "ozone-manager/references/route-replay-corpus.jsonl"
+}

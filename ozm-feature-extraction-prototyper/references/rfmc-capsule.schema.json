@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "ozm.rfmc_capsule.v1",
+  "type": "object",
+  "required": ["capsule_id", "source_work", "verified_behavior", "extraction_boundary", "consumer", "reuse_contract", "claim_ceiling"],
+  "properties": {
+    "capsule_id": {"type": "string", "minLength": 1},
+    "source_work": {"type": "string", "minLength": 1},
+    "verified_behavior": {"type": "array", "items": {"type": "string"}, "minItems": 1},
+    "extraction_boundary": {"type": "string", "minLength": 1},
+    "consumer": {"type": "string", "minLength": 1},
+    "reuse_contract": {"type": "string", "minLength": 1},
+    "excluded_project_specifics": {"type": "array", "items": {"type": "string"}},
+    "proof_refs": {"type": "array", "items": {"type": "string"}},
+    "claim_ceiling": {"type": "string", "minLength": 1}
+  },
+  "additionalProperties": true
+}

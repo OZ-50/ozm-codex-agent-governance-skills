@@ -1,0 +1,36 @@
+{
+  "schema": "ozm.activation_effect.v1",
+  "skill": "ozm-capability-evolution-governance",
+  "ownerQuestions": [
+    "Is this proposed capability/skill/agent evolution safe, benchmark-backed, reversible, and promotable under OZM?"
+  ],
+  "blocksActionWhen": [
+    "evolution candidate lacks baseline, target behavior, eval, rollback, or promotion owner",
+    "LLM API is treated as execution authority rather than optional evaluator/generator evidence",
+    "self-modification, remote hub, package install, git reset, or background loop is assumed without explicit carrier approval"
+  ],
+  "requiredArtifacts": [
+    "evolution_candidate_record",
+    "evolution_eval_report",
+    "promotion_decision_receipt",
+    "rollback_receipt"
+  ],
+  "downstreamBinding": [
+    "ozm-skill-hardening.candidate_change",
+    "ozm-recurring-failure-governance.failure_family",
+    "ozm-review-diffgate-acceptance.evolution_eval",
+    "ozm-record-surface-management.experience_record",
+    "ozm-claim-ceiling.evolution_claim"
+  ],
+  "proofOrScript": [
+    "scripts/evolution_candidate_check.py"
+  ],
+  "claimEffects": [
+    "keeps evo claims at candidate until baseline, heldout/regression eval, review, rollback, and promotion receipt pass"
+  ],
+  "nonSurfaceFailureCodes": [
+    "ozm-capability-evolution-governance_loaded_without_required_activation_effect",
+    "llm_api_output_treated_as_execution_authority",
+    "single_trace_promoted_as_evolution"
+  ]
+}

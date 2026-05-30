@@ -1,0 +1,4 @@
+interface:
+  display_name: "OZM Text I/O Integrity"
+  short_description: "Guards OZM text writes against encoding, newline, BOM, and oversized payload corruption."
+  default_prompt: "Use $ozm-text-io-integrity to inspect text conventions, choose a safe write method, run preflight or chunked write scripts, and record the claim ceiling for encoding or newline risk."

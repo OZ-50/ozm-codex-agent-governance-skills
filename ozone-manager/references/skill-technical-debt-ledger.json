@@ -1,0 +1,139 @@
+{
+  "schemaVersion": "1.0.0",
+  "purpose": "OZM skill-library technical-debt ledger for SkillOps-style maintenance.",
+  "entries": [
+    {
+      "debt_id": "ozm-td-graph-package-scope",
+      "type": "graph_scope_mismatch",
+      "affected_skills": [
+        "ozone-manager"
+      ],
+      "severity": "B0",
+      "evidence": "Default packaged graph must match OZM-only package mode and use portable paths.",
+      "fix_packet": "2026-05-28 portable-package-integrity",
+      "regression_case": "regression_ozm_only_package_uses_ozm_only_graph",
+      "status": "fixed"
+    },
+    {
+      "debt_id": "ozm-td-activation-effect-contracts",
+      "type": "missing_effect_contract",
+      "affected_skills": [
+        "ozone-manager",
+        "ozm-*"
+      ],
+      "severity": "H1",
+      "evidence": "Activation must produce downstream artifact, blocker, proof posture, or claim effect.",
+      "fix_packet": "2026-05-28 activation-effect-contract-rollout",
+      "regression_case": "regression_all_children_have_activation_effect_contract",
+      "status": "fixed"
+    },
+    {
+      "debt_id": "ozm-td-overlong-core-skills",
+      "type": "overlong_skill",
+      "affected_skills": [
+        "ozone-manager",
+        "ozm-requirement-load",
+        "ozm-review-diffgate-acceptance",
+        "ozm-record-surface-management",
+        "ozm-dispatch-freeze",
+        "ozm-closeout-handoff",
+        "ozm-role-stack-coordination",
+        "ozm-skill-hardening"
+      ],
+      "severity": "H1",
+      "evidence": "Core skill surfaces were reduced below the active progressive-disclosure warning thresholds by exact-section extraction into references; T0 stops and activation gates remain in SKILL.md.",
+      "fix_packet": "2026-05-28 semantic-preserving-reference-extraction",
+      "regression_case": "pre-skill-hardening_progressive_disclosure_budget",
+      "status": "fixed"
+    },
+    {
+      "debt_id": "ozm-td-outcome-executable-benchmarks",
+      "type": "outcome_eval_depth",
+      "affected_skills": [
+        "ozone-manager",
+        "ozm-skill-hardening"
+      ],
+      "severity": "H1",
+      "evidence": "Outcome evals now include fixture-backed script executions for claim/evidence, reference gaps, method anchors, session hydration, text preflight, and route shadowing in addition to benchmark contracts.",
+      "fix_packet": "2026-05-28 executable-outcome-eval-upgrade",
+      "regression_case": "outcome_activation_receipt_without_skill_load_fails",
+      "status": "fixed"
+    },
+    {
+      "debt_id": "ozm-td-manifest-script-integrity",
+      "type": "manifest_integrity",
+      "affected_skills": [
+        "ozone-manager"
+      ],
+      "severity": "P0",
+      "evidence": "Manifest script keys are package-root relative, all active scripts are declared, hashes are checked, and per-script read/write/network/external command metadata exists.",
+      "fix_packet": "2026-05-28 manifest-integrity-upgrade",
+      "regression_case": "package_scope_check",
+      "status": "fixed"
+    },
+    {
+      "debt_id": "ozm-td-eval-output-and-ledger",
+      "type": "eval_output_ledger_integrity",
+      "affected_skills": [
+        "ozone-manager"
+      ],
+      "severity": "P0",
+      "evidence": "Eval all-suite writes full JSON to eval-last-run.json and stdout summary; ozm_build_package.py generates PACKAGE-LEDGER from real command outputs.",
+      "fix_packet": "2026-05-28 generated-package-ledger",
+      "regression_case": "ozm_eval_suite_all_summary_output",
+      "status": "fixed"
+    },
+    {
+      "debt_id": "ozm-td-owner-specific-activation-contracts",
+      "type": "activation_effect_specificity",
+      "affected_skills": [
+        "ozone-manager",
+        "ozm-*"
+      ],
+      "severity": "P1",
+      "evidence": "Active OZM skills now carry owner-specific artifacts, blockers, downstream fields, proof/script posture, and claim effects instead of only generic matrix/ledger wording.",
+      "fix_packet": "2026-05-28 owner-specific-activation-contracts",
+      "regression_case": "behavior_child_contracts_present",
+      "status": "fixed"
+    },
+    {
+      "debt_id": "ozm-td-eval-harness-cross-platform-timeout",
+      "type": "harness_runtime_portability",
+      "affected_skills": [
+        "ozone-manager",
+        "ozm-skill-hardening"
+      ],
+      "severity": "P0",
+      "evidence": "Audit observed Linux/Python full process-group eval projected above suite timeout and benchmark no-spawn fixture failed when startup probe consumed suite budget. Fixed by excluding startup probe from suite timeout, adding safe in-process grouping, and adding platform matrix/live fixtures.",
+      "fix_packet": "2026-05-29 final-audit-implemented-v2-deep-reaudit",
+      "regression_case": "eval_benchmark_contract_no_spawn_slow_startup",
+      "status": "fixed"
+    },
+    {
+      "debt_id": "ozm-td-plain-import-bytecode-dirty-tree",
+      "type": "release_tree_side_effect",
+      "affected_skills": [
+        "ozone-manager"
+      ],
+      "severity": "P0",
+      "evidence": "Audit proved plain Python imports can create __pycache__ under package tree. Fixed with ozm_py.py, ozm_clean_package --check-only --forbid-bytecode, and a dirty-tree regression fixture that demonstrates detect-and-clean behavior.",
+      "fix_packet": "2026-05-29 final-audit-implemented-v2-deep-reaudit",
+      "regression_case": "plain_import_creates_bytecode_then_guard_fails_and_clean_fixes",
+      "status": "fixed"
+    },
+    {
+      "debt_id": "ozm-td-release-scorecard-stale-evidence",
+      "type": "stale_evidence_trust",
+      "affected_skills": [
+        "ozone-manager",
+        "ozm-review-diffgate-acceptance",
+        "ozm-truth-boundary-management"
+      ],
+      "severity": "P0",
+      "evidence": "Audit found release_scorecard could pass from packaged artifacts while direct live fixtures failed. Fixed by adding release_scorecard --mode evidence/live/strict, critical fixture allowlist, runtime mismatch warnings, and strict scenario bundle evidence.",
+      "fix_packet": "2026-05-29 final-audit-implemented-v2-deep-reaudit",
+      "regression_case": "release_scorecard_live_mode_runs_critical_fixtures",
+      "status": "fixed"
+    }
+  ]
+}

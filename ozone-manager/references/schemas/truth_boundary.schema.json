@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "ozm.truth_boundary.v1",
+  "type": "object",
+  "required": ["surface_id", "surface_path", "authority_class", "mutation_authority", "reviewer", "claim_effect"],
+  "properties": {
+    "surface_id": {"type": "string"},
+    "surface_path": {"type": "string"},
+    "authority_class": {
+      "enum": ["controller_truth", "execution_record", "candidate_controller_delta", "derived_navigation", "historical_only", "projection"]
+    },
+    "mutation_authority": {"type": "string"},
+    "reviewer": {"type": "string"},
+    "freshness_rule": {"type": "string"},
+    "claim_effect": {"type": "string"},
+    "evidence_chain_id": {"type": "string"},
+    "truth_owner_map": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["claim_id", "authority_source", "source_ref"],
+        "properties": {
+          "claim_id": {"type": "string"},
+          "authority_source": {"type": "string"},
+          "source_ref": {"type": "string"},
+          "claim_ceiling_if_missing": {"type": "string"}
+        },
+        "additionalProperties": true
+      }
+    }
+  }
+}

@@ -1,0 +1,4 @@
+interface:
+  display_name: "OZM Context Engineering"
+  short_description: "Govern compression, context drift, large-output routing, and file-backed memory for OZM loops."
+  default_prompt: "Use $ozm-context-engineering to classify context pressure, preserve critical facts, run context helper scripts, and keep summaries/navigation below owner truth."

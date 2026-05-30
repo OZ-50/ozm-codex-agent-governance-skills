@@ -1,0 +1,4 @@
+interface:
+  display_name: "OZM UX UI Expert Suite"
+  short_description: "OZM-managed UX/UI design and visual review gates"
+  default_prompt: "Use $ozm-ux-ui-expert-suite to run OZM-managed UX/UI design, iteration, and visual implementation review gates."

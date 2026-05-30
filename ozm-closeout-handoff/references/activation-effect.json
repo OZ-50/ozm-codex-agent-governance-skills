@@ -1,0 +1,29 @@
+{
+  "schema": "ozm.activation_effect.v1",
+  "skill": "ozm-closeout-handoff",
+  "ownerQuestions": [
+    "Use when an OZM-governed phase, lane, milestone, release, or user-requested reference retrospective needs controlled closeout, handoff, truth alignment, full-gate trigger reconciliation, inherited-vs-fresh labeling, and unresolved debt carry-forward."
+  ],
+  "blocksActionWhen": [
+    "fresh proof and inherited evidence are not separated",
+    "post-review control edits are not rereviewed"
+  ],
+  "requiredArtifacts": [
+    "closeout_receipt",
+    "active_surface_sweep",
+    "handoff_packet"
+  ],
+  "downstreamBinding": [
+    "future_thread.reentry_packet",
+    "ozm-claim-ceiling.closeout_ceiling"
+  ],
+  "proofOrScript": [
+    "ozm_guard.py pre-closeout when applicable"
+  ],
+  "claimEffects": [
+    "can close only as accepted, verified, record_sync_only, or deferred with explicit proof basis"
+  ],
+  "nonSurfaceFailureCodes": [
+    "ozm-closeout-handoff_loaded_without_required_activation_effect"
+  ]
+}

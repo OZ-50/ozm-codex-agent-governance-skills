@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "ozm.external_command_posture.v1",
+  "type": "object",
+  "required": ["command_id", "external_command", "network", "credential_surface", "writes_global_state", "approval_mode", "claim_effect_when_unrun"],
+  "properties": {
+    "command_id": {"type": "string"},
+    "external_command": {"type": "string"},
+    "network": {"type": "string"},
+    "credential_surface": {"type": "string"},
+    "writes_global_state": {"type": "boolean"},
+    "approval_mode": {"type": "string"},
+    "claim_effect_when_unrun": {"type": "string"}
+  },
+  "additionalProperties": true
+}

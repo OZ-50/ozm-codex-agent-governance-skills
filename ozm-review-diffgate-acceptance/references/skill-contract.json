@@ -1,0 +1,129 @@
+{
+  "schema": "ozm.skill_contract.v3.1",
+  "skill": "ozm-review-diffgate-acceptance",
+  "activationTriggers": {
+    "ownerStrongPhrases": [
+      "review diffgate",
+      "acceptance gate",
+      "验收审计",
+      "diff gate"
+    ],
+    "ownerWeakKeywords": [],
+    "companionStrongPhrases": [
+      "skill激活",
+      "skill 的激活",
+      "skill的激活",
+      "技能激活",
+      "非表层作用",
+      "表层激活",
+      "document drafting",
+      "draft research gate",
+      "claim evidence argument matrix",
+      "draft issue registry",
+      "text artifact",
+      "governed text"
+    ],
+    "companionWeakKeywords": [
+      "git-history-analyzer",
+      "git history analyzer",
+      "git history archaeology",
+      "git blame",
+      "multi-agent-patterns",
+      "multi agent patterns",
+      "multi-agent pattern",
+      "supervisor swarm hierarchy",
+      "ce:plan",
+      "ce-plan",
+      "ce:brainstorm",
+      "ce-brainstorm"
+    ],
+    "negativeTriggers": [
+      "metadata-only mention",
+      "route output without SKILL.md hydration",
+      "pre-compaction receipt reused after compaction"
+    ]
+  },
+  "ownerQuestions": [
+    "Use when OZM-governed work needs review, diff-gate checking, gate-tier validation, verification-backed acceptance, audit receipt review, and strict separation between candidate evidence and controller-owned truth."
+  ],
+  "preconditions": [
+    "ozm-review-diffgate-acceptance selected by ozone-manager for a matching OZM-governed request",
+    "latest visible request role and authority class are classified",
+    "owner surfaces or explicit absence are recorded"
+  ],
+  "blockingConditions": [
+    "local pass is claimed as acceptance",
+    "stale PASS predates final control-surface mutation"
+  ],
+  "requiredArtifacts": [
+    {
+      "id": "diffgate_verdict",
+      "schema": "ozone-manager/references/schemas/review_diffgate_verdict.schema.json",
+      "requiredWhen": "ozm-review-diffgate-acceptance is activated and diffgate_verdict governs the next downstream claim or action",
+      "claimCeilingIfMissing": "artifact_missing_or_candidate_only"
+    },
+    {
+      "id": "reviewability_health",
+      "schema": "ozone-manager/references/schemas/reviewability_health.schema.json",
+      "requiredWhen": "ozm-review-diffgate-acceptance is activated and reviewability_health governs the next downstream claim or action",
+      "claimCeilingIfMissing": "artifact_missing_or_candidate_only"
+    },
+    {
+      "id": "acceptance_evidence_matrix",
+      "schema": "ozone-manager/references/schemas/acceptance_receipt.schema.json",
+      "requiredWhen": "ozm-review-diffgate-acceptance is activated and acceptance_evidence_matrix governs the next downstream claim or action",
+      "claimCeilingIfMissing": "artifact_missing_or_candidate_only"
+    }
+  ],
+  "validators": [
+    {
+      "script": "ozm-review-diffgate-acceptance/scripts/review_diffgate_verdict_check.py",
+      "appliesTo": [
+        "diffgate_verdict",
+        "reviewability_health",
+        "acceptance_evidence_matrix"
+      ],
+      "mustPassBefore": [
+        "positive_claim",
+        "closeout"
+      ]
+    }
+  ],
+  "downstreamBindings": [
+    {
+      "consumer": "ozm-closeout-handoff",
+      "field": "review_verdict",
+      "required": true
+    },
+    {
+      "consumer": "ozm-claim-ceiling",
+      "field": "acceptance_ceiling",
+      "required": true
+    }
+  ],
+  "claimTransitions": [
+    {
+      "from": "planned",
+      "to": "artifact_present",
+      "requires": [
+        "diffgate_verdict",
+        "reviewability_health",
+        "acceptance_evidence_matrix"
+      ],
+      "validator": "ozm-review-diffgate-acceptance/scripts/review_diffgate_verdict_check.py"
+    },
+    {
+      "from": "artifact_present",
+      "to": "reviewed",
+      "requires": [
+        "review_verdict",
+        "acceptance_ceiling"
+      ],
+      "validator": "ozm-review-diffgate-acceptance/scripts/review_diffgate_verdict_check.py"
+    }
+  ],
+  "nonSurfaceFailures": [
+    "ozm-review-diffgate-acceptance_loaded_without_required_activation_effect"
+  ],
+  "paperEvidenceClass": "contractual_control_surface"
+}

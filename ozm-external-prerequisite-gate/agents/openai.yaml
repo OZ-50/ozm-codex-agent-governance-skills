@@ -1,0 +1,4 @@
+interface:
+  display_name: "OZM External Prerequisite Gate"
+  short_description: "Gate OZM prerequisites, environments, and carriers"
+  default_prompt: "Use $ozm-external-prerequisite-gate when OZM work depends on secrets, providers, live environments, project wrappers, browser servers, Python/Node/Cargo paths, runtime carriers, or other external prerequisites."

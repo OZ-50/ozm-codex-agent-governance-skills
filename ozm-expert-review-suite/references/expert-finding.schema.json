@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "ozm.expert_finding.v1",
+  "type": "object",
+  "required": ["finding_id", "lens", "claim", "artifact_ref", "evidence", "severity", "fix_required", "verdict"],
+  "properties": {
+    "finding_id": {"type": "string"},
+    "lens": {"type": "string"},
+    "claim": {"type": "string"},
+    "artifact_ref": {"type": "string"},
+    "evidence": {"type": "string"},
+    "severity": {"enum": ["P0", "P1", "P2", "P3"]},
+    "fix_required": {"type": "boolean"},
+    "verdict": {"enum": ["pass", "partial", "fail", "question_only"]}
+  },
+  "additionalProperties": true
+}

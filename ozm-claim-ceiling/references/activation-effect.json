@@ -1,0 +1,29 @@
+{
+  "schema": "ozm.activation_effect.v1",
+  "skill": "ozm-claim-ceiling",
+  "ownerQuestions": [
+    "Use whenever OZM-governed work is about to make a positive claim and the exact ceiling must be stated honestly as planned, dispatch-frozen, artifact-present, pending-controller-gate, historical-only, verified, or accepted."
+  ],
+  "blocksActionWhen": [
+    "positive wording lacks current ceiling",
+    "fresh proof cannot support requested completion wording"
+  ],
+  "requiredArtifacts": [
+    "claim_candidate",
+    "evidence_basis",
+    "ceiling_decision"
+  ],
+  "downstreamBinding": [
+    "final_response.claim_ceiling",
+    "ozm-closeout-handoff.remaining_non_claims"
+  ],
+  "proofOrScript": [
+    "manual evidence-to-claim comparison; no dedicated script"
+  ],
+  "claimEffects": [
+    "owns downward or upward ceiling transitions only within proven scope"
+  ],
+  "nonSurfaceFailureCodes": [
+    "ozm-claim-ceiling_loaded_without_required_activation_effect"
+  ]
+}

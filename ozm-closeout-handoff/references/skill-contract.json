@@ -1,0 +1,130 @@
+{
+  "schema": "ozm.skill_contract.v3.1",
+  "skill": "ozm-closeout-handoff",
+  "activationTriggers": {
+    "ownerStrongPhrases": [
+      "closeout",
+      "handoff",
+      "阶段收尾",
+      "交接"
+    ],
+    "ownerWeakKeywords": [],
+    "companionStrongPhrases": [
+      "skill激活",
+      "skill 的激活",
+      "skill的激活",
+      "技能激活",
+      "非表层作用",
+      "表层激活",
+      "document drafting",
+      "draft research gate",
+      "claim evidence argument matrix",
+      "draft issue registry",
+      "text artifact",
+      "governed text"
+    ],
+    "companionWeakKeywords": [
+      "todo-create",
+      "todo-triage",
+      "todo-resolve",
+      "durable todo",
+      "ce:plan",
+      "ce-plan",
+      "ce:brainstorm",
+      "ce-brainstorm",
+      "external prerequisite controller update",
+      "external-prerequisite controller update",
+      "external prerequisite control surface",
+      "external-prerequisite control surface"
+    ],
+    "negativeTriggers": [
+      "metadata-only mention",
+      "route output without SKILL.md hydration",
+      "pre-compaction receipt reused after compaction"
+    ]
+  },
+  "ownerQuestions": [
+    "Use when an OZM-governed phase, lane, milestone, release, or user-requested reference retrospective needs controlled closeout, handoff, truth alignment, full-gate trigger reconciliation, inherited-vs-fresh labeling, and unresolved debt carry-forward."
+  ],
+  "preconditions": [
+    "ozm-closeout-handoff selected by ozone-manager for a matching OZM-governed request",
+    "latest visible request role and authority class are classified",
+    "owner surfaces or explicit absence are recorded"
+  ],
+  "blockingConditions": [
+    "fresh proof and inherited evidence are not separated",
+    "post-review control edits are not rereviewed"
+  ],
+  "requiredArtifacts": [
+    {
+      "id": "closeout_receipt",
+      "schema": "references/closeout-receipt.schema.json",
+      "requiredWhen": "ozm-closeout-handoff is activated and closeout_receipt governs the next downstream claim or action",
+      "claimCeilingIfMissing": "artifact_missing_or_candidate_only"
+    },
+    {
+      "id": "active_surface_sweep",
+      "schema": "ozone-manager/references/schemas/active_surface_sweep.schema.json",
+      "requiredWhen": "ozm-closeout-handoff is activated and active_surface_sweep governs the next downstream claim or action",
+      "claimCeilingIfMissing": "artifact_missing_or_candidate_only"
+    },
+    {
+      "id": "handoff_packet",
+      "schema": "ozone-manager/references/schemas/closeout_handoff_packet.schema.json",
+      "requiredWhen": "ozm-closeout-handoff is activated and handoff_packet governs the next downstream claim or action",
+      "claimCeilingIfMissing": "artifact_missing_or_candidate_only"
+    }
+  ],
+  "validators": [
+    {
+      "script": "ozm-closeout-handoff/scripts/closeout_receipt_check.py",
+      "appliesTo": [
+        "closeout_receipt",
+        "handoff_packet",
+        "resume_packet",
+        "active_surface_sweep"
+      ],
+      "mustPassBefore": [
+        "positive_claim",
+        "closeout"
+      ]
+    }
+  ],
+  "downstreamBindings": [
+    {
+      "consumer": "ozm-record-surface-management",
+      "field": "future_thread.reentry_packet",
+      "required": true
+    },
+    {
+      "consumer": "ozm-claim-ceiling",
+      "field": "closeout_ceiling",
+      "required": true
+    }
+  ],
+  "claimTransitions": [
+    {
+      "from": "planned",
+      "to": "artifact_present",
+      "requires": [
+        "closeout_receipt",
+        "active_surface_sweep",
+        "handoff_packet"
+      ],
+      "validator": "ozm-closeout-handoff/scripts/closeout_receipt_check.py"
+    },
+    {
+      "from": "artifact_present",
+      "to": "reviewed",
+      "requires": [
+        "reentry_packet",
+        "closeout_ceiling"
+      ],
+      "validator": "ozm-closeout-handoff/scripts/closeout_receipt_check.py"
+    }
+  ],
+  "nonSurfaceFailures": [
+    "ozm-closeout-handoff_loaded_without_required_activation_effect"
+  ],
+  "paperEvidenceClass": "contractual_control_surface"
+}

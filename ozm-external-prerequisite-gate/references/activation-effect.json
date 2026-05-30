@@ -1,0 +1,29 @@
+{
+  "schema": "ozm.activation_effect.v1",
+  "skill": "ozm-external-prerequisite-gate",
+  "ownerQuestions": [
+    "Use when an OZM-governed work packet depends on secrets, providers, browsers, deployments, project environment entrypoints, orchestrators, local runtimes, or remote services and must not be admitted until the prerequisite contract and reachability posture are proven."
+  ],
+  "blocksActionWhen": [
+    "live claim depends on unknown secret/provider/account/network state",
+    "fallback/simulation is treated as real environment proof"
+  ],
+  "requiredArtifacts": [
+    "prerequisite_state_table",
+    "fallback_boundary",
+    "external_write_policy"
+  ],
+  "downstreamBinding": [
+    "ozm-dispatch-freeze.prerequisite_status",
+    "ozm-claim-ceiling.live_claim_ceiling"
+  ],
+  "proofOrScript": [
+    "manual prerequisite probe receipt; no dedicated script"
+  ],
+  "claimEffects": [
+    "downgrades live/deployed/provider claims to diagnostic, simulated, or blocked when prerequisites are absent"
+  ],
+  "nonSurfaceFailureCodes": [
+    "ozm-external-prerequisite-gate_loaded_without_required_activation_effect"
+  ]
+}

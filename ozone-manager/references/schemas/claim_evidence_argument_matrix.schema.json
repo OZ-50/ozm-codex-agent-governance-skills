@@ -1,0 +1,69 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "ozm.claim_evidence_argument_matrix.schema.json",
+  "title": "OZM claim_evidence_argument_matrix artifact schema",
+  "type": "object",
+  "required": [
+    "artifact_id",
+    "skill",
+    "claim_ceiling",
+    "evidence_refs",
+    "constraint_ids",
+    "claims",
+    "source_refs",
+    "reasoning_bridges"
+  ],
+  "properties": {
+    "artifact_id": {
+      "type": "string",
+      "const": "claim_evidence_argument_matrix"
+    },
+    "skill": {
+      "type": "string",
+      "const": "ozm-document-drafting"
+    },
+    "claim_ceiling": {
+      "type": "string"
+    },
+    "evidence_refs": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "constraint_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "claims": {
+      "type": [
+        "string",
+        "array",
+        "object",
+        "boolean",
+        "number"
+      ]
+    },
+    "source_refs": {
+      "type": [
+        "string",
+        "array",
+        "object",
+        "boolean",
+        "number"
+      ]
+    },
+    "reasoning_bridges": {
+      "type": [
+        "string",
+        "array",
+        "object",
+        "boolean",
+        "number"
+      ]
+    }
+  },
+  "additionalProperties": true
+}

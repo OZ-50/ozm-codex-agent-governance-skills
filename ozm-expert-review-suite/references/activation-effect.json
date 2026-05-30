@@ -1,0 +1,29 @@
+{
+  "schema": "ozm.activation_effect.v1",
+  "skill": "ozm-expert-review-suite",
+  "ownerQuestions": [
+    "Use for OZM-managed expert review gates after governance is frozen, without loading archived standalone reviewer skills."
+  ],
+  "blocksActionWhen": [
+    "persona label appears without evidence-backed finding",
+    "required lens is unavailable and not downgraded"
+  ],
+  "requiredArtifacts": [
+    "expert_lens_registry",
+    "expert_finding_list",
+    "review_verdict_receipt"
+  ],
+  "downstreamBinding": [
+    "ozm-review-diffgate-acceptance.expert_findings",
+    "ozm-claim-ceiling.review_claim_effect"
+  ],
+  "proofOrScript": [
+    "PR review helper scripts when GitHub context exists"
+  ],
+  "claimEffects": [
+    "supports review evidence only after finding ids, evidence refs, and verdicts are present"
+  ],
+  "nonSurfaceFailureCodes": [
+    "ozm-expert-review-suite_loaded_without_required_activation_effect"
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "ozm.instruction_precedence_map.v1",
+  "type": "object",
+  "required": ["map_id", "surfaces", "precedence_order", "conflicts", "risk_diff", "claim_ceiling"],
+  "properties": {
+    "map_id": {"type": "string", "minLength": 1},
+    "surfaces": {"type": "array", "items": {"type": "object", "required": ["path", "authority"], "properties": {"path": {"type": "string"}, "authority": {"enum": ["system", "developer", "user", "global", "repo", "subdir", "task", "skill", "unknown"]}}, "additionalProperties": true}},
+    "precedence_order": {"type": "array", "items": {"type": "string"}, "minItems": 1},
+    "conflicts": {"type": "array", "items": {"type": "object", "required": ["conflict", "owner"], "properties": {"conflict": {"type": "string"}, "owner": {"type": "string"}}, "additionalProperties": true}},
+    "risk_diff": {"type": "array", "items": {"type": "string"}},
+    "rollback_plan": {"type": "string"},
+    "claim_ceiling": {"type": "string"}
+  },
+  "additionalProperties": true
+}

@@ -1,0 +1,29 @@
+{
+  "schema": "ozm.activation_effect.v1",
+  "skill": "ozm-ux-ui-expert-suite",
+  "ownerQuestions": [
+    "Use for OZM-managed UX/UI design, iteration, and visual implementation review gates."
+  ],
+  "blocksActionWhen": [
+    "UI claim lacks screenshot/DOM/interaction evidence",
+    "design specialist result is not consumed by OZM review"
+  ],
+  "requiredArtifacts": [
+    "design_direction_receipt",
+    "visual_evidence_pack",
+    "accessibility_or_interaction_verdict"
+  ],
+  "downstreamBinding": [
+    "ozm-review-diffgate-acceptance.visual_parity_verdict",
+    "ozm-claim-ceiling.visual_claim_ceiling"
+  ],
+  "proofOrScript": [
+    "visual/browser evidence receipt; optional backend data when present"
+  ],
+  "claimEffects": [
+    "separates design_direction, implemented_surface, visual_reviewed, and accepted_visual claims"
+  ],
+  "nonSurfaceFailureCodes": [
+    "ozm-ux-ui-expert-suite_loaded_without_required_activation_effect"
+  ]
+}

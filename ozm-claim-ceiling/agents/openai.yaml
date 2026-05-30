@@ -1,0 +1,4 @@
+interface:
+  display_name: "OZM Claim Ceiling"
+  short_description: "Set honest ceilings for OZM claims and closeouts"
+  default_prompt: "Use $ozm-claim-ceiling before positive OZM claims, final review or audit-result consumption, pre-closeout guard-result summaries, progress reports, commit summaries, and closeout notes to state the exact ceiling, including plan-only, dispatch-frozen, local proof, paper/reference anchor missing, support-only reference progress, pending controller gate, verified, accepted, or blocked wording."

@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "ozm.method_adoption_contract.v1",
+  "type": "object",
+  "required": ["contract_id", "source_classification", "method_atoms", "adoption_decisions", "anti_transplant_constraints", "claim_effect"],
+  "properties": {
+    "contract_id": {"type": "string", "minLength": 1},
+    "source_classification": {"enum": ["authoritative_requirement", "implementation_donor", "method_donor", "benchmark", "design_inspiration", "historical_sibling", "background_only"]},
+    "method_atoms": {"type": "array", "items": {"type": "string"}, "minItems": 1},
+    "adoption_decisions": {"type": "array", "items": {"type": "object", "required": ["atom_id", "decision", "proof_target"], "properties": {"atom_id": {"type": "string"}, "decision": {"enum": ["adopt", "adapt", "reject", "defer", "background"]}, "proof_target": {"type": "string"}}, "additionalProperties": true}},
+    "anti_transplant_constraints": {"type": "array", "items": {"type": "string"}},
+    "claim_effect": {"type": "string"}
+  },
+  "additionalProperties": true
+}

@@ -1,0 +1,59 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "ozm.external_write_policy.schema.json",
+  "title": "OZM external_write_policy artifact schema",
+  "type": "object",
+  "required": [
+    "artifact_id",
+    "skill",
+    "claim_ceiling",
+    "evidence_refs",
+    "constraint_ids",
+    "allowed_external_writes",
+    "approval_required"
+  ],
+  "properties": {
+    "artifact_id": {
+      "type": "string",
+      "const": "external_write_policy"
+    },
+    "skill": {
+      "type": "string",
+      "const": "ozm-external-prerequisite-gate"
+    },
+    "claim_ceiling": {
+      "type": "string"
+    },
+    "evidence_refs": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "constraint_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "allowed_external_writes": {
+      "type": [
+        "string",
+        "array",
+        "object",
+        "boolean",
+        "number"
+      ]
+    },
+    "approval_required": {
+      "type": [
+        "string",
+        "array",
+        "object",
+        "boolean",
+        "number"
+      ]
+    }
+  },
+  "additionalProperties": true
+}

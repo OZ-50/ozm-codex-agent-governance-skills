@@ -1,0 +1,125 @@
+{
+  "schema": "ozm.skill_contract.v3.1",
+  "skill": "ozm-claim-ceiling",
+  "activationTriggers": {
+    "ownerStrongPhrases": [],
+    "ownerWeakKeywords": [
+      "plan-only",
+      "plan only",
+      "planning only",
+      "read-only plan"
+    ],
+    "companionStrongPhrases": [
+      "skill激活",
+      "skill 的激活",
+      "skill的激活",
+      "技能激活",
+      "非表层作用",
+      "表层激活",
+      "new project setup",
+      "project bootstrap",
+      "新项目初始化",
+      "TruthDocs",
+      "task loop",
+      "goal loop"
+    ],
+    "companionWeakKeywords": [
+      "git-history-analyzer",
+      "git history analyzer",
+      "git history archaeology",
+      "git blame",
+      "multi-agent-patterns",
+      "multi agent patterns",
+      "multi-agent pattern",
+      "supervisor swarm hierarchy"
+    ],
+    "negativeTriggers": [
+      "metadata-only mention",
+      "route output without SKILL.md hydration",
+      "pre-compaction receipt reused after compaction"
+    ]
+  },
+  "ownerQuestions": [
+    "Use whenever OZM-governed work is about to make a positive claim and the exact ceiling must be stated honestly as planned, dispatch-frozen, artifact-present, pending-controller-gate, historical-only, verified, or accepted."
+  ],
+  "preconditions": [
+    "ozm-claim-ceiling selected by ozone-manager for a matching OZM-governed request",
+    "latest visible request role and authority class are classified",
+    "owner surfaces or explicit absence are recorded"
+  ],
+  "blockingConditions": [
+    "positive wording lacks current ceiling",
+    "fresh proof cannot support requested completion wording"
+  ],
+  "requiredArtifacts": [
+    {
+      "id": "claim_candidate",
+      "schema": "ozone-manager/references/schemas/claim_candidate.schema.json",
+      "requiredWhen": "ozm-claim-ceiling is activated and claim_candidate governs the next downstream claim or action",
+      "claimCeilingIfMissing": "artifact_missing_or_candidate_only"
+    },
+    {
+      "id": "evidence_basis",
+      "schema": "ozone-manager/references/schemas/evidence_basis.schema.json",
+      "requiredWhen": "ozm-claim-ceiling is activated and evidence_basis governs the next downstream claim or action",
+      "claimCeilingIfMissing": "artifact_missing_or_candidate_only"
+    },
+    {
+      "id": "ceiling_decision",
+      "schema": "ozone-manager/references/schemas/claim_ceiling_decision.schema.json",
+      "requiredWhen": "ozm-claim-ceiling is activated and ceiling_decision governs the next downstream claim or action",
+      "claimCeilingIfMissing": "artifact_missing_or_candidate_only"
+    }
+  ],
+  "validators": [
+    {
+      "script": "ozm-claim-ceiling/scripts/claim_ceiling_phrase_linter.py",
+      "appliesTo": [
+        "claim_candidate",
+        "evidence_basis",
+        "ceiling_decision"
+      ],
+      "mustPassBefore": [
+        "positive_claim",
+        "closeout"
+      ]
+    }
+  ],
+  "downstreamBindings": [
+    {
+      "consumer": "ozone-manager",
+      "field": "final_response.claim_ceiling",
+      "required": true
+    },
+    {
+      "consumer": "ozm-closeout-handoff",
+      "field": "remaining_non_claims",
+      "required": true
+    }
+  ],
+  "claimTransitions": [
+    {
+      "from": "planned",
+      "to": "artifact_present",
+      "requires": [
+        "claim_candidate",
+        "evidence_basis",
+        "ceiling_decision"
+      ],
+      "validator": "ozm-claim-ceiling/scripts/claim_ceiling_phrase_linter.py"
+    },
+    {
+      "from": "artifact_present",
+      "to": "reviewed",
+      "requires": [
+        "claim_ceiling",
+        "remaining_non_claims"
+      ],
+      "validator": "ozm-claim-ceiling/scripts/claim_ceiling_phrase_linter.py"
+    }
+  ],
+  "nonSurfaceFailures": [
+    "ozm-claim-ceiling_loaded_without_required_activation_effect"
+  ],
+  "paperEvidenceClass": "contractual_control_surface"
+}

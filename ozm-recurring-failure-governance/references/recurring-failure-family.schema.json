@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "ozm.recurring_failure_family.v1",
+  "type": "object",
+  "required": ["signature", "trigger", "affected_skills", "required_guard", "eval_case", "owner", "retire_condition"],
+  "properties": {
+    "signature": {"type": "string", "minLength": 1},
+    "trigger": {"type": "string", "minLength": 1},
+    "affected_skills": {"type": "array", "items": {"type": "string"}, "minItems": 1},
+    "required_guard": {"type": "string", "minLength": 1},
+    "eval_case": {"type": "string", "minLength": 1},
+    "owner": {"type": "string", "minLength": 1},
+    "retire_condition": {"type": "string", "minLength": 1},
+    "rejected_edit_buffer": {"type": "array", "items": {"type": "object", "required": ["attempt", "reason_rejected"], "properties": {"attempt": {"type": "string"}, "reason_rejected": {"type": "string"}}, "additionalProperties": true}}
+  },
+  "additionalProperties": true
+}

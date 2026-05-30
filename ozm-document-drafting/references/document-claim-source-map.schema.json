@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "ozm.document_claim_source_map.v1",
+  "title": "OZM Document Claim Source Map",
+  "type": "object",
+  "required": ["claims"],
+  "properties": {
+    "claims": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["claim_id", "claim_type", "draft_span", "source_spans", "support_type", "reviewer_verdict"],
+        "properties": {
+          "claim_id": {"type": "string"},
+          "claim_type": {"enum": ["numeric", "factual", "methodology", "citation", "recommendation"]},
+          "draft_span": {"type": "string"},
+          "source_spans": {"type": "array", "items": {"type": "string"}, "minItems": 1},
+          "support_type": {"enum": ["direct", "inferred", "contradicted", "unsupported"]},
+          "reasoning_bridge": {"type": "string"},
+          "counterpoint_or_boundary": {"type": "string"},
+          "reviewer_verdict": {"enum": ["pass", "weak", "fail"]},
+          "claim_ceiling": {"type": "string"}
+        },
+        "additionalProperties": true
+      }
+    }
+  },
+  "additionalProperties": true
+}

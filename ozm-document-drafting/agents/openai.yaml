@@ -1,0 +1,4 @@
+interface:
+  display_name: "OZM Document Drafting"
+  short_description: "Govern OZM text drafts, evidence, and issue closure"
+  default_prompt: "Use $ozm-document-drafting when OZM work creates, rewrites, deepens, audits, or iteratively improves a plan, spec, report, analysis, handoff, research note, prompt package, roadmap, design doc, or acceptance narrative. Require draft research, claim/evidence matrix, reader/editor issue closure, and lowered claim wording when evidence is incomplete."

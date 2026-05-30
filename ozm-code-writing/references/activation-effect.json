@@ -1,0 +1,29 @@
+{
+  "schema": "ozm.activation_effect.v1",
+  "skill": "ozm-code-writing",
+  "ownerQuestions": [
+    "Use during admitted OZM-governed implementation to keep code decoupled, completion-directed, readable, map-aware, bounded to the frozen write-set, and efficient under scoped packet gates without weakening final proof."
+  ],
+  "blocksActionWhen": [
+    "writer admission is missing or write-set is exceeded",
+    "code-health gate is unavailable without downgrade"
+  ],
+  "requiredArtifacts": [
+    "write_set_receipt",
+    "agentic_code_health_result",
+    "changed_file_manifest"
+  ],
+  "downstreamBinding": [
+    "ozm-review-diffgate-acceptance.code_health_delta",
+    "ozm-closeout-handoff.changed_surfaces"
+  ],
+  "proofOrScript": [
+    "scripts/code_health_gate.py; scripts/agentic_health_checks.py"
+  ],
+  "claimEffects": [
+    "keeps implementation at artifact_present until review and proof gates consume code-health output"
+  ],
+  "nonSurfaceFailureCodes": [
+    "ozm-code-writing_loaded_without_required_activation_effect"
+  ]
+}

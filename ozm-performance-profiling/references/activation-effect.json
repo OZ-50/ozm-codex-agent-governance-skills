@@ -1,0 +1,34 @@
+{
+  "schema": "ozm.activation_effect.v1",
+  "skill": "ozm-performance-profiling",
+  "ownerQuestions": [
+    "What domain proof, prerequisite, negative test, and rollback/recovery evidence is required before this performance profiling claim can rise?"
+  ],
+  "requiredArtifacts": [
+    "performance_proof_matrix",
+    "external_prerequisite_table",
+    "rollback_recovery_plan"
+  ],
+  "downstreamBinding": [
+    "ozm-external-prerequisite-gate.prerequisite_state",
+    "ozm-review-diffgate-acceptance.domain_verdict",
+    "ozm-claim-ceiling.domain_ceiling"
+  ],
+  "proofOrScript": [
+    "ozm-external-prerequisite-gate/scripts/external_prerequisite_gate_check.py"
+  ],
+  "blocksActionWhen": [
+    "domain claim lacks proof surfaces",
+    "external prerequisite or rollback/recovery posture is absent",
+    "negative/recovery behavior is untested for acceptance-grade wording"
+  ],
+  "claimEffects": [
+    "domain_candidate",
+    "prerequisite_blocked",
+    "local_only",
+    "verified_by_scope"
+  ],
+  "nonSurfaceFailureCodes": [
+    "ozm-performance-profiling_loaded_without_required_activation_effect"
+  ]
+}

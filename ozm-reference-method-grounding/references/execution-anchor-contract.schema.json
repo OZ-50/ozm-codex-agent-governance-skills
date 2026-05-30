@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "ozm.execution_anchor_contract.v1",
+  "type": "object",
+  "required": ["packet_id", "reference_anchor_ids", "source_backed_gap", "proof_surface", "target_owner_requirement", "claim_ceiling_if_anchor_not_consumed"],
+  "properties": {
+    "packet_id": {"type": "string", "minLength": 1},
+    "reference_anchor_ids": {"type": "array", "items": {"type": "string"}, "minItems": 1},
+    "adoption_basis": {"enum": ["adopt", "adapt", "reject", "defer", "background"]},
+    "source_backed_gap": {"type": "string", "minLength": 1},
+    "proof_surface": {"type": "string", "minLength": 1},
+    "target_owner_requirement": {"type": "string", "minLength": 1},
+    "forbidden_shortcuts": {"type": "array", "items": {"type": "string"}},
+    "wrong_direction_signals": {"type": "array", "items": {"type": "string"}},
+    "claim_ceiling_if_anchor_not_consumed": {"type": "string", "minLength": 1}
+  },
+  "additionalProperties": true
+}

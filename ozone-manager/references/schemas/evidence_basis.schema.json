@@ -1,0 +1,59 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "ozm.evidence_basis.schema.json",
+  "title": "OZM evidence_basis artifact schema",
+  "type": "object",
+  "required": [
+    "artifact_id",
+    "skill",
+    "claim_ceiling",
+    "evidence_refs",
+    "constraint_ids",
+    "freshness",
+    "authority_class"
+  ],
+  "properties": {
+    "artifact_id": {
+      "type": "string",
+      "const": "evidence_basis"
+    },
+    "skill": {
+      "type": "string",
+      "const": "ozm-claim-ceiling"
+    },
+    "claim_ceiling": {
+      "type": "string"
+    },
+    "evidence_refs": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "constraint_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "freshness": {
+      "type": [
+        "string",
+        "array",
+        "object",
+        "boolean",
+        "number"
+      ]
+    },
+    "authority_class": {
+      "type": [
+        "string",
+        "array",
+        "object",
+        "boolean",
+        "number"
+      ]
+    }
+  },
+  "additionalProperties": true
+}

@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "ozm.provider_prerequisite.v1",
+  "type": "object",
+  "required": ["provider_id", "secret_presence", "scope", "reachability", "simulation_boundary", "fallback_ceiling", "revocation_rule"],
+  "properties": {
+    "provider_id": {"type": "string", "minLength": 1},
+    "secret_presence": {"enum": ["unknown", "absent", "present_unverified", "present_verified"]},
+    "scope": {"type": "string", "minLength": 1},
+    "reachability": {"enum": ["unchecked", "simulated", "reachable", "unreachable"]},
+    "simulation_boundary": {"type": "string", "minLength": 1},
+    "fallback_ceiling": {"type": "string", "minLength": 1},
+    "revocation_rule": {"type": "string", "minLength": 1},
+    "redaction_receipt": {"type": "string"},
+    "leakage_scan": {"enum": ["not_run", "pass", "fail", "not_applicable"]}
+  },
+  "additionalProperties": true
+}

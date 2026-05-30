@@ -1,0 +1,141 @@
+{
+  "schema": "ozm.skill_contract.v3.1",
+  "skill": "ozm-new-project-setup",
+  "activationTriggers": {
+    "ownerStrongPhrases": [
+      "new project setup",
+      "project bootstrap",
+      "新项目初始化",
+      "TruthDocs",
+      "task loop",
+      "goal loop",
+      "Goal/runtime reentry gate",
+      "Agentic Coding Loop Output Discipline"
+    ],
+    "ownerWeakKeywords": [
+      "new project setup",
+      "new project prestart",
+      "project pre-start",
+      "startup pack",
+      "loop output discipline"
+    ],
+    "companionStrongPhrases": [],
+    "companionWeakKeywords": [],
+    "negativeTriggers": [
+      "metadata-only mention",
+      "route output without SKILL.md hydration",
+      "pre-compaction receipt reused after compaction"
+    ]
+  },
+  "ownerQuestions": [
+    "Use for OZM new-project pre-start setup or audit: TruthDocs surfaces, task/goal loops, Goal/runtime reentry gates, loop output discipline, placement/environment gates, smoke/probe script placement, and bounded run-until-done autonomy."
+  ],
+  "preconditions": [
+    "ozm-new-project-setup selected by ozone-manager for a matching OZM-governed request",
+    "latest visible request role and authority class are classified",
+    "owner surfaces or explicit absence are recorded"
+  ],
+  "blockingConditions": [
+    "new project starts without truth docs, environment, or placement posture",
+    "template defaults overwrite owner intent",
+    "OZM standing autonomy or explicit native Goal continuation is admitted without repo instruction reentry and routine loop output discipline"
+  ],
+  "requiredArtifacts": [
+    {
+      "id": "project_boot_matrix",
+      "schema": "ozone-manager/references/schemas/project_boot_matrix.schema.json",
+      "requiredWhen": "ozm-new-project-setup is activated and project_boot_matrix governs the next downstream claim or action",
+      "claimCeilingIfMissing": "artifact_missing_or_candidate_only"
+    },
+    {
+      "id": "instruction_surface_posture",
+      "schema": "ozone-manager/references/schemas/instruction_surface_posture.schema.json",
+      "requiredWhen": "ozm-new-project-setup is activated and instruction_surface_posture governs the next downstream claim or action",
+      "claimCeilingIfMissing": "artifact_missing_or_candidate_only"
+    },
+    {
+      "id": "clean_room_entry_receipt",
+      "schema": "ozone-manager/references/schemas/clean_room_entry_receipt.schema.json",
+      "requiredWhen": "ozm-new-project-setup is activated and clean_room_entry_receipt governs the next downstream claim or action",
+      "claimCeilingIfMissing": "artifact_missing_or_candidate_only"
+    },
+    {
+      "id": "goal_runtime_reentry_gate",
+      "schema": "ozone-manager/references/schemas/instruction_surface_posture.schema.json",
+      "requiredWhen": "the new project expects OZM standing autonomy, run-until-done behavior, explicit native Goal continuation, or context-compaction recovery",
+      "claimCeilingIfMissing": "runtime_carrier_text_only_or_reentry_unbound"
+    },
+    {
+      "id": "agentic_loop_output_discipline",
+      "schema": "ozone-manager/references/schemas/instruction_surface_posture.schema.json",
+      "requiredWhen": "the new project expects agentic coding loop, standing-autonomy run, explicit native Goal continuation, or file-driven implementation loop behavior",
+      "claimCeilingIfMissing": "loop_output_contract_missing"
+    }
+  ],
+  "validators": [
+    {
+      "script": "ozm-new-project-setup/scripts/project_boot_check.py",
+      "appliesTo": [
+        "project_boot_matrix",
+        "instruction_surface_posture",
+        "runtime_assumption_table",
+        "clean_room_entry_receipt",
+        "goal_runtime_reentry_gate",
+        "agentic_loop_output_discipline"
+      ],
+      "mustPassBefore": [
+        "positive_claim",
+        "closeout"
+      ]
+    }
+  ],
+  "downstreamBindings": [
+    {
+      "consumer": "ozm-requirement-load",
+      "field": "project_truth_surfaces",
+      "required": true
+    },
+    {
+      "consumer": "ozm-dispatch-freeze",
+      "field": "initial_packet",
+      "required": true
+    },
+    {
+      "consumer": "ozm-repo-instruction-surface-management",
+      "field": "repo_agents_goal_reentry_and_output_discipline",
+      "required": true
+    },
+    {
+      "consumer": "ozm-record-surface-management",
+      "field": "standing_autonomy_loop_receipt_policy",
+      "required": true
+    }
+  ],
+  "claimTransitions": [
+    {
+      "from": "planned",
+      "to": "artifact_present",
+      "requires": [
+        "project_boot_matrix",
+        "instruction_surface_posture",
+        "clean_room_entry_receipt",
+        "goal_runtime_reentry_gate",
+        "agentic_loop_output_discipline"
+      ],
+      "validator": "ozm-new-project-setup/scripts/project_boot_check.py"
+    },
+    {
+      "from": "artifact_present",
+      "to": "reviewed",
+      "requires": [
+        "project_truth_surfaces",
+        "initial_packet"
+      ],
+      "validator": "ozm-new-project-setup/scripts/project_boot_check.py"
+    }
+  ],
+  "nonSurfaceFailures": [
+    "ozm-new-project-setup_loaded_without_required_activation_effect"
+  ],
+  "paperEvidenceClass": "contractual_control_surface"
+}

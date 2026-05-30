@@ -1,0 +1,124 @@
+{
+  "schema": "ozm.skill_contract.v3.1",
+  "skill": "ozm-skill-hardening",
+  "activationTriggers": {
+    "ownerStrongPhrases": [
+      "skill激活",
+      "skill 的激活",
+      "skill的激活",
+      "技能激活",
+      "非表层作用",
+      "表层激活",
+      "再次审计",
+      "详尽优化建议",
+      "论文证据链",
+      "基于论文层面的证据链",
+      "逐个skill分析",
+      "skill library audit with papers"
+    ],
+    "ownerWeakKeywords": [
+      "target session skill invocation",
+      "session skill invocation",
+      "skill invocation audit",
+      "skill call audit",
+      "skill activation effectiveness",
+      "activation effectiveness audit",
+      "skill effect contract",
+      "activation effect contract",
+      "document strength",
+      "doc strength",
+      "planning document too thin",
+      "thin planning docs"
+    ],
+    "companionStrongPhrases": [],
+    "companionWeakKeywords": [],
+    "negativeTriggers": [
+      "metadata-only mention",
+      "route output without SKILL.md hydration",
+      "pre-compaction receipt reused after compaction"
+    ]
+  },
+  "ownerQuestions": [
+    "Is this OZM-family change a real skill-system improvement with route, eval, package, donor, and claim effects?"
+  ],
+  "preconditions": [
+    "ozm-skill-hardening selected by ozone-manager for a matching OZM-governed request",
+    "latest visible request role and authority class are classified",
+    "owner surfaces or explicit absence are recorded"
+  ],
+  "blockingConditions": [
+    "skill change lacks eval before/after or owner child",
+    "archived donor remains normal-path trigger"
+  ],
+  "requiredArtifacts": [
+    {
+      "id": "hardening_delta_record",
+      "schema": "ozone-manager/references/schemas/hardening_delta_record.schema.json",
+      "requiredWhen": "ozm-skill-hardening is activated and hardening_delta_record governs the next downstream claim or action",
+      "claimCeilingIfMissing": "artifact_missing_or_candidate_only"
+    },
+    {
+      "id": "eval_delta",
+      "schema": "ozone-manager/references/schemas/eval_delta.schema.json",
+      "requiredWhen": "ozm-skill-hardening is activated and eval_delta governs the next downstream claim or action",
+      "claimCeilingIfMissing": "artifact_missing_or_candidate_only"
+    },
+    {
+      "id": "donor_absorption_receipt",
+      "schema": "ozone-manager/references/schemas/donor_absorption_receipt.schema.json",
+      "requiredWhen": "ozm-skill-hardening is activated and donor_absorption_receipt governs the next downstream claim or action",
+      "claimCeilingIfMissing": "artifact_missing_or_candidate_only"
+    }
+  ],
+  "validators": [
+    {
+      "script": "ozm-skill-hardening/scripts/hardening_delta_check.py",
+      "appliesTo": [
+        "hardening_delta_record",
+        "eval_delta",
+        "donor_absorption_receipt"
+      ],
+      "mustPassBefore": [
+        "positive_claim",
+        "closeout"
+      ]
+    }
+  ],
+  "downstreamBindings": [
+    {
+      "consumer": "ozone-manager",
+      "field": "route_rules",
+      "required": true
+    },
+    {
+      "consumer": "ozm-record-surface-management",
+      "field": "hardening_log",
+      "required": true
+    }
+  ],
+  "claimTransitions": [
+    {
+      "from": "planned",
+      "to": "artifact_present",
+      "requires": [
+        "hardening_delta_record",
+        "eval_delta",
+        "donor_absorption_receipt"
+      ],
+      "validator": "ozm-skill-hardening/scripts/hardening_delta_check.py"
+    },
+    {
+      "from": "artifact_present",
+      "to": "reviewed",
+      "requires": [
+        "route_rules",
+        "hardening_log"
+      ],
+      "validator": "ozm-skill-hardening/scripts/hardening_delta_check.py"
+    }
+  ],
+  "nonSurfaceFailures": [
+    "ozm-skill-hardening_loaded_without_required_activation_effect"
+  ],
+  "paperEvidenceClass": "contractual_control_surface"
+}

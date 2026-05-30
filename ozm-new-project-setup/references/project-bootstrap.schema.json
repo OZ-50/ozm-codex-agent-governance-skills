@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "ozm.project_bootstrap.v1",
+  "type": "object",
+  "required": ["truth_docs", "env_entrypoints", "package_manager", "test_probe", "owner_decisions", "initial_claim_ceiling"],
+  "properties": {
+    "truth_docs": {"type": "array", "items": {"type": "string"}},
+    "env_entrypoints": {"type": "array", "items": {"type": "string"}},
+    "package_manager": {"type": "string"},
+    "test_probe": {"type": "string"},
+    "owner_decisions": {"type": "array", "items": {"type": "object", "required": ["decision", "status"], "properties": {"decision": {"type": "string"}, "status": {"enum": ["owner_confirmed", "default_candidate", "unresolved"]}}, "additionalProperties": true}},
+    "template_defaults": {"type": "array", "items": {"type": "object", "required": ["field", "status"], "properties": {"field": {"type": "string"}, "status": {"enum": ["owner_confirmed", "default_candidate"]}}, "additionalProperties": true}},
+    "initial_claim_ceiling": {"type": "string"}
+  },
+  "additionalProperties": true
+}

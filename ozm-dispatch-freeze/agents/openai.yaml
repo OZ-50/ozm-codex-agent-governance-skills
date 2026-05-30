@@ -1,0 +1,4 @@
+interface:
+  display_name: "OZM Dispatch Freeze"
+  short_description: "Freeze OZM write-set, claims, gates, and runtime carrier"
+  default_prompt: "Use $ozm-dispatch-freeze before OZM writer admission to freeze write-set, controller-truth locks, active hygiene, file placement, claim ceiling, gate tier, runtime carrier, review target, reference execution anchors, and Wrong-Direction Stop for reference-method work."

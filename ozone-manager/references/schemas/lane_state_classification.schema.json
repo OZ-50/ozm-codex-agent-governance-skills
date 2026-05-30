@@ -1,0 +1,64 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "ozm.lane_state_classification.schema.json",
+  "title": "OZM lane_state_classification artifact schema",
+  "type": "object",
+  "required": [
+    "artifact_id",
+    "skill",
+    "claim_ceiling",
+    "evidence_refs",
+    "constraint_ids",
+    "classification"
+  ],
+  "properties": {
+    "artifact_id": {
+      "type": "string",
+      "const": "lane_state_classification"
+    },
+    "skill": {
+      "type": "string",
+      "const": "ozm-wait-block-replay-replacement"
+    },
+    "claim_ceiling": {
+      "type": "string"
+    },
+    "evidence_refs": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "constraint_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "authority_class": {
+      "type": "string"
+    },
+    "downstream_consumers": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "stale_when": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "classification": {
+      "type": [
+        "string",
+        "array",
+        "object",
+        "boolean",
+        "number"
+      ]
+    }
+  },
+  "additionalProperties": true
+}

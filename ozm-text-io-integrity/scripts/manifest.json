@@ -1,0 +1,22 @@
+{
+  "owner": "ozm-text-io-integrity",
+  "purpose": "Portable OZM text preflight, safe-write, split, and assembly scripts absorbed from encoding-fix.",
+  "scripts": [
+    {
+      "path": "assemble_text_chunks.py",
+      "role": "Assemble chunked text into a target with explicit encoding, newline, and size guards."
+    },
+    {
+      "path": "safe_write_text.py",
+      "role": "Write or replace text through explicit encoding and convention-preservation options."
+    },
+    {
+      "path": "split_text_chunks.py",
+      "role": "Split large candidate text into ordered chunks before transport or assembly."
+    },
+    {
+      "path": "text_preflight.py",
+      "role": "Inspect text encoding, BOM, newline style, suspicious characters, and line-length risk."
+    }
+  ]
+}

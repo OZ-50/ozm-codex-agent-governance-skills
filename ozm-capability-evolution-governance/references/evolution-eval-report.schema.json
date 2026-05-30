@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "ozm.evolution_eval_report.v1",
+  "type": "object",
+  "required": [
+    "candidate_id",
+    "baseline_result",
+    "optimization_result",
+    "heldout_result",
+    "regression_result",
+    "reviewer_result",
+    "promotion_ready"
+  ],
+  "properties": {
+    "candidate_id": { "type": "string", "minLength": 1 },
+    "baseline_result": { "type": "string", "minLength": 1 },
+    "optimization_result": { "type": "string", "minLength": 1 },
+    "heldout_result": { "type": "string", "minLength": 1 },
+    "regression_result": { "type": "string", "minLength": 1 },
+    "reviewer_result": { "type": "string", "minLength": 1 },
+    "llm_api_posture": {
+      "type": "string",
+      "enum": ["not_used", "optional_generator", "optional_evaluator", "judge_only", "unavailable", "prohibited_for_execution"]
+    },
+    "rollback_posture": { "type": "string" },
+    "promotion_ready": { "type": "boolean" },
+    "claim_ceiling": { "type": "string" }
+  },
+  "additionalProperties": true
+}

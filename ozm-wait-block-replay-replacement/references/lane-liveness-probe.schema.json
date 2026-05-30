@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "ozm.lane_liveness_probe.v1",
+  "type": "object",
+  "required": ["lane_id", "last_event_time", "expected_carrier", "pending_external_prereq", "duplicate_writer_risk", "replay_idempotence", "write_set_conflict_status"],
+  "properties": {
+    "lane_id": {"type": "string"},
+    "last_event_time": {"type": "string"},
+    "expected_carrier": {"type": "string"},
+    "pending_external_prereq": {"type": "string"},
+    "duplicate_writer_risk": {"enum": ["none", "possible", "high", "unknown"]},
+    "replay_idempotence": {"enum": ["safe", "unsafe", "unknown"]},
+    "write_set_conflict_status": {"enum": ["clear", "conflict", "unknown"]},
+    "old_lane_evidence_policy": {"type": "string"}
+  },
+  "additionalProperties": true
+}

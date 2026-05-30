@@ -1,0 +1,122 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "ozm.skill_contract.v3.1",
+  "title": "OZM Skill Contract v3.1",
+  "type": "object",
+  "required": [
+    "schema",
+    "skill",
+    "activationTriggers",
+    "ownerQuestions",
+    "preconditions",
+    "blockingConditions",
+    "requiredArtifacts",
+    "validators",
+    "downstreamBindings",
+    "claimTransitions",
+    "nonSurfaceFailures"
+  ],
+  "properties": {
+    "schema": {
+      "const": "ozm.skill_contract.v3.1"
+    },
+    "skill": {
+      "type": "string"
+    },
+    "activationTriggers": {
+      "type": "object",
+      "required": [
+        "ownerStrongPhrases",
+        "ownerWeakKeywords",
+        "companionStrongPhrases",
+        "companionWeakKeywords",
+        "negativeTriggers"
+      ],
+      "properties": {
+        "ownerStrongPhrases": {"type": "array", "items": {"type": "string"}},
+        "ownerWeakKeywords": {"type": "array", "items": {"type": "string"}},
+        "companionStrongPhrases": {"type": "array", "items": {"type": "string"}},
+        "companionWeakKeywords": {"type": "array", "items": {"type": "string"}},
+        "negativeTriggers": {"type": "array", "items": {"type": "string"}}
+      },
+      "additionalProperties": true
+    },
+    "ownerQuestions": {
+      "type": "array",
+      "items": {"type": "string"},
+      "minItems": 1
+    },
+    "preconditions": {
+      "type": "array",
+      "items": {"type": "string"},
+      "minItems": 1
+    },
+    "blockingConditions": {
+      "type": "array",
+      "items": {"type": "string"},
+      "minItems": 1
+    },
+    "requiredArtifacts": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["id", "schema", "requiredWhen", "claimCeilingIfMissing"],
+        "properties": {
+          "id": {"type": "string"},
+          "schema": {"type": "string", "minLength": 1},
+          "requiredWhen": {"type": "string"},
+          "claimCeilingIfMissing": {"type": "string"}
+        },
+        "additionalProperties": true
+      }
+    },
+    "validators": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["script", "appliesTo", "mustPassBefore"],
+        "properties": {
+          "script": {"type": "string"},
+          "appliesTo": {"type": "array", "items": {"type": "string"}},
+          "mustPassBefore": {"type": "array", "items": {"type": "string"}}
+        },
+        "additionalProperties": true
+      }
+    },
+    "downstreamBindings": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["consumer", "field", "required"],
+        "properties": {
+          "consumer": {"type": "string"},
+          "field": {"type": "string"},
+          "required": {"type": "boolean"}
+        },
+        "additionalProperties": true
+      }
+    },
+    "claimTransitions": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["from", "to", "requires"],
+        "properties": {
+          "from": {"type": "string"},
+          "to": {"type": "string"},
+          "requires": {"type": "array", "items": {"type": "string"}}
+        },
+        "additionalProperties": true
+      }
+    },
+    "nonSurfaceFailures": {
+      "type": "array",
+      "items": {"type": "string"},
+      "minItems": 1
+    }
+  },
+  "additionalProperties": true
+}

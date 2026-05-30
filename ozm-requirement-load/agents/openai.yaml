@@ -1,0 +1,4 @@
+interface:
+  display_name: "OZM Requirement Load"
+  short_description: "Load OZM requirements, contracts, and reference maps"
+  default_prompt: "Use $ozm-requirement-load before writer admission to bind request role, final objective, controller-truth boundaries, Plan/Goal contract matrix, draft intake gate for governed text artifacts, reference capability/method maps, paper-method grounding handoff, and claim ceiling."

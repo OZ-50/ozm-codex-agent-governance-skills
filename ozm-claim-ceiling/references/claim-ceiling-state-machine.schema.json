@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "ozm.claim_ceiling_state_machine.v1",
+  "type": "object",
+  "required": ["current", "target", "evidence_id", "allowed_transition"],
+  "properties": {
+    "current": {"enum": ["unknown", "planned", "dispatched", "artifact_present", "locally_checked", "reviewed", "verified_runtime", "accepted"]},
+    "target": {"enum": ["unknown", "planned", "dispatched", "artifact_present", "locally_checked", "reviewed", "verified_runtime", "accepted"]},
+    "evidence_id": {"type": "string"},
+    "allowed_transition": {"type": "boolean"},
+    "post_compaction_refresh": {"type": "boolean"}
+  },
+  "additionalProperties": true
+}

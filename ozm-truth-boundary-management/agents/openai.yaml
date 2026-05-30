@@ -1,0 +1,4 @@
+interface:
+  display_name: "OZM Truth Boundary Management"
+  short_description: "Manage OZM truth owners, stale proof, and reentry"
+  default_prompt: "Use $ozm-truth-boundary-management when OZM work has competing truth surfaces, compressed summaries, stale evidence, subagent result consumption, or owner-reread requirements before dispatch, review, or claim elevation."

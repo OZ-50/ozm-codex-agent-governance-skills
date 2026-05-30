@@ -1,0 +1,137 @@
+{
+  "schema": "ozm.skill_contract.v3.1",
+  "skill": "ozm-code-writing",
+  "activationTriggers": {
+    "ownerStrongPhrases": [],
+    "ownerWeakKeywords": [
+      "auto advance bounded packet",
+      "automatic bounded packet",
+      "next bounded packet",
+      "one bounded packet",
+      "controller selection audit",
+      "controller-selection audit",
+      "controller selection",
+      "controller-update admission"
+    ],
+    "companionStrongPhrases": [
+      "参考项目有效分析",
+      "论文方法提炼",
+      "论文方法论",
+      "方法论落地",
+      "reference method grounding",
+      "paper method grounding",
+      "UX",
+      "UI",
+      "视觉验收",
+      "交互证明",
+      "responsive proof",
+      "accessibility proof"
+    ],
+    "companionWeakKeywords": [
+      "ce:plan",
+      "ce-plan",
+      "ce:brainstorm",
+      "ce-brainstorm"
+    ],
+    "negativeTriggers": [
+      "metadata-only mention",
+      "route output without SKILL.md hydration",
+      "pre-compaction receipt reused after compaction"
+    ]
+  },
+  "ownerQuestions": [
+    "Use during admitted OZM-governed implementation to keep code decoupled, completion-directed, readable, map-aware, bounded to the frozen write-set, and efficient under scoped packet gates without weakening final proof."
+  ],
+  "preconditions": [
+    "ozm-code-writing selected by ozone-manager for a matching OZM-governed request",
+    "latest visible request role and authority class are classified",
+    "owner surfaces or explicit absence are recorded"
+  ],
+  "blockingConditions": [
+    "writer admission is missing or write-set is exceeded",
+    "code-health gate is unavailable without downgrade"
+  ],
+  "requiredArtifacts": [
+    {
+      "id": "write_set_receipt",
+      "schema": "ozone-manager/references/schemas/write_set_receipt.schema.json",
+      "requiredWhen": "ozm-code-writing is activated and write_set_receipt governs the next downstream claim or action",
+      "claimCeilingIfMissing": "artifact_missing_or_candidate_only"
+    },
+    {
+      "id": "agentic_code_health_result",
+      "schema": "ozone-manager/references/schemas/code_health_result.schema.json",
+      "requiredWhen": "ozm-code-writing is activated and agentic_code_health_result governs the next downstream claim or action",
+      "claimCeilingIfMissing": "artifact_missing_or_candidate_only"
+    },
+    {
+      "id": "changed_file_manifest",
+      "schema": "ozone-manager/references/schemas/code_write_changed_file_manifest.schema.json",
+      "requiredWhen": "ozm-code-writing is activated and changed_file_manifest governs the next downstream claim or action",
+      "claimCeilingIfMissing": "artifact_missing_or_candidate_only"
+    }
+  ],
+  "validators": [
+    {
+      "script": "ozm-code-writing/scripts/code_health_gate.py",
+      "appliesTo": [
+        "write_set_receipt",
+        "agentic_code_health_result",
+        "changed_file_manifest"
+      ],
+      "mustPassBefore": [
+        "positive_claim",
+        "closeout"
+      ]
+    },
+    {
+      "script": "ozm-code-writing/scripts/agentic_health_checks.py",
+      "appliesTo": [
+        "write_set_receipt",
+        "agentic_code_health_result",
+        "changed_file_manifest"
+      ],
+      "mustPassBefore": [
+        "positive_claim",
+        "closeout"
+      ]
+    }
+  ],
+  "downstreamBindings": [
+    {
+      "consumer": "ozm-review-diffgate-acceptance",
+      "field": "code_health_delta",
+      "required": true
+    },
+    {
+      "consumer": "ozm-closeout-handoff",
+      "field": "changed_surfaces",
+      "required": true
+    }
+  ],
+  "claimTransitions": [
+    {
+      "from": "planned",
+      "to": "artifact_present",
+      "requires": [
+        "write_set_receipt",
+        "agentic_code_health_result",
+        "changed_file_manifest"
+      ],
+      "validator": "ozm-code-writing/scripts/code_health_gate.py"
+    },
+    {
+      "from": "artifact_present",
+      "to": "reviewed",
+      "requires": [
+        "code_health_delta",
+        "changed_surfaces"
+      ],
+      "validator": "ozm-code-writing/scripts/code_health_gate.py"
+    }
+  ],
+  "nonSurfaceFailures": [
+    "ozm-code-writing_loaded_without_required_activation_effect"
+  ],
+  "paperEvidenceClass": "contractual_control_surface"
+}

@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "ozm.evolution_candidate.v1",
+  "type": "object",
+  "required": [
+    "candidate_id",
+    "target_capability",
+    "baseline_behavior",
+    "candidate_change",
+    "owner_child",
+    "eval_plan",
+    "rollback_plan",
+    "claim_ceiling_if_unpromoted"
+  ],
+  "properties": {
+    "candidate_id": { "type": "string", "minLength": 1 },
+    "source_signal": { "type": "array", "items": { "type": "string" } },
+    "target_capability": { "type": "string", "minLength": 1 },
+    "baseline_behavior": { "type": "string", "minLength": 1 },
+    "candidate_change": { "type": "string", "minLength": 1 },
+    "owner_child": { "type": "string", "pattern": "^ozm-[a-z0-9-]+$" },
+    "allowed_writes": { "type": "array", "items": { "type": "string" } },
+    "forbidden_actions": { "type": "array", "items": { "type": "string" } },
+    "eval_plan": {
+      "type": "object",
+      "required": ["optimization_cases", "heldout_cases", "regression_cases", "expected_non_changes"],
+      "properties": {
+        "optimization_cases": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
+        "heldout_cases": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
+        "regression_cases": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
+        "expected_non_changes": { "type": "array", "items": { "type": "string" }, "minItems": 1 }
+      },
+      "additionalProperties": true
+    },
+    "rollback_plan": { "type": "string", "minLength": 1 },
+    "promotion_gate": { "type": "string" },
+    "claim_ceiling_if_unpromoted": { "type": "string", "minLength": 1 }
+  },
+  "additionalProperties": true
+}

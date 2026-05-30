@@ -1,0 +1,118 @@
+{
+  "schema": "ozm.skill_contract.v3.1",
+  "skill": "ozm-expert-review-suite",
+  "activationTriggers": {
+    "ownerStrongPhrases": [
+      "expert review",
+      "专家审计",
+      "reviewer contract",
+      "blocking semantics",
+      "review lens",
+      "PR comment review"
+    ],
+    "ownerWeakKeywords": [
+      "writing-plans",
+      "spec-driven-implementation",
+      "codex-write-set-lane-bootstrap",
+      "controller-truth-guard",
+      "security review",
+      "security audit",
+      "OWASP",
+      "authz review",
+      "data migration review",
+      "schema drift",
+      "schema.rb drift",
+      "backfill review"
+    ],
+    "companionStrongPhrases": [],
+    "companionWeakKeywords": [],
+    "negativeTriggers": [
+      "metadata-only mention",
+      "route output without SKILL.md hydration",
+      "pre-compaction receipt reused after compaction"
+    ]
+  },
+  "ownerQuestions": [
+    "Use for OZM-managed expert review gates after governance is frozen, without loading archived standalone reviewer skills."
+  ],
+  "preconditions": [
+    "ozm-expert-review-suite selected by ozone-manager for a matching OZM-governed request",
+    "latest visible request role and authority class are classified",
+    "owner surfaces or explicit absence are recorded"
+  ],
+  "blockingConditions": [
+    "persona label appears without evidence-backed finding",
+    "required lens is unavailable and not downgraded"
+  ],
+  "requiredArtifacts": [
+    {
+      "id": "expert_lens_registry",
+      "schema": "ozone-manager/references/schemas/expert_lens_registry.schema.json",
+      "requiredWhen": "ozm-expert-review-suite is activated and expert_lens_registry governs the next downstream claim or action",
+      "claimCeilingIfMissing": "artifact_missing_or_candidate_only"
+    },
+    {
+      "id": "expert_finding_list",
+      "schema": "references/expert-finding.schema.json",
+      "requiredWhen": "ozm-expert-review-suite is activated and expert_finding_list governs the next downstream claim or action",
+      "claimCeilingIfMissing": "artifact_missing_or_candidate_only"
+    },
+    {
+      "id": "review_verdict_receipt",
+      "schema": "ozone-manager/references/schemas/review_verdict_receipt.schema.json",
+      "requiredWhen": "ozm-expert-review-suite is activated and review_verdict_receipt governs the next downstream claim or action",
+      "claimCeilingIfMissing": "artifact_missing_or_candidate_only"
+    }
+  ],
+  "validators": [
+    {
+      "script": "ozm-expert-review-suite/scripts/expert_review_verdict_check.py",
+      "appliesTo": [
+        "expert_lens_registry",
+        "expert_finding_list",
+        "review_verdict_receipt"
+      ],
+      "mustPassBefore": [
+        "positive_claim",
+        "closeout"
+      ]
+    }
+  ],
+  "downstreamBindings": [
+    {
+      "consumer": "ozm-review-diffgate-acceptance",
+      "field": "expert_findings",
+      "required": true
+    },
+    {
+      "consumer": "ozm-claim-ceiling",
+      "field": "review_claim_effect",
+      "required": true
+    }
+  ],
+  "claimTransitions": [
+    {
+      "from": "planned",
+      "to": "artifact_present",
+      "requires": [
+        "expert_lens_registry",
+        "expert_finding_list",
+        "review_verdict_receipt"
+      ],
+      "validator": "ozm-expert-review-suite/scripts/expert_review_verdict_check.py"
+    },
+    {
+      "from": "artifact_present",
+      "to": "reviewed",
+      "requires": [
+        "expert_findings",
+        "review_claim_effect"
+      ],
+      "validator": "ozm-expert-review-suite/scripts/expert_review_verdict_check.py"
+    }
+  ],
+  "nonSurfaceFailures": [
+    "ozm-expert-review-suite_loaded_without_required_activation_effect"
+  ],
+  "paperEvidenceClass": "contractual_control_surface"
+}

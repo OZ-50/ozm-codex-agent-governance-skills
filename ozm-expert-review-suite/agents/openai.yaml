@@ -1,0 +1,4 @@
+interface:
+  display_name: "OZM Expert Review Suite"
+  short_description: "OZM-managed expert review gates"
+  default_prompt: "Use $ozm-expert-review-suite to select and run OZM-managed expert review gates before acceptance."

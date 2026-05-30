@@ -1,0 +1,4 @@
+interface:
+  display_name: "OZM Capability Evolution Governance"
+  short_description: "Govern capability evolution candidates and promotion."
+  default_prompt: "Use $ozm-capability-evolution-governance to classify an agent or skill evolution candidate, bind eval evidence, and decide whether it can be promoted safely."

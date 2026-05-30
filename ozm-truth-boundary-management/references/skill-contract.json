@@ -1,0 +1,128 @@
+{
+  "schema": "ozm.skill_contract.v3.1",
+  "skill": "ozm-truth-boundary-management",
+  "activationTriggers": {
+    "ownerStrongPhrases": [],
+    "ownerWeakKeywords": [
+      "current-phase companion",
+      "current-phase only companion",
+      "post compression skill reload",
+      "post-compression skill reload",
+      "truth record skill reload",
+      "truth/record skill reload",
+      "target session skill invocation",
+      "session skill invocation",
+      "skill invocation audit",
+      "skill call audit"
+    ],
+    "companionStrongPhrases": [
+      "skill激活",
+      "skill 的激活",
+      "skill的激活",
+      "技能激活",
+      "非表层作用",
+      "表层激活",
+      "AGENTS.md",
+      "CLAUDE.md",
+      "repository instruction",
+      "instruction drift",
+      "仓库指令",
+      "指令面"
+    ],
+    "companionWeakKeywords": [
+      "current phase companion",
+      "current phase only companion"
+    ],
+    "negativeTriggers": [
+      "metadata-only mention",
+      "route output without SKILL.md hydration",
+      "pre-compaction receipt reused after compaction"
+    ]
+  },
+  "ownerQuestions": [
+    "Use when OZM-governed work has competing truth surfaces and needs explicit ownership, honest downgrade of projections or placeholders, and reconciliation between live state and controller memory."
+  ],
+  "preconditions": [
+    "ozm-truth-boundary-management selected by ozone-manager for a matching OZM-governed request",
+    "latest visible request role and authority class are classified",
+    "owner surfaces or explicit absence are recorded"
+  ],
+  "blockingConditions": [
+    "projection or summary is used as owner truth",
+    "controller truth conflict is unresolved"
+  ],
+  "requiredArtifacts": [
+    {
+      "id": "truth_owner_map",
+      "schema": "ozone-manager/references/schemas/truth_owner_map.schema.json",
+      "requiredWhen": "ozm-truth-boundary-management is activated and truth_owner_map governs the next downstream claim or action",
+      "claimCeilingIfMissing": "artifact_missing_or_candidate_only"
+    },
+    {
+      "id": "surface_authority_classification",
+      "schema": "ozone-manager/references/schemas/surface_authority_classification.schema.json",
+      "requiredWhen": "ozm-truth-boundary-management is activated and surface_authority_classification governs the next downstream claim or action",
+      "claimCeilingIfMissing": "artifact_missing_or_candidate_only"
+    },
+    {
+      "id": "conflict_resolution_receipt",
+      "schema": "ozone-manager/references/schemas/conflict_resolution_receipt.schema.json",
+      "requiredWhen": "ozm-truth-boundary-management is activated and conflict_resolution_receipt governs the next downstream claim or action",
+      "claimCeilingIfMissing": "artifact_missing_or_candidate_only"
+    }
+  ],
+  "validators": [
+    {
+      "script": "ozm-truth-boundary-management/scripts/truth_boundary_conflict_check.py",
+      "appliesTo": [
+        "truth_boundary_verdict",
+        "owner_decision",
+        "conflict_record",
+        "truth_owner_map",
+        "surface_authority_classification",
+        "conflict_resolution_receipt"
+      ],
+      "mustPassBefore": [
+        "positive_claim",
+        "closeout"
+      ]
+    }
+  ],
+  "downstreamBindings": [
+    {
+      "consumer": "ozm-claim-ceiling",
+      "field": "truth_basis",
+      "required": true
+    },
+    {
+      "consumer": "ozm-record-surface-management",
+      "field": "authority_class",
+      "required": true
+    }
+  ],
+  "claimTransitions": [
+    {
+      "from": "planned",
+      "to": "artifact_present",
+      "requires": [
+        "truth_owner_map",
+        "surface_authority_classification",
+        "conflict_resolution_receipt"
+      ],
+      "validator": "ozm-truth-boundary-management/scripts/truth_boundary_conflict_check.py"
+    },
+    {
+      "from": "artifact_present",
+      "to": "reviewed",
+      "requires": [
+        "truth_basis",
+        "authority_class"
+      ],
+      "validator": "ozm-truth-boundary-management/scripts/truth_boundary_conflict_check.py"
+    }
+  ],
+  "nonSurfaceFailures": [
+    "ozm-truth-boundary-management_loaded_without_required_activation_effect"
+  ],
+  "paperEvidenceClass": "contractual_control_surface"
+}

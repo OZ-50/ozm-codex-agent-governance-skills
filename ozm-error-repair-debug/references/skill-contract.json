@@ -1,0 +1,121 @@
+{
+  "schema": "ozm.skill_contract.v3.1",
+  "skill": "ozm-error-repair-debug",
+  "activationTriggers": {
+    "ownerStrongPhrases": [
+      "bug reproduce root cause",
+      "reproduce root cause",
+      "minimal repair",
+      "root cause minimal repair",
+      "debug root cause",
+      "修复 bug"
+    ],
+    "ownerWeakKeywords": [
+      "git-history-analyzer",
+      "git history analyzer",
+      "git history archaeology",
+      "git blame",
+      "no-op repair",
+      "no code change",
+      "inaction",
+      "stale report",
+      "bug reproduce root cause",
+      "reproduce root cause",
+      "minimal repair",
+      "root cause minimal repair"
+    ],
+    "companionStrongPhrases": [],
+    "companionWeakKeywords": [],
+    "negativeTriggers": [
+      "metadata-only mention",
+      "route output without SKILL.md hydration",
+      "pre-compaction receipt reused after compaction"
+    ]
+  },
+  "ownerQuestions": [
+    "Use when OZM-governed work needs bug reproduction, root-cause isolation, minimal repair, and debug recording without widening scope or confusing harness noise with product truth."
+  ],
+  "preconditions": [
+    "ozm-error-repair-debug selected by ozone-manager for a matching OZM-governed request",
+    "latest visible request role and authority class are classified",
+    "owner surfaces or explicit absence are recorded"
+  ],
+  "blockingConditions": [
+    "fix starts before reproduction or root-cause isolation",
+    "no-op repair is claimed as fixed"
+  ],
+  "requiredArtifacts": [
+    {
+      "id": "reproduction_receipt",
+      "schema": "ozone-manager/references/schemas/reproduction_receipt.schema.json",
+      "requiredWhen": "ozm-error-repair-debug is activated and reproduction_receipt governs the next downstream claim or action",
+      "claimCeilingIfMissing": "artifact_missing_or_candidate_only"
+    },
+    {
+      "id": "root_cause_trace",
+      "schema": "ozone-manager/references/schemas/root_cause_trace.schema.json",
+      "requiredWhen": "ozm-error-repair-debug is activated and root_cause_trace governs the next downstream claim or action",
+      "claimCeilingIfMissing": "artifact_missing_or_candidate_only"
+    },
+    {
+      "id": "minimal_repair_record",
+      "schema": "ozone-manager/references/schemas/minimal_repair_record.schema.json",
+      "requiredWhen": "ozm-error-repair-debug is activated and minimal_repair_record governs the next downstream claim or action",
+      "claimCeilingIfMissing": "artifact_missing_or_candidate_only"
+    }
+  ],
+  "validators": [
+    {
+      "script": "ozm-error-repair-debug/scripts/repair_minimality_check.py",
+      "appliesTo": [
+        "repair_packet",
+        "reproduction_trace",
+        "minimality_receipt",
+        "reproduction_receipt",
+        "root_cause_trace",
+        "minimal_repair_record"
+      ],
+      "mustPassBefore": [
+        "positive_claim",
+        "closeout"
+      ]
+    }
+  ],
+  "downstreamBindings": [
+    {
+      "consumer": "ozm-code-writing",
+      "field": "repair_scope",
+      "required": true
+    },
+    {
+      "consumer": "ozm-review-diffgate-acceptance",
+      "field": "no_op_repair_verdict",
+      "required": true
+    }
+  ],
+  "claimTransitions": [
+    {
+      "from": "planned",
+      "to": "artifact_present",
+      "requires": [
+        "reproduction_receipt",
+        "root_cause_trace",
+        "minimal_repair_record"
+      ],
+      "validator": "ozm-error-repair-debug/scripts/repair_minimality_check.py"
+    },
+    {
+      "from": "artifact_present",
+      "to": "reviewed",
+      "requires": [
+        "repair_scope",
+        "no_op_repair_verdict"
+      ],
+      "validator": "ozm-error-repair-debug/scripts/repair_minimality_check.py"
+    }
+  ],
+  "nonSurfaceFailures": [
+    "ozm-error-repair-debug_loaded_without_required_activation_effect"
+  ],
+  "paperEvidenceClass": "contractual_control_surface"
+}

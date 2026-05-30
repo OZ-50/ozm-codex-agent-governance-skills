@@ -1,0 +1,14 @@
+{
+  "schemaVersion": "1.0.0",
+  "ownerSkill": "ozm-context-engineering",
+  "purpose": "Discovery surface for copied context-engineering helper scripts. Scripts are deterministic context-health helpers, not acceptance proof.",
+  "entrypoints": {
+    "compression_evaluator.py": "Evaluate whether compressed context preserves critical facts, probes, artifacts, and continuity constraints.",
+    "degradation_detector.py": "Detect lost-in-middle, context poisoning, distraction, confusion, clash, and structure degradation signals.",
+    "context_manager.py": "Estimate context cost and build progressive-disclosure context packs.",
+    "compaction.py": "Design compaction, masking, offload, and stable-prefix strategies for context-pressure events.",
+    "filesystem_context.py": "Plan filesystem-backed context, scratch pads, lifecycle rules, and selective retrieval."
+  },
+  "claimBoundary": "Outputs are navigation/candidate evidence until OZM truth, record, review, and claim-ceiling gates consume them.",
+  "executionRule": "Run through a resolved Python interpreter; do not invoke bare python on Windows."
+}

@@ -1,0 +1,128 @@
+{
+  "schema": "ozm.skill_contract.v3.1",
+  "skill": "ozm-external-prerequisite-gate",
+  "activationTriggers": {
+    "ownerStrongPhrases": [],
+    "ownerWeakKeywords": [
+      "external prerequisite controller update",
+      "external-prerequisite controller update",
+      "external prerequisite control surface",
+      "external-prerequisite control surface",
+      "uncertainty escalation",
+      "human-owned uncertainty",
+      "diagnostic reducible",
+      "truth uncertainty"
+    ],
+    "companionStrongPhrases": [
+      "new project setup",
+      "project bootstrap",
+      "新项目初始化",
+      "TruthDocs",
+      "task loop",
+      "goal loop",
+      "agent runtime",
+      "MCP boundary",
+      "tool contract",
+      "memory boundary",
+      "operator shell parity",
+      "运行时架构"
+    ],
+    "companionWeakKeywords": [
+      "new project setup",
+      "new project prestart",
+      "project pre-start",
+      "startup pack"
+    ],
+    "negativeTriggers": [
+      "metadata-only mention",
+      "route output without SKILL.md hydration",
+      "pre-compaction receipt reused after compaction"
+    ]
+  },
+  "ownerQuestions": [
+    "Use when an OZM-governed work packet depends on secrets, providers, browsers, deployments, project environment entrypoints, orchestrators, local runtimes, or remote services and must not be admitted until the prerequisite contract and reachability posture are proven."
+  ],
+  "preconditions": [
+    "ozm-external-prerequisite-gate selected by ozone-manager for a matching OZM-governed request",
+    "latest visible request role and authority class are classified",
+    "owner surfaces or explicit absence are recorded"
+  ],
+  "blockingConditions": [
+    "live claim depends on unknown secret/provider/account/network state",
+    "fallback/simulation is treated as real environment proof"
+  ],
+  "requiredArtifacts": [
+    {
+      "id": "prerequisite_state_table",
+      "schema": "ozone-manager/references/schemas/prerequisite_state_table.schema.json",
+      "requiredWhen": "ozm-external-prerequisite-gate is activated and prerequisite_state_table governs the next downstream claim or action",
+      "claimCeilingIfMissing": "artifact_missing_or_candidate_only"
+    },
+    {
+      "id": "fallback_boundary",
+      "schema": "ozone-manager/references/schemas/fallback_boundary.schema.json",
+      "requiredWhen": "ozm-external-prerequisite-gate is activated and fallback_boundary governs the next downstream claim or action",
+      "claimCeilingIfMissing": "artifact_missing_or_candidate_only"
+    },
+    {
+      "id": "external_write_policy",
+      "schema": "ozone-manager/references/schemas/external_write_policy.schema.json",
+      "requiredWhen": "ozm-external-prerequisite-gate is activated and external_write_policy governs the next downstream claim or action",
+      "claimCeilingIfMissing": "artifact_missing_or_candidate_only"
+    }
+  ],
+  "validators": [
+    {
+      "script": "ozm-external-prerequisite-gate/scripts/external_prerequisite_gate_check.py",
+      "appliesTo": [
+        "prerequisite_state",
+        "fallback_label",
+        "live_claim_ceiling",
+        "prerequisite_state_table",
+        "fallback_boundary",
+        "external_write_policy"
+      ],
+      "mustPassBefore": [
+        "positive_claim",
+        "closeout"
+      ]
+    }
+  ],
+  "downstreamBindings": [
+    {
+      "consumer": "ozm-dispatch-freeze",
+      "field": "prerequisite_status",
+      "required": true
+    },
+    {
+      "consumer": "ozm-claim-ceiling",
+      "field": "live_claim_ceiling",
+      "required": true
+    }
+  ],
+  "claimTransitions": [
+    {
+      "from": "planned",
+      "to": "artifact_present",
+      "requires": [
+        "prerequisite_state_table",
+        "fallback_boundary",
+        "external_write_policy"
+      ],
+      "validator": "ozm-external-prerequisite-gate/scripts/external_prerequisite_gate_check.py"
+    },
+    {
+      "from": "artifact_present",
+      "to": "reviewed",
+      "requires": [
+        "prerequisite_status",
+        "live_claim_ceiling"
+      ],
+      "validator": "ozm-external-prerequisite-gate/scripts/external_prerequisite_gate_check.py"
+    }
+  ],
+  "nonSurfaceFailures": [
+    "ozm-external-prerequisite-gate_loaded_without_required_activation_effect"
+  ],
+  "paperEvidenceClass": "contractual_control_surface"
+}

@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "ozm.eval_run_manifest.v1",
+  "type": "object",
+  "required": ["schema", "graph", "evalFiles", "script", "caseCounts", "status"],
+  "properties": {
+    "schema": {"const": "ozm.eval_run_manifest.v1"},
+    "graph": {"type": "object", "required": ["path", "sha256"]},
+    "evalFiles": {"type": "object"},
+    "script": {"type": "object", "required": ["path", "sha256"]},
+    "caseCounts": {"type": "object"},
+    "status": {"enum": ["pass", "fail"]}
+  },
+  "additionalProperties": true
+}

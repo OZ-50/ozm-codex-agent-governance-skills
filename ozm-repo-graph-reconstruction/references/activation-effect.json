@@ -1,0 +1,29 @@
+{
+  "schema": "ozm.activation_effect.v1",
+  "skill": "ozm-repo-graph-reconstruction",
+  "ownerQuestions": [
+    "Use for OZM-governed repo graph/reconstruction work: CodeGraph/codegraph MCP or CLI, .codegraph/.understand-anything, .repo_analysis bundles, graph freshness, impact radius before write, and mechanism fidelity."
+  ],
+  "blocksActionWhen": [
+    "stale graph is used for write or reference claim",
+    "impact radius is unknown before code mutation"
+  ],
+  "requiredArtifacts": [
+    "graph_freshness_receipt",
+    "impact_radius_map",
+    "reconstruction_bundle"
+  ],
+  "downstreamBinding": [
+    "ozm-requirement-load.repo_graph_basis",
+    "ozm-code-writing.impact_radius"
+  ],
+  "proofOrScript": [
+    "repo graph scripts under scripts/; graph freshness/manual receipt"
+  ],
+  "claimEffects": [
+    "keeps graph-backed claims at stale_or_candidate until freshness and impact are proven"
+  ],
+  "nonSurfaceFailureCodes": [
+    "ozm-repo-graph-reconstruction_loaded_without_required_activation_effect"
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "status": "pass",
+  "heartbeatSchemaVersion": "2.0",
+  "updatedAtEpoch": 1780165218.3494341,
+  "runnerMode": "process-group",
+  "completed": 393,
+  "completedCases": 393,
+  "selectedTotalCases": 393,
+  "totalCases": 393,
+  "lastCase": "security_gh_tools_redact_token_on_error",
+  "lastStartedCase": "security_gh_tools_redact_token_on_error",
+  "lastProgressAtEpoch": 1780165218.349435,
+  "noProgressSeconds": 0,
+  "elapsedMs": 35227,
+  "exitReason": "completed",
+  "failedCount": 0
+}

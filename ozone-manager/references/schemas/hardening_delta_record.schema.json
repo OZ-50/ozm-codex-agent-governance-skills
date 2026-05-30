@@ -1,0 +1,64 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "ozm.hardening_delta_record.schema.json",
+  "title": "OZM hardening_delta_record artifact schema",
+  "type": "object",
+  "required": [
+    "artifact_id",
+    "skill",
+    "claim_ceiling",
+    "evidence_refs",
+    "constraint_ids",
+    "record_delta"
+  ],
+  "properties": {
+    "artifact_id": {
+      "type": "string",
+      "const": "hardening_delta_record"
+    },
+    "skill": {
+      "type": "string",
+      "const": "ozm-skill-hardening"
+    },
+    "claim_ceiling": {
+      "type": "string"
+    },
+    "evidence_refs": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "constraint_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "authority_class": {
+      "type": "string"
+    },
+    "downstream_consumers": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "stale_when": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "record_delta": {
+      "type": [
+        "string",
+        "array",
+        "object",
+        "boolean",
+        "number"
+      ]
+    }
+  },
+  "additionalProperties": true
+}

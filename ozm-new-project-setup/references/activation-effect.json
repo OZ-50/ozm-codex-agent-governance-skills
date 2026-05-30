@@ -1,0 +1,34 @@
+{
+  "schema": "ozm.activation_effect.v1",
+  "skill": "ozm-new-project-setup",
+  "ownerQuestions": [
+    "Use for OZM new-project pre-start setup or audit: TruthDocs surfaces, task/goal loops, Goal/runtime reentry gates, loop output discipline, placement/environment gates, smoke/probe script placement, and bounded run-until-done autonomy."
+  ],
+  "blocksActionWhen": [
+    "new project starts without truth docs, environment, or placement posture",
+    "template defaults overwrite owner intent",
+    "OZM standing autonomy or explicit native Goal continuation is admitted without repo instruction reentry and routine loop output discipline"
+  ],
+  "requiredArtifacts": [
+    "project_boot_matrix",
+    "instruction_surface_posture",
+    "clean_room_entry_receipt",
+    "goal_runtime_reentry_gate",
+    "agentic_loop_output_discipline"
+  ],
+  "downstreamBinding": [
+    "ozm-requirement-load.project_truth_surfaces",
+    "ozm-dispatch-freeze.initial_packet",
+    "ozm-repo-instruction-surface-management.repo_agents_goal_reentry_and_output_discipline",
+    "ozm-record-surface-management.standing_autonomy_loop_receipt_policy"
+  ],
+  "proofOrScript": [
+    "manual project surface audit; no dedicated script"
+  ],
+  "claimEffects": [
+    "keeps project at setup_ready only after boot surfaces and first packet are bounded"
+  ],
+  "nonSurfaceFailureCodes": [
+    "ozm-new-project-setup_loaded_without_required_activation_effect"
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "schema": "ozm.harness_platform_matrix.v1",
+  "purpose": "Track eval harness variance across recorded and live runtime profiles.",
+  "budgets": {
+    "coldStartMsMax": 1000,
+    "warmP95MsMax": 50,
+    "allSuiteTimeoutPolicy": "suite_timeout_excludes_startup_probe"
+  },
+  "requiredProfilesForRelease": [
+    "windows-python-3.14",
+    "linux-python-3.13-container"
+  ],
+  "profiles": [
+    {
+      "profile": "windows-python-3.14",
+      "pythonStartupMsP50": 18,
+      "allSuiteElapsedMs": 39992,
+      "status": "current_live_pass",
+      "evidence": "ozone-manager/references/eval-last-run.json",
+      "pairedManifest": "ozone-manager/references/eval-run-manifest.json",
+      "updatedBy": "ozone-manager/scripts/record_live_profile_evidence.py"
+    },
+    {
+      "profile": "linux-python-3.13-container",
+      "pythonStartupMsP50": "measured",
+      "allSuiteProjectedMs": "measured",
+      "status": "must_pass_before_public_release",
+      "evidence": "external audit environment; not required for internal operator-local package release"
+    },
+    {
+      "profile": "linux-python-3.12-wsl",
+      "pythonStartupMsP50": 28,
+      "allSuiteElapsedMs": 48613,
+      "status": "recorded_pass",
+      "evidence": "external WSL Ubuntu live all-suite receipt; not a substitute for linux-python-3.13-container public-release profile"
+    }
+  ]
+}

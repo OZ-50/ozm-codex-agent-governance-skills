@@ -1,0 +1,129 @@
+{
+  "schema": "ozm.skill_contract.v3.1",
+  "skill": "ozm-dispatch-freeze",
+  "activationTriggers": {
+    "ownerStrongPhrases": [
+      "dispatch freeze",
+      "writer admission",
+      "写入准入",
+      "冻结开发包"
+    ],
+    "ownerWeakKeywords": [],
+    "companionStrongPhrases": [
+      "new project setup",
+      "project bootstrap",
+      "新项目初始化",
+      "TruthDocs",
+      "task loop",
+      "goal loop",
+      "参考项目有效分析",
+      "论文方法提炼",
+      "论文方法论",
+      "方法论落地",
+      "reference method grounding",
+      "paper method grounding"
+    ],
+    "companionWeakKeywords": [
+      "multi-agent-patterns",
+      "multi agent patterns",
+      "multi-agent pattern",
+      "supervisor swarm hierarchy",
+      "ce:plan",
+      "ce-plan",
+      "ce:brainstorm",
+      "ce-brainstorm",
+      "external prerequisite controller update",
+      "external-prerequisite controller update",
+      "external prerequisite control surface",
+      "external-prerequisite control surface"
+    ],
+    "negativeTriggers": [
+      "metadata-only mention",
+      "route output without SKILL.md hydration",
+      "pre-compaction receipt reused after compaction"
+    ]
+  },
+  "ownerQuestions": [
+    "Use before starting, replaying, or replacing an OZM-governed writer lane to freeze the reference row, write-set, controller-owned surfaces, admission order, current claim ceiling, change class, gate tier, and runtime carrier posture."
+  ],
+  "preconditions": [
+    "ozm-dispatch-freeze selected by ozone-manager for a matching OZM-governed request",
+    "latest visible request role and authority class are classified",
+    "owner surfaces or explicit absence are recorded"
+  ],
+  "blockingConditions": [
+    "packet lacks owner row, write-set, verifier, rollback, or reference anchor",
+    "wrong-direction signal conflicts with reference method map"
+  ],
+  "requiredArtifacts": [
+    {
+      "id": "dispatch_freeze_receipt",
+      "schema": "ozone-manager/references/schemas/dispatch_freeze_receipt.schema.json",
+      "requiredWhen": "ozm-dispatch-freeze is activated and dispatch_freeze_receipt governs the next downstream claim or action",
+      "claimCeilingIfMissing": "artifact_missing_or_candidate_only"
+    },
+    {
+      "id": "allowed_write_set",
+      "schema": "ozone-manager/references/schemas/allowed_write_set.schema.json",
+      "requiredWhen": "ozm-dispatch-freeze is activated and allowed_write_set governs the next downstream claim or action",
+      "claimCeilingIfMissing": "artifact_missing_or_candidate_only"
+    },
+    {
+      "id": "packet_gate_plan",
+      "schema": "ozone-manager/references/schemas/packet_gate_plan.schema.json",
+      "requiredWhen": "ozm-dispatch-freeze is activated and packet_gate_plan governs the next downstream claim or action",
+      "claimCeilingIfMissing": "artifact_missing_or_candidate_only"
+    }
+  ],
+  "validators": [
+    {
+      "script": "ozm-dispatch-freeze/scripts/dispatch_packet_contract_check.py",
+      "appliesTo": [
+        "dispatch_freeze_receipt",
+        "allowed_write_set",
+        "packet_gate_plan"
+      ],
+      "mustPassBefore": [
+        "positive_claim",
+        "closeout"
+      ]
+    }
+  ],
+  "downstreamBindings": [
+    {
+      "consumer": "ozm-code-writing",
+      "field": "allowed_write_set",
+      "required": true
+    },
+    {
+      "consumer": "ozm-review-diffgate-acceptance",
+      "field": "review_target",
+      "required": true
+    }
+  ],
+  "claimTransitions": [
+    {
+      "from": "planned",
+      "to": "artifact_present",
+      "requires": [
+        "dispatch_freeze_receipt",
+        "allowed_write_set",
+        "packet_gate_plan"
+      ],
+      "validator": "ozm-dispatch-freeze/scripts/dispatch_packet_contract_check.py"
+    },
+    {
+      "from": "artifact_present",
+      "to": "reviewed",
+      "requires": [
+        "allowed_write_set",
+        "review_target"
+      ],
+      "validator": "ozm-dispatch-freeze/scripts/dispatch_packet_contract_check.py"
+    }
+  ],
+  "nonSurfaceFailures": [
+    "ozm-dispatch-freeze_loaded_without_required_activation_effect"
+  ],
+  "paperEvidenceClass": "contractual_control_surface"
+}

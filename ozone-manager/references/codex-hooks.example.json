@@ -1,0 +1,65 @@
+{
+  "hooks": {
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"<resolved-python>\" \"<skills-root>/ozone-manager/scripts/ozm_codex_hook.py\"",
+            "timeout": 30,
+            "statusMessage": "Checking OZM activation"
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "^(apply_patch|Edit|Write)$",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"<resolved-python>\" \"<skills-root>/ozone-manager/scripts/ozm_codex_hook.py\"",
+            "timeout": 30,
+            "statusMessage": "Running OZM pre-write hook"
+          }
+        ]
+      },
+      {
+        "matcher": "^(Bash|shell_command|functions\\.shell_command)$",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"<resolved-python>\" \"<skills-root>/ozone-manager/scripts/ozm_codex_hook.py\"",
+            "timeout": 30,
+            "statusMessage": "Running OZM shell-role hook"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "^(apply_patch|Edit|Write)$",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"<resolved-python>\" \"<skills-root>/ozone-manager/scripts/ozm_codex_hook.py\"",
+            "timeout": 30,
+            "statusMessage": "Running OZM post-write hook"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"<resolved-python>\" \"<skills-root>/ozone-manager/scripts/ozm_codex_hook.py\"",
+            "timeout": 30,
+            "statusMessage": "Checking OZM closeout posture"
+          }
+        ]
+      }
+    ]
+  }
+}

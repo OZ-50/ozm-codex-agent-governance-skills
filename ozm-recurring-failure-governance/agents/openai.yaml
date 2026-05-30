@@ -1,0 +1,4 @@
+interface:
+  display_name: "OZM Recurring Failure Governance"
+  short_description: "Govern recurring OZM failures and experience loops"
+  default_prompt: "Use $ozm-recurring-failure-governance when the same OZM failure repeats, a method stalls or keeps failing review, gate noise recurs, or a training-free experience-practice candidate needs promotion discipline."

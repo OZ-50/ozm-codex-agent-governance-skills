@@ -1,0 +1,4 @@
+interface:
+  display_name: "OZM Skill Hardening"
+  short_description: "Harden OZM skills, routing, metadata, and evals"
+  default_prompt: "Use $ozm-skill-hardening to patch recurring OZM governance gaps while preserving hierarchy: update child skills, routing, hooks, metadata, graph rules, archives, validation, and target-session skill hydration audits without weakening existing gates."

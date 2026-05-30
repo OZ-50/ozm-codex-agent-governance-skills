@@ -1,0 +1,116 @@
+{
+  "schema": "ozm.release_evidence_authority.v1",
+  "package": "active-ozm-skill-tree",
+  "generated_at_local": "2026-05-30T01:52:33.507222+08:00",
+  "generated_at_utc": "2026-05-29T17:52:33.507416Z",
+  "claims": {
+    "internal_operator_release": {
+      "required_profiles": [
+        "windows-python-3.14"
+      ],
+      "evidence": [
+        {
+          "path": "ozone-manager/references/eval-last-run.json",
+          "runtime_profile": "windows-python-3.14",
+          "authority": "recorded_package_evidence"
+        },
+        {
+          "path": "ozone-manager/references/eval-run-manifest.json",
+          "runtime_profile": "windows-python-3.14",
+          "authority": "recorded_package_evidence"
+        },
+        {
+          "path": "ozone-manager/references/eval-last-run.json",
+          "runtime_profile": "windows-python-3.14",
+          "authority": "current_live_profile_evidence",
+          "recorded_at_epoch": 1780115705.6096761,
+          "paired_manifest": "ozone-manager/references/eval-run-manifest.json"
+        },
+        {
+          "path": "ozone-manager/references/eval-last-run.json",
+          "runtime_profile": "windows-python-3.14",
+          "authority": "current_live_profile_evidence",
+          "recorded_at_epoch": 1780116218.014827,
+          "paired_manifest": "ozone-manager/references/eval-run-manifest.json"
+        },
+        {
+          "path": "ozone-manager/references/eval-last-run.json",
+          "runtime_profile": "windows-python-3.14",
+          "authority": "current_live_profile_evidence",
+          "recorded_at_epoch": 1780116317.5592146,
+          "paired_manifest": "ozone-manager/references/eval-run-manifest.json"
+        }
+      ],
+      "claim_ceiling": "internal_operator_verified"
+    },
+    "portable_public_release": {
+      "required_profiles": [
+        "windows-python-3.14",
+        "linux-python-3.13-container"
+      ],
+      "evidence": [
+        {
+          "path": "ozone-manager/references/eval-last-run.json",
+          "runtime_profile": "windows-python-3.14",
+          "authority": "recorded_package_evidence"
+        },
+        {
+          "path": "ozone-manager/references/eval-last-run.json",
+          "runtime_profile": "windows-python-3.14",
+          "authority": "current_live_profile_evidence",
+          "recorded_at_epoch": 1780115705.6099002,
+          "paired_manifest": "ozone-manager/references/eval-run-manifest.json"
+        },
+        {
+          "path": "ozone-manager/references/eval-last-run.json",
+          "runtime_profile": "windows-python-3.14",
+          "authority": "current_live_profile_evidence",
+          "recorded_at_epoch": 1780116218.0150523,
+          "paired_manifest": "ozone-manager/references/eval-run-manifest.json"
+        },
+        {
+          "path": "ozone-manager/references/eval-last-run.json",
+          "runtime_profile": "windows-python-3.14",
+          "authority": "current_live_profile_evidence",
+          "recorded_at_epoch": 1780116317.559432,
+          "paired_manifest": "ozone-manager/references/eval-run-manifest.json"
+        }
+      ],
+      "claim_ceiling_if_missing": "portable_candidate_not_public_verified"
+    },
+    "current_live_reverification": {
+      "required_profiles": [
+        "windows-python-3.14"
+      ],
+      "evidence": [
+        {
+          "path": "ozone-manager/references/eval-run-manifest.json",
+          "runtime_profile": "windows-python-3.14",
+          "authority": "recorded_package_evidence"
+        },
+        {
+          "path": "ozone-manager/references/eval-last-run.json",
+          "runtime_profile": "windows-python-3.14",
+          "authority": "current_live_profile_evidence",
+          "recorded_at_epoch": 1780115705.6094012,
+          "paired_manifest": "ozone-manager/references/eval-run-manifest.json"
+        },
+        {
+          "path": "ozone-manager/references/eval-last-run.json",
+          "runtime_profile": "windows-python-3.14",
+          "authority": "current_live_profile_evidence",
+          "recorded_at_epoch": 1780116218.0145612,
+          "paired_manifest": "ozone-manager/references/eval-run-manifest.json"
+        },
+        {
+          "path": "ozone-manager/references/eval-last-run.json",
+          "runtime_profile": "windows-python-3.14",
+          "authority": "current_live_profile_evidence",
+          "recorded_at_epoch": 1780116317.5589848,
+          "paired_manifest": "ozone-manager/references/eval-run-manifest.json"
+        }
+      ],
+      "claim_ceiling": "current_live_verified_for_profile"
+    }
+  }
+}

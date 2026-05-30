@@ -1,0 +1,22 @@
+{
+  "schema": "ozm.eval_live_snapshot.v1",
+  "status": "pass",
+  "caseCounts": {
+    "selected": 391,
+    "completed": 391,
+    "failed": 0,
+    "running": 0
+  },
+  "lastStartedCase": null,
+  "lastCompletedCase": "security_gh_tools_redact_token_on_error",
+  "failedCases": [],
+  "runner": {
+    "mode": "process-group",
+    "caseTimeoutPolicy": "auto",
+    "currentRuntimeProfile": "win32-python-3.14",
+    "heartbeatSchemaVersion": "2.1",
+    "elapsedMs": 37042
+  },
+  "timedOut": false,
+  "claimCeiling": "pass"
+}

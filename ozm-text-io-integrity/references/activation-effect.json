@@ -1,0 +1,29 @@
+{
+  "schema": "ozm.activation_effect.v1",
+  "skill": "ozm-text-io-integrity",
+  "ownerQuestions": [
+    "Use for OZM-governed text file writes, generated reports, skill files, Markdown/JSON/YAML/config edits, Windows or PowerShell encoding boundaries, mojibake, newline drift, BOM handling, oversized inline payloads, chunked writes, and safe text preflight before positive claims."
+  ],
+  "blocksActionWhen": [
+    "generated text write lacks encoding/newline/readback posture",
+    "oversized payload is written without chunk/manifest boundary"
+  ],
+  "requiredArtifacts": [
+    "text_preflight_report",
+    "chunk_manifest",
+    "round_trip_hash_receipt"
+  ],
+  "downstreamBinding": [
+    "ozm-record-surface-management.text_write_receipt",
+    "ozm-closeout-handoff.artifact_integrity"
+  ],
+  "proofOrScript": [
+    "scripts/text_preflight.py and hash/readback receipt"
+  ],
+  "claimEffects": [
+    "separates written, readback_verified, and content_integrity_verified"
+  ],
+  "nonSurfaceFailureCodes": [
+    "ozm-text-io-integrity_loaded_without_required_activation_effect"
+  ]
+}

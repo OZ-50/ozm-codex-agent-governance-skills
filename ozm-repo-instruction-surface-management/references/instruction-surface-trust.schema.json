@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "ozm.instruction_surface_trust.v1",
+  "type": "object",
+  "required": ["surface_path", "trust_label", "precedence_rank", "conflict_diff", "mutation_authority"],
+  "properties": {
+    "surface_path": {"type": "string"},
+    "trust_label": {"enum": ["owner-authored", "repo-local", "third-party", "generated", "historical-only"]},
+    "precedence_rank": {"type": "integer"},
+    "conflict_diff": {"type": "string"},
+    "mutation_authority": {"type": "string"},
+    "payloadless_attack_scan": {"enum": ["pass", "warn", "fail", "not_run"]}
+  },
+  "additionalProperties": true
+}

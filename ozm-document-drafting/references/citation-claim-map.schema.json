@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "ozm.citation_claim_map.v1",
+  "type": "object",
+  "required": ["claims"],
+  "properties": {
+    "claims": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["claim_id", "section", "claim_text", "source_span", "reasoning_bridge", "counterpoint_or_boundary", "reader_action", "claim_ceiling"],
+        "properties": {
+          "claim_id": {"type": "string"},
+          "section": {"type": "string"},
+          "claim_text": {"type": "string"},
+          "source_span": {"type": "string"},
+          "reasoning_bridge": {"type": "string"},
+          "counterpoint_or_boundary": {"type": "string"},
+          "reader_action": {"type": "string"},
+          "claim_ceiling": {"type": "string"}
+        },
+        "additionalProperties": true
+      }
+    }
+  },
+  "additionalProperties": true
+}

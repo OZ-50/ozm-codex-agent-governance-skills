@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "ozm.paper_method_card.v1",
+  "type": "object",
+  "required": ["paper_id", "method_atoms", "non_claims"],
+  "properties": {
+    "paper_id": {"type": "string"},
+    "source_snapshot": {"type": "object"},
+    "method_claims": {"type": "array"},
+    "method_atoms": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["atom_id", "type", "source_ref", "source_span", "adoption", "proof_target"],
+        "properties": {
+          "atom_id": {"type": "string"},
+          "type": {"type": "string"},
+          "source_ref": {"type": "string"},
+          "source_span": {"type": "string"},
+          "adoption": {"enum": ["adopt", "adapt", "reject", "defer", "background"]},
+          "target_owner_requirement": {"type": "string"},
+          "proof_target": {"type": "object"},
+          "required_for_target": {"type": "boolean"},
+          "nonportable_boundary": {"type": "string"}
+        },
+        "additionalProperties": true
+      }
+    },
+    "non_claims": {"type": "array", "items": {"type": "string"}},
+    "underspecified_parts": {"type": "array"}
+  },
+  "additionalProperties": true
+}

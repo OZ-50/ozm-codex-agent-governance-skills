@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "ozm.review_verdict.v1",
+  "type": "object",
+  "required": ["verdict_id", "claim", "artifact_scope", "process_trace", "claim_promotion", "claim_ceiling"],
+  "properties": {
+    "verdict_id": {"type": "string"},
+    "claim": {"type": "string"},
+    "artifact_scope": {"type": "array", "items": {"type": "string"}},
+    "process_trace": {"type": "array", "items": {"type": "string"}},
+    "constraint_status": {"type": "array", "items": {"type": "string"}},
+    "per_constraint_results": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["constraint_id", "verdict", "evidence", "artifact_ref", "reviewer_role"],
+        "properties": {
+          "constraint_id": {"type": "string"},
+          "verdict": {"enum": ["yes", "partial", "no"]},
+          "evidence": {"type": "string"},
+          "artifact_ref": {"type": "string"},
+          "reviewer_role": {"type": "string"},
+          "instability_probe": {"type": "string"}
+        },
+        "additionalProperties": true
+      }
+    },
+    "claim_promotion": {"enum": ["blocked", "downgraded", "candidate", "verified_by_scope", "accepted_by_controller"]},
+    "claim_ceiling": {"type": "string"},
+    "open_issues": {"type": "array", "items": {"type": "string"}}
+  }
+}

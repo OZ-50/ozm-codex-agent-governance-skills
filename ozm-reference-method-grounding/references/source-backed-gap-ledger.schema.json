@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "ozm.source_backed_gap_ledger.v1",
+  "type": "object",
+  "required": ["gaps"],
+  "properties": {
+    "gaps": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["gap_id", "source", "method_atom_id", "current_maturity", "target_maturity", "status", "proof_required"],
+        "properties": {
+          "gap_id": {"type": "string"},
+          "source": {"type": "string"},
+          "method_node": {"type": "string"},
+          "method_atom_id": {"type": "string"},
+          "target_requirement": {"type": "string"},
+          "current_maturity": {"type": "string"},
+          "target_maturity": {"type": "string"},
+          "status": {"enum": ["open", "reduced", "closed", "deferred", "rejected"]},
+          "proof_required": {"type": "array", "items": {"type": "string"}},
+          "evidence_types": {"type": "array", "items": {"type": "string"}},
+          "last_evidence": {"type": "string"}
+        },
+        "additionalProperties": true
+      }
+    }
+  },
+  "additionalProperties": true
+}

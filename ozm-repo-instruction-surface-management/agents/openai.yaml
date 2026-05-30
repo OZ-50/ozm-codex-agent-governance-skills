@@ -1,0 +1,4 @@
+interface:
+  display_name: "OZM Repo Instruction Surface Management"
+  short_description: "OZM-managed repository instruction surface gates"
+  default_prompt: "Use $ozm-repo-instruction-surface-management to create, audit, or maintain AGENTS.md and related instruction surfaces under OZM control."

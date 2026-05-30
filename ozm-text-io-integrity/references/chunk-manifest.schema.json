@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "ozm.chunk_manifest.v1",
+  "type": "object",
+  "required": ["manifest_id", "total_chunks", "sha256_chain", "expected_order", "assembly_target", "max_inline_payload", "readback_hash"],
+  "properties": {
+    "manifest_id": {"type": "string", "minLength": 1},
+    "total_chunks": {"type": "integer", "minimum": 1},
+    "sha256_chain": {"type": "array", "items": {"type": "string"}, "minItems": 1},
+    "expected_order": {"type": "array", "items": {"type": "string"}, "minItems": 1},
+    "assembly_target": {"type": "string", "minLength": 1},
+    "max_inline_payload": {"type": "integer", "minimum": 1},
+    "newline_policy": {"type": "string"},
+    "encoding_summary": {"type": "string"},
+    "readback_hash": {"type": "string", "minLength": 1}
+  },
+  "additionalProperties": true
+}

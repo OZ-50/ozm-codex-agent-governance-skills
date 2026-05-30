@@ -1,0 +1,123 @@
+{
+  "schema": "ozm.skill_contract.v3.1",
+  "skill": "ozm-repo-instruction-surface-management",
+  "activationTriggers": {
+    "ownerStrongPhrases": [
+      "AGENTS.md",
+      "CLAUDE.md",
+      "repository instruction",
+      "instruction drift",
+      "仓库指令",
+      "指令面"
+    ],
+    "ownerWeakKeywords": [
+      "agents.md",
+      "agent.md",
+      "claude.md",
+      "repo instruction",
+      "repository instruction"
+    ],
+    "companionStrongPhrases": [
+      "new project setup",
+      "project bootstrap",
+      "新项目初始化",
+      "TruthDocs",
+      "task loop",
+      "goal loop"
+    ],
+    "companionWeakKeywords": [
+      "new project setup",
+      "new project prestart",
+      "project pre-start",
+      "startup pack"
+    ],
+    "negativeTriggers": [
+      "metadata-only mention",
+      "route output without SKILL.md hydration",
+      "pre-compaction receipt reused after compaction"
+    ]
+  },
+  "ownerQuestions": [
+    "Use for OZM-managed AGENTS.md, CLAUDE.md, and repository instruction surface governance."
+  ],
+  "preconditions": [
+    "ozm-repo-instruction-surface-management selected by ozone-manager for a matching OZM-governed request",
+    "latest visible request role and authority class are classified",
+    "owner surfaces or explicit absence are recorded"
+  ],
+  "blockingConditions": [
+    "AGENTS/CLAUDE instructions are edited without authority or precedence map",
+    "repo instruction absence is treated as blocker"
+  ],
+  "requiredArtifacts": [
+    {
+      "id": "instruction_precedence_map",
+      "schema": "references/instruction-precedence-map.schema.json",
+      "requiredWhen": "ozm-repo-instruction-surface-management is activated and instruction_precedence_map governs the next downstream claim or action",
+      "claimCeilingIfMissing": "artifact_missing_or_candidate_only"
+    },
+    {
+      "id": "instruction_diff_receipt",
+      "schema": "ozone-manager/references/schemas/instruction_diff_receipt.schema.json",
+      "requiredWhen": "ozm-repo-instruction-surface-management is activated and instruction_diff_receipt governs the next downstream claim or action",
+      "claimCeilingIfMissing": "artifact_missing_or_candidate_only"
+    },
+    {
+      "id": "authority_update_posture",
+      "schema": "ozone-manager/references/schemas/authority_update_posture.schema.json",
+      "requiredWhen": "ozm-repo-instruction-surface-management is activated and authority_update_posture governs the next downstream claim or action",
+      "claimCeilingIfMissing": "artifact_missing_or_candidate_only"
+    }
+  ],
+  "validators": [
+    {
+      "script": "ozm-repo-instruction-surface-management/scripts/repo_instruction_surface_check.py",
+      "appliesTo": [
+        "instruction_precedence_map",
+        "instruction_diff_receipt",
+        "authority_update_posture"
+      ],
+      "mustPassBefore": [
+        "positive_claim",
+        "closeout"
+      ]
+    }
+  ],
+  "downstreamBindings": [
+    {
+      "consumer": "ozone-manager",
+      "field": "load_order",
+      "required": true
+    },
+    {
+      "consumer": "ozm-closeout-handoff",
+      "field": "instruction_mutation_receipt",
+      "required": true
+    }
+  ],
+  "claimTransitions": [
+    {
+      "from": "planned",
+      "to": "artifact_present",
+      "requires": [
+        "instruction_precedence_map",
+        "instruction_diff_receipt",
+        "authority_update_posture"
+      ],
+      "validator": "ozm-repo-instruction-surface-management/scripts/repo_instruction_surface_check.py"
+    },
+    {
+      "from": "artifact_present",
+      "to": "reviewed",
+      "requires": [
+        "load_order",
+        "instruction_mutation_receipt"
+      ],
+      "validator": "ozm-repo-instruction-surface-management/scripts/repo_instruction_surface_check.py"
+    }
+  ],
+  "nonSurfaceFailures": [
+    "ozm-repo-instruction-surface-management_loaded_without_required_activation_effect"
+  ],
+  "paperEvidenceClass": "contractual_control_surface"
+}

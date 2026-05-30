@@ -1,0 +1,29 @@
+{
+  "schema": "ozm.activation_effect.v1",
+  "skill": "ozm-truth-boundary-management",
+  "ownerQuestions": [
+    "Use when OZM-governed work has competing truth surfaces and needs explicit ownership, honest downgrade of projections or placeholders, and reconciliation between live state and controller memory."
+  ],
+  "blocksActionWhen": [
+    "projection or summary is used as owner truth",
+    "controller truth conflict is unresolved"
+  ],
+  "requiredArtifacts": [
+    "truth_owner_map",
+    "surface_authority_classification",
+    "conflict_resolution_receipt"
+  ],
+  "downstreamBinding": [
+    "ozm-claim-ceiling.truth_basis",
+    "ozm-record-surface-management.authority_class"
+  ],
+  "proofOrScript": [
+    "manual owner-surface reread; no dedicated script"
+  ],
+  "claimEffects": [
+    "downgrades claims to projection_only, historical_only, or owner_conflict until reconciled"
+  ],
+  "nonSurfaceFailureCodes": [
+    "ozm-truth-boundary-management_loaded_without_required_activation_effect"
+  ]
+}

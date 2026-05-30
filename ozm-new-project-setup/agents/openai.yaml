@@ -1,0 +1,4 @@
+interface:
+  display_name: "OZM New Project Setup"
+  short_description: "Governed startup, smoke placement, and agentic loop gates"
+  default_prompt: "Use $ozm-new-project-setup to prepare or audit a governed pre-start package with TruthDocs, task/goal loops, report boundaries, script/smoke placement, final coverage, and standing-autonomy gates."

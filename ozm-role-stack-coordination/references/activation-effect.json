@@ -1,0 +1,29 @@
+{
+  "schema": "ozm.activation_effect.v1",
+  "skill": "ozm-role-stack-coordination",
+  "ownerQuestions": [
+    "Use when OZM-governed work needs controller/planner/writer/reviewer/audit role coordination, subagent or spawn_agent/wait_agent tool-event governance, model-profile/runtime-carrier checks, or bounded multi-lane ownership discipline."
+  ],
+  "blocksActionWhen": [
+    "subagent/review is claimed without actual carrier receipt",
+    "writer self-accepts without independent review posture"
+  ],
+  "requiredArtifacts": [
+    "role_stack_receipt",
+    "subagent_context_pack",
+    "result_pack_contract"
+  ],
+  "downstreamBinding": [
+    "ozm-review-diffgate-acceptance.audit_carrier",
+    "ozm-record-surface-management.subagent_result_record"
+  ],
+  "proofOrScript": [
+    "ozm_session_audit.py for session traces; manual carrier receipt otherwise"
+  ],
+  "claimEffects": [
+    "downgrades audit claims to same-thread or unavailable unless carrier/result pack proves independence"
+  ],
+  "nonSurfaceFailureCodes": [
+    "ozm-role-stack-coordination_loaded_without_required_activation_effect"
+  ]
+}

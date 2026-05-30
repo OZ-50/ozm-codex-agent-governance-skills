@@ -1,0 +1,64 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "ozm.prototype_boundary_receipt.schema.json",
+  "title": "OZM prototype_boundary_receipt artifact schema",
+  "type": "object",
+  "required": [
+    "artifact_id",
+    "skill",
+    "claim_ceiling",
+    "evidence_refs",
+    "constraint_ids",
+    "receipt_status"
+  ],
+  "properties": {
+    "artifact_id": {
+      "type": "string",
+      "const": "prototype_boundary_receipt"
+    },
+    "skill": {
+      "type": "string",
+      "const": "ozm-feature-extraction-prototyper"
+    },
+    "claim_ceiling": {
+      "type": "string"
+    },
+    "evidence_refs": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "constraint_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "authority_class": {
+      "type": "string"
+    },
+    "downstream_consumers": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "stale_when": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "receipt_status": {
+      "type": [
+        "string",
+        "array",
+        "object",
+        "boolean",
+        "number"
+      ]
+    }
+  },
+  "additionalProperties": true
+}

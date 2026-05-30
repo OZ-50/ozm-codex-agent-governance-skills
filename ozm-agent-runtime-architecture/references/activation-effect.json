@@ -1,0 +1,29 @@
+{
+  "schema": "ozm.activation_effect.v1",
+  "skill": "ozm-agent-runtime-architecture",
+  "ownerQuestions": [
+    "Use for OZM-governed agent-native, multi-agent, memory, MCP/tool, control-plane, operator-shell, or agent framework work that needs runtime-real evidence, user-agent parity, tool contracts, state transitions, memory boundaries, and claim ceilings."
+  ],
+  "blocksActionWhen": [
+    "agent capability is claimed without runtime/tool/state proof",
+    "projection-only architecture is treated as implemented runtime"
+  ],
+  "requiredArtifacts": [
+    "agent_runtime_capability_map",
+    "tool_contract_table",
+    "runtime_real_vs_projection_receipt"
+  ],
+  "downstreamBinding": [
+    "ozm-requirement-load.runtime_truth_map",
+    "ozm-review-diffgate-acceptance.runtime_real_verdict"
+  ],
+  "proofOrScript": [
+    "manual runtime/tool receipt; no dedicated script"
+  ],
+  "claimEffects": [
+    "limits agent/runtime claims to projection_only until tool and state transitions are proven"
+  ],
+  "nonSurfaceFailureCodes": [
+    "ozm-agent-runtime-architecture_loaded_without_required_activation_effect"
+  ]
+}

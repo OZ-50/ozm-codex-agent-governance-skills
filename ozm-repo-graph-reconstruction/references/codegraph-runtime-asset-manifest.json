@@ -1,0 +1,72 @@
+{
+  "schema": "ozm.codegraph_runtime_asset_manifest.v1",
+  "asset": "assets/codegraph-runtime",
+  "authority": "optional_preserved_backend_asset",
+  "runtime": "node_typescript",
+  "network": false,
+  "installNetwork": "disabled_by_default",
+  "requiresUserApprovalForInstall": true,
+  "packageJsonSha256": "e7fdcd1f15717ee982f7caa21ff35c0cd3cbe46c100b980484576c95283e7afe",
+  "packageLockSha256": "59af2647fb07fce5f5e76a69fabe74b483b5d3d15b8aaaf3016586006440451e",
+  "fileCount": 156,
+  "extensionCounts": {
+    ".js": 4,
+    ".json": 4,
+    ".md": 10,
+    ".mdc": 1,
+    ".mjs": 3,
+    ".sh": 6,
+    ".sql": 1,
+    ".ts": 123,
+    ".wasm": 2,
+    "<none>": 2
+  },
+  "allowedCommands": [
+    "npm test -- --runInBand equivalent only inside assets/codegraph-runtime after owner approval",
+    "npm run build equivalent only inside assets/codegraph-runtime after dependency posture is classified",
+    "read-only source inspection and hash verification without install approval"
+  ],
+  "allowedWrites": [
+    "assets/codegraph-runtime build/test outputs only when explicitly admitted",
+    "OZM repo graph receipts under the current project record surface",
+    "temporary test fixtures under an explicit temp directory"
+  ],
+  "forbiddenWrites": [
+    "OZM root package files outside this skill without dispatch freeze",
+    "project source files from asset runtime commands unless a write packet owns them",
+    "network-installed dependency changes without package-lock diff and approval receipt"
+  ],
+  "stdoutDataClass": "diagnostic_no_secret_text_or_json",
+  "secretAccess": "not_required; redact env/token-like output before record-surface consumption",
+  "testPosture": "asset tests are runtime-backend proof only; they do not prove target repo graph freshness or implementation acceptance",
+  "claimCeilingIfMissing": "codegraph_asset_unmanifested_navigation_only",
+  "staleWhen": [
+    "package.json changes",
+    "package-lock.json changes",
+    "asset source changes",
+    "Node/runtime version changes",
+    "external MCP/backend replaces bundled asset"
+  ],
+  "sampleHashes": {
+    ".claude/skills/agent-eval/corpus.json": "ca82b30b834c2f4779f05fc875d7e3458b4fe57ae223e1dfe607b3a0b83766a2",
+    ".claude/skills/agent-eval/SKILL.md": "589c2e17b8f7816eb115ae9626d34347b09dbb745c6a700a8ea084062eef1471",
+    ".claude/skills/publish/SKILL.md": "c1de79e850f904bfc76bcdd62324d0247ccad821ea13d174099afd41e4819db4",
+    ".cursor/rules/codegraph.mdc": "e9c9812990a7847c3ae8d9b9b884764540d58be3d48af9f012d9b75fa350885a",
+    ".gitignore": "b3801a502441201e9d5163df6ef9a24c28b8eecb82981658e3e243282c6520e2",
+    "__tests__/context.test.ts": "dd66da761d64061ae2fcd5ad85e47513520fa4b314fe76a416e92000657a97fa",
+    "__tests__/evaluation/runner.ts": "409d72f95d3c992a28f73c81faf25b15720fa10ac393436eab560d764cb7c8a7",
+    "__tests__/evaluation/scoring.ts": "483dc3d3dad5de4af9676fe4b2bfdf935d4330838540f9f15e94453c11c8589a",
+    "__tests__/evaluation/test-cases.ts": "c39072f3122c1e6a5562a8feb52845590ed5e5ac6302d0facb79a080c0c04cd0",
+    "__tests__/evaluation/types.ts": "168a4a09c69eb3b435d3679c4e407a7d4582e8ad267381f5797ad4550fd86d9d",
+    "__tests__/explore-output-budget.test.ts": "1bdbb45cb7a7c5ad3e22e310cafba32308b316881aaec75f01a782600fb7dbcf",
+    "__tests__/extraction.test.ts": "d96c03834060ba651259a9dd6d591c8af765e68dee4307316f0bb77ed3333124",
+    "__tests__/foundation.test.ts": "0fbd4ba9fd7e48d50a0ce37a45cdb2a8bcd99112b0e44cc5ac09dc58a65257a7",
+    "__tests__/frameworks-integration.test.ts": "82a7638d54f997f8942359e406c6f1f422c9ceca8b0764785654cd4925b93224",
+    "__tests__/frameworks.test.ts": "276704499cacd29dc7a49f64fe36df86a05322794f2bcd7f23b4f429b6aa8725",
+    "__tests__/git-hooks.test.ts": "ef61ddfec643a412f5e3c4631450f98ef1bad6001e5fb6a8281581c9ef8c0d52",
+    "__tests__/glyphs.test.ts": "bb3c13808e1d8bcd4d3fd42c7cbdffc6b04892917625fdeb43c9455bc56d8812",
+    "__tests__/graph.test.ts": "f0aff75c7a952657bcb604c248e03748b6e7f467b790f08faf29afc4aa514944",
+    "__tests__/installer-targets.test.ts": "10fdca9f8e1f63e236483b569c6420b579213d9b0202981c7e881e5dde9df710",
+    "__tests__/installer.test.ts": "3cb4f079030742e9d42fdcedaa35347b8a93857ad35b412027dc14b5031790aa"
+  }
+}

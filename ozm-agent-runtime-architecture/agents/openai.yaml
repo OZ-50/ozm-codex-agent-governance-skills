@@ -1,0 +1,4 @@
+interface:
+  display_name: "OZM Agent Runtime Architecture"
+  short_description: "Govern agent-native runtime architecture evidence."
+  default_prompt: "Use $ozm-agent-runtime-architecture to map canonical loops, user-agent parity, tool contracts, memory/state boundaries, and runtime-real claim ceilings before agent framework design, implementation, or acceptance."

@@ -1,0 +1,111 @@
+{
+  "schema": "ozm.eval_run_manifest.v1",
+  "python": {
+    "version": "3.14.2 (tags/v3.14.2:df79316, Dec  5 2025, 17:18:21) [MSC v.1944 64 bit (AMD64)]",
+    "executable": "<resolved-python>",
+    "platform": "Windows-11-10.0.26200-SP0"
+  },
+  "runner": {
+    "mode": "process-group",
+    "caseTimeoutSeconds": 5.017,
+    "caseTimeoutPolicy": "auto",
+    "pythonStartupMsP50": 17,
+    "startupProbeMs": 55,
+    "suiteTimeoutExcludesStartupProbe": true,
+    "workerTimeoutBudgetMs": 7034,
+    "suiteTimeoutSeconds": 0.0,
+    "timeoutMode": "hard_kill_worker",
+    "elapsedMs": 35227,
+    "caseIsolationStrategy": {
+      "static_and_route": "inprocess_batch",
+      "script_fixture": "class_based",
+      "pure_validator": "inprocess_batch",
+      "filesystem_fixture": "process-group",
+      "process_safety_fixture": "process-group",
+      "expected_timeout": "process-group",
+      "benchmark_contract": "contract-inprocess"
+    },
+    "fixtureIsolationClassCounts": {
+      "pure_validator": 13,
+      "filesystem_fixture": 110,
+      "process_safety_fixture": 14,
+      "expected_timeout_fixture": 5
+    },
+    "estimatedSpawnOverheadMs": 4386,
+    "safeInprocessCases": 264,
+    "isolatedProcessCases": 129,
+    "processStartMethod": "subprocess",
+    "launchTimeoutSeconds": 3,
+    "noProgressTimeoutSeconds": 20,
+    "processTreeKill": true,
+    "heartbeatSchemaVersion": "2.0",
+    "dontWriteBytecode": true,
+    "pythonBFlag": true
+  },
+  "runtime": {
+    "capturedAtEpoch": 1780165218.3587508,
+    "pythonVersion": "3.14.2",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "system": "Windows",
+    "machine": "AMD64",
+    "processStartMethod": "subprocess",
+    "dontWriteBytecode": true,
+    "pythonBFlag": true,
+    "heartbeatSchemaVersion": "2.0"
+  },
+  "currentRuntime": {
+    "capturedAtEpoch": 1780165218.3587508,
+    "pythonVersion": "3.14.2",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "system": "Windows",
+    "machine": "AMD64",
+    "processStartMethod": "subprocess",
+    "dontWriteBytecode": true,
+    "pythonBFlag": true,
+    "heartbeatSchemaVersion": "2.0"
+  },
+  "evidenceRuntime": {
+    "capturedAtEpoch": 1780165218.3587508,
+    "pythonVersion": "3.14.2",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "system": "Windows",
+    "machine": "AMD64",
+    "processStartMethod": "subprocess",
+    "dontWriteBytecode": true,
+    "pythonBFlag": true,
+    "heartbeatSchemaVersion": "2.0"
+  },
+  "runtimeAuthority": "current_live_run",
+  "graph": {
+    "path": "ozone-manager/references/skill-graph.json",
+    "sha256": "5ebefb1aa845e6a28c90e83f51e9f478e3a664c492d491cfb1181244893f75b8"
+  },
+  "evalFiles": {
+    "route_cases.jsonl": "35196566cb183aa00c336765680750e62fb3fcac0d0de824aaf6004e2f54609e",
+    "behavior_cases.jsonl": "47638b99bf1462e91c57f76353c933e584decb57d55678f0a923e99fe00f2a80",
+    "regression_cases.jsonl": "0cd1621769424006be7ce2cd70585e74ba4fc30f708cadf815f5c01bb08629c2",
+    "outcome_cases.jsonl": "47678acf6099b3d7e6d21542a82e7e05a6603568080011f80ae62c7266a7a087",
+    "process_trace_cases.jsonl": "988f116380c96b8d207aafecfb258cd0b5545c80e0e6528f7b1494418a74e72a",
+    "heldout_cases.jsonl": "2ee3d55e4472cde53441e2104a242a716b9fd65d95acd2a51d21157a7330c9dc",
+    "adversarial_cases.jsonl": "1ebce2478b0202af3b3a72d8fb2f5b731cf50dc1d7b77e079f208dc29a7f2b5f",
+    "performance_cases.jsonl": "fd59ef93636d6c398a39cb612a2bf9cf131f20fc9d987228c9c741bbeb8a614e",
+    "security_cases.jsonl": "cd68bc48fb56b43a89b34607d321e6cfcb686f275da63dfe18dcb398b8e1814e"
+  },
+  "script": {
+    "path": "ozone-manager/scripts/ozm_eval_suite.py",
+    "sha256": "9f383e635b1407d493f83434a73752826a9def2f4f0a135914f880218d57701f"
+  },
+  "caseCounts": {
+    "route": 92,
+    "behavior": 60,
+    "regression": 34,
+    "outcome": 141,
+    "process": 23,
+    "heldout": 2,
+    "adversarial": 2,
+    "performance": 2,
+    "security": 37,
+    "total": 393
+  },
+  "status": "pass"
+}

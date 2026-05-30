@@ -1,0 +1,4 @@
+interface:
+  display_name: "OZM Feature Extraction Prototyper"
+  short_description: "OZM-managed RFMC reusable feature extraction gates"
+  default_prompt: "Use $ozm-feature-extraction-prototyper to extract verified work into RFMC reusable capsules under OZM claim control."

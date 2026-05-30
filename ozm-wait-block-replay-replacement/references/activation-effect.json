@@ -1,0 +1,29 @@
+{
+  "schema": "ozm.activation_effect.v1",
+  "skill": "ozm-wait-block-replay-replacement",
+  "ownerQuestions": [
+    "Use when an OZM-governed lane appears stalled and must be classified honestly as clean wait, nonstart, replay, replacement, blocker, or historical-only without corrupting ownership."
+  ],
+  "blocksActionWhen": [
+    "stalled lane is blindly replayed",
+    "replacement would corrupt owner surface or duplicate writer work"
+  ],
+  "requiredArtifacts": [
+    "lane_state_classification",
+    "replay_or_replacement_decision",
+    "ownership_boundary_receipt"
+  ],
+  "downstreamBinding": [
+    "ozm-dispatch-freeze.replay_admission",
+    "ozm-record-surface-management.lane_state_record"
+  ],
+  "proofOrScript": [
+    "manual lane trace/heartbeat receipt; no dedicated script"
+  ],
+  "claimEffects": [
+    "limits lane posture to clean_wait, blocked, nonstart, replay_candidate, or replacement_candidate"
+  ],
+  "nonSurfaceFailureCodes": [
+    "ozm-wait-block-replay-replacement_loaded_without_required_activation_effect"
+  ]
+}

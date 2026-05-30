@@ -1,0 +1,150 @@
+{
+  "schema": "ozm.skill_contract.v3.1",
+  "skill": "ozm-capability-evolution-governance",
+  "activationTriggers": {
+    "ownerStrongPhrases": [
+      "capability evolution",
+      "self-evolving agent",
+      "self-improving coding agent",
+      "evo skill",
+      "LLM evaluator API",
+      "能力进化",
+      "自进化",
+      "技能进化"
+    ],
+    "ownerWeakKeywords": [
+      "evo",
+      "evolution",
+      "mutation",
+      "promotion",
+      "rollback",
+      "benchmark-first",
+      "capability-evolver",
+      "EvoAgentX"
+    ],
+    "companionStrongPhrases": [],
+    "companionWeakKeywords": [],
+    "negativeTriggers": [
+      "metadata-only mention",
+      "route output without SKILL.md hydration",
+      "pre-compaction receipt reused after compaction"
+    ]
+  },
+  "ownerQuestions": [
+    "Is this proposed capability/skill/agent evolution safe, benchmark-backed, reversible, and promotable under OZM?"
+  ],
+  "preconditions": [
+    "ozone-manager selected this child for an OZM-governed evo or capability evolution request",
+    "request role and runtime/API posture are classified",
+    "baseline behavior or explicit absence is recorded"
+  ],
+  "blockingConditions": [
+    "evolution candidate lacks baseline, target behavior, eval, rollback, or promotion owner",
+    "LLM API is treated as execution authority rather than optional evaluator/generator evidence",
+    "self-modification, remote hub, package install, git reset, or background loop is assumed without explicit carrier approval"
+  ],
+  "requiredArtifacts": [
+    {
+      "id": "evolution_candidate_record",
+      "schema": "references/evolution-candidate.schema.json",
+      "requiredWhen": "candidate generation, mutation planning, or promotion is requested",
+      "claimCeilingIfMissing": "evolution_candidate_missing"
+    },
+    {
+      "id": "evolution_eval_report",
+      "schema": "references/evolution-eval-report.schema.json",
+      "requiredWhen": "promotion, acceptance, or quality improvement claim is requested",
+      "claimCeilingIfMissing": "eval_incomplete"
+    },
+    {
+      "id": "promotion_decision_receipt",
+      "schema": "ozone-manager/references/schemas/promotion_decision_receipt.schema.json",
+      "requiredWhen": "the candidate is promoted into active OZM behavior",
+      "claimCeilingIfMissing": "promotion_pending"
+    },
+    {
+      "id": "rollback_receipt",
+      "schema": "ozone-manager/references/schemas/rollback_receipt.schema.json",
+      "requiredWhen": "candidate edits were made or promotion is rejected after mutation",
+      "claimCeilingIfMissing": "rollback_unproven"
+    }
+  ],
+  "validators": [
+    {
+      "script": "ozm-capability-evolution-governance/scripts/evolution_candidate_check.py",
+      "appliesTo": [
+        "evolution_candidate_record",
+        "evolution_eval_report",
+        "promotion_decision_receipt",
+        "rollback_receipt"
+      ],
+      "mustPassBefore": [
+        "promotion_claim",
+        "closeout"
+      ]
+    }
+  ],
+  "downstreamBindings": [
+    {
+      "consumer": "ozm-skill-hardening",
+      "field": "candidate_change",
+      "required": true
+    },
+    {
+      "consumer": "ozm-recurring-failure-governance",
+      "field": "failure_family",
+      "required": false
+    },
+    {
+      "consumer": "ozm-review-diffgate-acceptance",
+      "field": "evolution_eval",
+      "required": true
+    },
+    {
+      "consumer": "ozm-record-surface-management",
+      "field": "experience_record",
+      "required": false
+    },
+    {
+      "consumer": "ozm-claim-ceiling",
+      "field": "evolution_claim",
+      "required": true
+    }
+  ],
+  "claimTransitions": [
+    {
+      "from": "planned",
+      "to": "artifact_present",
+      "requires": [
+        "evolution_candidate_record"
+      ],
+      "validator": "ozm-capability-evolution-governance/scripts/evolution_candidate_check.py"
+    },
+    {
+      "from": "artifact_present",
+      "to": "reviewed",
+      "requires": [
+        "evolution_eval_report",
+        "rollback_plan",
+        "reviewer_result"
+      ],
+      "validator": "ozm-capability-evolution-governance/scripts/evolution_candidate_check.py"
+    },
+    {
+      "from": "reviewed",
+      "to": "accepted",
+      "requires": [
+        "promotion_decision_receipt",
+        "ozm-skill-hardening",
+        "ozm-claim-ceiling"
+      ],
+      "validator": "ozm-capability-evolution-governance/scripts/evolution_candidate_check.py"
+    }
+  ],
+  "nonSurfaceFailures": [
+    "ozm-capability-evolution-governance_loaded_without_required_activation_effect",
+    "llm_api_output_treated_as_execution_authority",
+    "single_trace_promoted_as_evolution"
+  ],
+  "paperEvidenceClass": "contractual_control_surface"
+}

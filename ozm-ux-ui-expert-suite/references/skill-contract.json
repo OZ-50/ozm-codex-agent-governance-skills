@@ -1,0 +1,119 @@
+{
+  "schema": "ozm.skill_contract.v3.1",
+  "skill": "ozm-ux-ui-expert-suite",
+  "activationTriggers": {
+    "ownerStrongPhrases": [
+      "UX",
+      "UI",
+      "视觉验收",
+      "交互证明",
+      "responsive proof",
+      "accessibility proof"
+    ],
+    "ownerWeakKeywords": [
+      "reference ui parity",
+      "reference visual parity",
+      "reference-guided ui",
+      "reference guided ui",
+      "frontend",
+      "front-end",
+      "ui",
+      "ux"
+    ],
+    "companionStrongPhrases": [],
+    "companionWeakKeywords": [
+      "control plane weight",
+      "control-plane weight",
+      "control plane noise",
+      "control-plane noise"
+    ],
+    "negativeTriggers": [
+      "metadata-only mention",
+      "route output without SKILL.md hydration",
+      "pre-compaction receipt reused after compaction"
+    ]
+  },
+  "ownerQuestions": [
+    "Use for OZM-managed UX/UI design, iteration, and visual implementation review gates."
+  ],
+  "preconditions": [
+    "ozm-ux-ui-expert-suite selected by ozone-manager for a matching OZM-governed request",
+    "latest visible request role and authority class are classified",
+    "owner surfaces or explicit absence are recorded"
+  ],
+  "blockingConditions": [
+    "UI claim lacks screenshot/DOM/interaction evidence",
+    "design specialist result is not consumed by OZM review"
+  ],
+  "requiredArtifacts": [
+    {
+      "id": "design_direction_receipt",
+      "schema": "ozone-manager/references/schemas/design_direction_receipt.schema.json",
+      "requiredWhen": "ozm-ux-ui-expert-suite is activated and design_direction_receipt governs the next downstream claim or action",
+      "claimCeilingIfMissing": "artifact_missing_or_candidate_only"
+    },
+    {
+      "id": "visual_evidence_pack",
+      "schema": "ozone-manager/references/schemas/visual_evidence_pack.schema.json",
+      "requiredWhen": "ozm-ux-ui-expert-suite is activated and visual_evidence_pack governs the next downstream claim or action",
+      "claimCeilingIfMissing": "artifact_missing_or_candidate_only"
+    },
+    {
+      "id": "accessibility_or_interaction_verdict",
+      "schema": "ozone-manager/references/schemas/accessibility_or_interaction_verdict.schema.json",
+      "requiredWhen": "ozm-ux-ui-expert-suite is activated and accessibility_or_interaction_verdict governs the next downstream claim or action",
+      "claimCeilingIfMissing": "artifact_missing_or_candidate_only"
+    }
+  ],
+  "validators": [
+    {
+      "script": "ozm-ux-ui-expert-suite/scripts/ux_visual_evidence_check.py",
+      "appliesTo": [
+        "design_direction_receipt",
+        "visual_evidence_pack",
+        "accessibility_or_interaction_verdict"
+      ],
+      "mustPassBefore": [
+        "positive_claim",
+        "closeout"
+      ]
+    }
+  ],
+  "downstreamBindings": [
+    {
+      "consumer": "ozm-review-diffgate-acceptance",
+      "field": "visual_parity_verdict",
+      "required": true
+    },
+    {
+      "consumer": "ozm-claim-ceiling",
+      "field": "visual_claim_ceiling",
+      "required": true
+    }
+  ],
+  "claimTransitions": [
+    {
+      "from": "planned",
+      "to": "artifact_present",
+      "requires": [
+        "design_direction_receipt",
+        "visual_evidence_pack",
+        "accessibility_or_interaction_verdict"
+      ],
+      "validator": "ozm-ux-ui-expert-suite/scripts/ux_visual_evidence_check.py"
+    },
+    {
+      "from": "artifact_present",
+      "to": "reviewed",
+      "requires": [
+        "visual_parity_verdict",
+        "visual_claim_ceiling"
+      ],
+      "validator": "ozm-ux-ui-expert-suite/scripts/ux_visual_evidence_check.py"
+    }
+  ],
+  "nonSurfaceFailures": [
+    "ozm-ux-ui-expert-suite_loaded_without_required_activation_effect"
+  ],
+  "paperEvidenceClass": "contractual_control_surface"
+}

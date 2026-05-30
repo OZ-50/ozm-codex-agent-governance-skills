@@ -1,0 +1,128 @@
+{
+  "schema": "ozm.skill_contract.v3.1",
+  "skill": "ozm-role-stack-coordination",
+  "activationTriggers": {
+    "ownerStrongPhrases": [],
+    "ownerWeakKeywords": [
+      "multi-agent-patterns",
+      "multi agent patterns",
+      "multi-agent pattern",
+      "supervisor swarm hierarchy",
+      "current-phase companion",
+      "current phase companion",
+      "current-phase only companion",
+      "current phase only companion"
+    ],
+    "companionStrongPhrases": [
+      "skill激活",
+      "skill 的激活",
+      "skill的激活",
+      "技能激活",
+      "非表层作用",
+      "表层激活",
+      "document drafting",
+      "draft research gate",
+      "claim evidence argument matrix",
+      "draft issue registry",
+      "text artifact",
+      "governed text"
+    ],
+    "companionWeakKeywords": [
+      "ce:plan",
+      "ce-plan",
+      "ce:brainstorm",
+      "ce-brainstorm"
+    ],
+    "negativeTriggers": [
+      "metadata-only mention",
+      "route output without SKILL.md hydration",
+      "pre-compaction receipt reused after compaction"
+    ]
+  },
+  "ownerQuestions": [
+    "Use when OZM-governed work needs controller/planner/writer/reviewer/audit role coordination, subagent or spawn_agent/wait_agent tool-event governance, model-profile/runtime-carrier checks, or bounded multi-lane ownership discipline."
+  ],
+  "preconditions": [
+    "ozm-role-stack-coordination selected by ozone-manager for a matching OZM-governed request",
+    "latest visible request role and authority class are classified",
+    "owner surfaces or explicit absence are recorded"
+  ],
+  "blockingConditions": [
+    "subagent/review is claimed without actual carrier receipt",
+    "writer self-accepts without independent review posture"
+  ],
+  "requiredArtifacts": [
+    {
+      "id": "role_stack_receipt",
+      "schema": "ozone-manager/references/schemas/role_stack_receipt.schema.json",
+      "requiredWhen": "ozm-role-stack-coordination is activated and role_stack_receipt governs the next downstream claim or action",
+      "claimCeilingIfMissing": "artifact_missing_or_candidate_only"
+    },
+    {
+      "id": "subagent_context_pack",
+      "schema": "ozone-manager/references/schemas/subagent_context_pack.schema.json",
+      "requiredWhen": "ozm-role-stack-coordination is activated and subagent_context_pack governs the next downstream claim or action",
+      "claimCeilingIfMissing": "artifact_missing_or_candidate_only"
+    },
+    {
+      "id": "result_pack_contract",
+      "schema": "ozone-manager/references/schemas/result_pack_contract.schema.json",
+      "requiredWhen": "ozm-role-stack-coordination is activated and result_pack_contract governs the next downstream claim or action",
+      "claimCeilingIfMissing": "artifact_missing_or_candidate_only"
+    }
+  ],
+  "validators": [
+    {
+      "script": "ozm-role-stack-coordination/scripts/role_stack_event_trace_check.py",
+      "appliesTo": [
+        "role_event_trace",
+        "subagent_result_pack",
+        "controller_review",
+        "role_stack_receipt",
+        "subagent_context_pack",
+        "result_pack_contract"
+      ],
+      "mustPassBefore": [
+        "positive_claim",
+        "closeout"
+      ]
+    }
+  ],
+  "downstreamBindings": [
+    {
+      "consumer": "ozm-review-diffgate-acceptance",
+      "field": "audit_carrier",
+      "required": true
+    },
+    {
+      "consumer": "ozm-record-surface-management",
+      "field": "subagent_result_record",
+      "required": true
+    }
+  ],
+  "claimTransitions": [
+    {
+      "from": "planned",
+      "to": "artifact_present",
+      "requires": [
+        "role_stack_receipt",
+        "subagent_context_pack",
+        "result_pack_contract"
+      ],
+      "validator": "ozm-role-stack-coordination/scripts/role_stack_event_trace_check.py"
+    },
+    {
+      "from": "artifact_present",
+      "to": "reviewed",
+      "requires": [
+        "audit_carrier",
+        "subagent_result_record"
+      ],
+      "validator": "ozm-role-stack-coordination/scripts/role_stack_event_trace_check.py"
+    }
+  ],
+  "nonSurfaceFailures": [
+    "ozm-role-stack-coordination_loaded_without_required_activation_effect"
+  ],
+  "paperEvidenceClass": "contractual_control_surface"
+}

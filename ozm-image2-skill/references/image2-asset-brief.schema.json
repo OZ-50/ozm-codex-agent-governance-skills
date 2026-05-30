@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "ozm.image2_asset_brief.v1",
+  "type": "object",
+  "required": ["brief_id", "asset_kind", "prompt_pack", "integration_target", "acceptance_criteria", "claim_ceiling"],
+  "properties": {
+    "brief_id": {"type": "string", "minLength": 1},
+    "asset_kind": {"enum": ["prompt_only", "scene", "character", "spritesheet", "effect", "ui_mock", "product_visual", "other"]},
+    "prompt_pack": {
+      "type": "object",
+      "required": ["style_tokens", "negative_constraints", "variant_map"],
+      "properties": {
+        "style_tokens": {"type": "array", "items": {"type": "string"}},
+        "negative_constraints": {"type": "array", "items": {"type": "string"}},
+        "sequence_map": {"type": "array", "items": {"type": "string"}},
+        "variant_map": {"type": "array", "items": {"type": "string"}}
+      },
+      "additionalProperties": true
+    },
+    "integration_target": {"type": "string", "minLength": 1},
+    "acceptance_criteria": {"type": "array", "items": {"type": "string"}, "minItems": 1},
+    "claim_ceiling": {"enum": ["prompt_ready", "asset_generated", "asset_integrated_verified", "unavailable_tool_prompt_only"]}
+  },
+  "additionalProperties": true
+}

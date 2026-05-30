@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "ozm.visual_evidence_pack.v1",
+  "type": "object",
+  "required": ["surface", "screenshot_ref", "dom_snapshot", "interaction_trace", "accessibility_check", "visual_claim_ceiling"],
+  "properties": {
+    "surface": {"type": "string"},
+    "screenshot_ref": {"type": "string"},
+    "dom_snapshot": {"type": "string"},
+    "interaction_trace": {"type": "string"},
+    "accessibility_check": {"enum": ["axe_pass", "axe_fail", "heuristic_review", "not_run"]},
+    "visual_diff_ref": {"type": "string"},
+    "visual_claim_ceiling": {"type": "string"}
+  },
+  "additionalProperties": true
+}

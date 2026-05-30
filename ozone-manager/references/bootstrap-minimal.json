@@ -1,0 +1,24 @@
+{
+  "schema": "ozm.bootstrap_minimal.v1",
+  "always_inline": [
+    "mandatory_bootstrap",
+    "actual_child_skill_hydration_gate",
+    "umbrella_stop_index",
+    "request_role_boundary",
+    "claim_ceiling_boundary"
+  ],
+  "load_on_demand": {
+    "budget_detail": "references/bootstrap-budget.md",
+    "routing_detail": "references/bootstrap-routing-details.md",
+    "stage_matrix": "references/routing/stage-absorption-matrix.md",
+    "failure_mode_matrix": "references/routing/failure-mode-routing.md",
+    "specialist_boundaries": "references/routing/specialist-preserve-quarantine.md"
+  },
+  "receipt_required_fields": [
+    "ozm_bootstrap_epoch",
+    "actual_child_skill_loads",
+    "candidate_routes_not_loaded",
+    "activation_effects_verified",
+    "claim_ceiling"
+  ]
+}

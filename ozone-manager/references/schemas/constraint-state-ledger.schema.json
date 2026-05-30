@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "ozm.constraint_state_ledger.v1",
+  "type": "object",
+  "required": ["constraints"],
+  "properties": {
+    "constraints": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "constraint_id",
+          "source_skill",
+          "authority",
+          "must_be_consumed_by",
+          "freshness",
+          "stale_when",
+          "current_status",
+          "claim_effect_if_missing"
+        ],
+        "properties": {
+          "constraint_id": {"type": "string", "minLength": 1},
+          "source_skill": {"type": "string", "minLength": 1},
+          "authority": {"type": "string", "minLength": 1},
+          "source_ref": {"type": "string"},
+          "must_be_consumed_by": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+          "freshness": {"type": "string", "minLength": 1},
+          "stale_when": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+          "current_status": {"enum": ["active", "consumed", "violated", "deferred_with_ceiling"]},
+          "claim_effect_if_missing": {"type": "string", "minLength": 1}
+        },
+        "additionalProperties": true
+      }
+    }
+  },
+  "additionalProperties": true
+}

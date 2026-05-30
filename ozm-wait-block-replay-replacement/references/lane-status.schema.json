@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "ozm.lane_status.v1",
+  "type": "object",
+  "required": ["lane_id", "status", "evidence", "surface_ownership", "next_rule", "claim_ceiling"],
+  "properties": {
+    "lane_id": {"type": "string", "minLength": 1},
+    "status": {"enum": ["clean_wait", "nonstart", "replay_candidate", "replacement_candidate", "blocker", "historical_only"]},
+    "evidence": {"type": "array", "items": {"type": "string"}, "minItems": 1},
+    "surface_ownership": {"type": "array", "items": {"type": "string"}},
+    "duplicate_writer_check": {"enum": ["not_run", "pass", "risk", "fail"]},
+    "invalidation_or_continuation": {"type": "string"},
+    "next_rule": {"type": "string", "minLength": 1},
+    "claim_ceiling": {"type": "string", "minLength": 1}
+  },
+  "additionalProperties": true
+}

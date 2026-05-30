@@ -1,0 +1,4 @@
+interface:
+  display_name: "OZM Record Surface Management"
+  short_description: "Manage OZM records, reentry, memory, and evidence sync"
+  default_prompt: "Use $ozm-record-surface-management to keep OZM control records current: post-compression reentry receipts, activation anchors, compact memory indexes, working indexes, command receipts, governed task-card lifecycle, ledgers, queues, evidence dependency posture, continuation queues, record-sync cadence, and low-frequency reference loading only when exact field lists are needed. Do not load archived todo-create/todo-triage/todo-resolve donor ids on the OZM normal path."

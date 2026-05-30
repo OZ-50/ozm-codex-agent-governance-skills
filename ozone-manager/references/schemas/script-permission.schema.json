@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "ozm.script_permission.v1",
+  "type": "object",
+  "required": ["sha256", "network", "requires_user_approval", "read_scope", "write_scope", "stdout_data_class", "external_commands", "platforms", "secret_redaction_required"],
+  "properties": {
+    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "network": {"type": "boolean"},
+    "requires_user_approval": {"type": "boolean"},
+    "disabled_by_default": {"type": "boolean"},
+    "authorization_env": {"type": "string"},
+    "read_scope": {"type": "array", "items": {"type": "string"}},
+    "write_scope": {"type": "array", "items": {"type": "string"}},
+    "stdout_data_class": {"type": "string"},
+    "external_commands": {"type": "array", "items": {"type": "string"}},
+    "platforms": {"type": "array", "items": {"enum": ["windows", "linux", "macos"]}},
+    "secret_redaction_required": {"type": "boolean"}
+  },
+  "additionalProperties": true
+}

@@ -1,0 +1,116 @@
+{
+  "schema": "ozm.skill_contract.v3.1",
+  "skill": "ozm-feature-extraction-prototyper",
+  "activationTriggers": {
+    "ownerStrongPhrases": [
+      "RFMC",
+      "feature extraction",
+      "reusable capsule",
+      "模块化抽取",
+      "复用功能",
+      "verified work extraction"
+    ],
+    "ownerWeakKeywords": [
+      "rfmc",
+      "quick-copy",
+      "reusable",
+      "reuse",
+      "feature extraction",
+      "reusable capsule",
+      "复用功能"
+    ],
+    "companionStrongPhrases": [],
+    "companionWeakKeywords": [],
+    "negativeTriggers": [
+      "metadata-only mention",
+      "route output without SKILL.md hydration",
+      "pre-compaction receipt reused after compaction"
+    ]
+  },
+  "ownerQuestions": [
+    "Use for OZM-managed extraction of verified work into RFMC reusable capsules."
+  ],
+  "preconditions": [
+    "ozm-feature-extraction-prototyper selected by ozone-manager for a matching OZM-governed request",
+    "latest visible request role and authority class are classified",
+    "owner surfaces or explicit absence are recorded"
+  ],
+  "blockingConditions": [
+    "capsule lacks source proof, excluded scope, or promotion criteria",
+    "prototype is claimed as reusable production module"
+  ],
+  "requiredArtifacts": [
+    {
+      "id": "feature_capsule",
+      "schema": "ozone-manager/references/schemas/feature_capsule.schema.json",
+      "requiredWhen": "ozm-feature-extraction-prototyper is activated and feature_capsule governs the next downstream claim or action",
+      "claimCeilingIfMissing": "artifact_missing_or_candidate_only"
+    },
+    {
+      "id": "source_evidence_links",
+      "schema": "ozone-manager/references/schemas/source_evidence_links.schema.json",
+      "requiredWhen": "ozm-feature-extraction-prototyper is activated and source_evidence_links governs the next downstream claim or action",
+      "claimCeilingIfMissing": "artifact_missing_or_candidate_only"
+    },
+    {
+      "id": "prototype_boundary_receipt",
+      "schema": "ozone-manager/references/schemas/prototype_boundary_receipt.schema.json",
+      "requiredWhen": "ozm-feature-extraction-prototyper is activated and prototype_boundary_receipt governs the next downstream claim or action",
+      "claimCeilingIfMissing": "artifact_missing_or_candidate_only"
+    }
+  ],
+  "validators": [
+    {
+      "script": "ozm-feature-extraction-prototyper/scripts/feature_capsule_check.py",
+      "appliesTo": [
+        "rfmc_capsule",
+        "reuse_preconditions",
+        "heldout_reuse_task",
+        "feature_capsule",
+        "source_evidence_links",
+        "prototype_boundary_receipt"
+      ],
+      "mustPassBefore": [
+        "positive_claim",
+        "closeout"
+      ]
+    }
+  ],
+  "downstreamBindings": [
+    {
+      "consumer": "RFMC",
+      "field": "catalog_entry",
+      "required": true
+    },
+    {
+      "consumer": "ozm-closeout-handoff",
+      "field": "extraction_closeout",
+      "required": true
+    }
+  ],
+  "claimTransitions": [
+    {
+      "from": "planned",
+      "to": "artifact_present",
+      "requires": [
+        "feature_capsule",
+        "source_evidence_links",
+        "prototype_boundary_receipt"
+      ],
+      "validator": "ozm-feature-extraction-prototyper/scripts/feature_capsule_check.py"
+    },
+    {
+      "from": "artifact_present",
+      "to": "reviewed",
+      "requires": [
+        "catalog_entry",
+        "extraction_closeout"
+      ],
+      "validator": "ozm-feature-extraction-prototyper/scripts/feature_capsule_check.py"
+    }
+  ],
+  "nonSurfaceFailures": [
+    "ozm-feature-extraction-prototyper_loaded_without_required_activation_effect"
+  ],
+  "paperEvidenceClass": "contractual_control_surface"
+}

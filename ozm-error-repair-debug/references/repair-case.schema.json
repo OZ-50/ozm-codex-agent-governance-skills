@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "ozm.repair_case.v1",
+  "type": "object",
+  "required": ["symptom", "repro_command", "expected_failure_signature", "root_cause_file", "minimal_delta", "post_fix_evidence", "no_scope_widening_diff"],
+  "properties": {
+    "symptom": {"type": "string"},
+    "repro_command": {"type": "string"},
+    "expected_failure_signature": {"type": "string"},
+    "root_cause_file": {"type": "string"},
+    "minimal_delta": {"type": "string"},
+    "post_fix_evidence": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+    "no_scope_widening_diff": {"type": "string"},
+    "harness_status": {"enum": ["pass", "fail", "blocked", "not_run"]},
+    "product_status": {"enum": ["pass", "fail", "blocked", "not_run"]}
+  },
+  "additionalProperties": true
+}

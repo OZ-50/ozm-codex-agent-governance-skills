@@ -1,0 +1,4 @@
+interface:
+  display_name: "OZM Code Writing"
+  short_description: "Admitted OZM implementation with write-set discipline"
+  default_prompt: "Use $ozm-code-writing only after dispatch freeze; keep implementation inside the frozen write-set, preserve controller truth, consume reference execution anchors when present, update owned maps/records, avoid coupling/noise, and run the compact code-health gate."

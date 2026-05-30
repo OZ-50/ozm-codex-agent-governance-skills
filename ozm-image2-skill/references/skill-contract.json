@@ -1,0 +1,107 @@
+{
+  "schema": "ozm.skill_contract.v3.1",
+  "skill": "ozm-image2-skill",
+  "activationTriggers": {
+    "ownerStrongPhrases": [],
+    "ownerWeakKeywords": [
+      "gpt-image-2",
+      "gpt image 2",
+      "image-2",
+      "image2",
+      "agent-sprite-forge",
+      "generate2dsprite",
+      "generate2dmap",
+      "game asset"
+    ],
+    "companionStrongPhrases": [],
+    "companionWeakKeywords": [],
+    "negativeTriggers": [
+      "metadata-only mention",
+      "route output without SKILL.md hydration",
+      "pre-compaction receipt reused after compaction"
+    ]
+  },
+  "ownerQuestions": [
+    "Craft and audit GPT Image 2 / image-2 prompts and visual briefs under OZM governance. Use for prompt-only planning, image-2 brief refinement, and project asset prompt evidence posture; actual generation remains owned by imagegen."
+  ],
+  "preconditions": [
+    "ozm-image2-skill selected by ozone-manager for a matching OZM-governed request",
+    "latest visible request role and authority class are classified",
+    "owner surfaces or explicit absence are recorded"
+  ],
+  "blockingConditions": [
+    "prompt craft is claimed as generated/integrated asset",
+    "game asset lacks style, sequence, or integration boundary"
+  ],
+  "requiredArtifacts": [
+    {
+      "id": "image2_prompt_brief",
+      "schema": "ozone-manager/references/schemas/image2_prompt_brief.schema.json",
+      "requiredWhen": "ozm-image2-skill is activated and image2_prompt_brief governs the next downstream claim or action",
+      "claimCeilingIfMissing": "artifact_missing_or_candidate_only"
+    },
+    {
+      "id": "asset_provenance",
+      "schema": "ozone-manager/references/schemas/asset_provenance.schema.json",
+      "requiredWhen": "ozm-image2-skill is activated and asset_provenance governs the next downstream claim or action",
+      "claimCeilingIfMissing": "artifact_missing_or_candidate_only"
+    },
+    {
+      "id": "visual_qa_receipt",
+      "schema": "ozone-manager/references/schemas/visual_qa_receipt.schema.json",
+      "requiredWhen": "ozm-image2-skill is activated and visual_qa_receipt governs the next downstream claim or action",
+      "claimCeilingIfMissing": "artifact_missing_or_candidate_only"
+    }
+  ],
+  "validators": [
+    {
+      "script": "ozm-image2-skill/scripts/image_prompt_boundary_check.py",
+      "appliesTo": [
+        "image2_prompt_brief",
+        "asset_provenance",
+        "visual_qa_receipt"
+      ],
+      "mustPassBefore": [
+        "positive_claim",
+        "closeout"
+      ]
+    }
+  ],
+  "downstreamBindings": [
+    {
+      "consumer": "ozm-review-diffgate-acceptance",
+      "field": "image_generation.prompt_input",
+      "required": true
+    },
+    {
+      "consumer": "ozm-review-diffgate-acceptance",
+      "field": "visual_claim_boundary",
+      "required": true
+    }
+  ],
+  "claimTransitions": [
+    {
+      "from": "planned",
+      "to": "artifact_present",
+      "requires": [
+        "image2_prompt_brief",
+        "asset_provenance",
+        "visual_qa_receipt"
+      ],
+      "validator": "ozm-image2-skill/scripts/image_prompt_boundary_check.py"
+    },
+    {
+      "from": "artifact_present",
+      "to": "reviewed",
+      "requires": [
+        "prompt_input",
+        "visual_claim_boundary"
+      ],
+      "validator": "ozm-image2-skill/scripts/image_prompt_boundary_check.py"
+    }
+  ],
+  "nonSurfaceFailures": [
+    "ozm-image2-skill_loaded_without_required_activation_effect"
+  ],
+  "paperEvidenceClass": "contractual_control_surface"
+}

@@ -1,0 +1,82 @@
+{
+  "schema": "ozm.release_critical_fixtures.v1",
+  "purpose": "Live fixtures that release_scorecard strict mode must execute instead of trusting only packaged evidence.",
+  "fixtures": [
+    {
+      "id": "eval_benchmark_contract_no_spawn_live",
+      "command": ["ozone-manager/scripts/test_fixtures/eval_benchmark_no_spawn_check.py"],
+      "timeoutSeconds": 20,
+      "expectStatus": "pass"
+    },
+    {
+      "id": "eval_suite_timeout_excludes_startup_probe_live",
+      "command": ["ozone-manager/scripts/test_fixtures/eval_suite_timeout_probe_check.py"],
+      "timeoutSeconds": 20,
+      "expectStatus": "pass"
+    },
+    {
+      "id": "eval_benchmark_contract_no_spawn_slow_startup_live",
+      "command": ["ozone-manager/scripts/test_fixtures/eval_benchmark_no_spawn_slow_startup_check.py"],
+      "timeoutSeconds": 20,
+      "expectStatus": "pass"
+    },
+    {
+      "id": "eval_all_linux_container_runtime_budget_live",
+      "command": ["ozone-manager/scripts/test_fixtures/eval_all_runtime_budget_check.py"],
+      "timeoutSeconds": 20,
+      "expectStatus": "pass"
+    },
+    {
+      "id": "plain_import_dirty_tree_policy_live",
+      "command": ["ozone-manager/scripts/test_fixtures/plain_import_dirty_tree_check.py"],
+      "timeoutSeconds": 30,
+      "expectStatus": "pass"
+    },
+    {
+      "id": "harness_platform_matrix_live",
+      "command": ["ozone-manager/scripts/harness_platform_matrix_check.py", "--matrix", "ozone-manager/references/harness-platform-matrix.json", "--json"],
+      "timeoutSeconds": 10,
+      "expectStatus": "pass"
+    },
+    {
+      "id": "executable_surface_coverage_live",
+      "command": [
+        "ozone-manager/scripts/executable_surface_coverage_check.py",
+        "--skill-root",
+        ".",
+        "--package-manifest",
+        "ozone-manager/references/package-manifest.json",
+        "--asset-manifest",
+        "ozone-manager/references/asset-runtime-manifest.json",
+        "--json"
+      ],
+      "timeoutSeconds": 20,
+      "expectStatus": "pass"
+    },
+    {
+      "id": "eval_all_partial_snapshot_live",
+      "command": ["ozone-manager/scripts/test_fixtures/eval_partial_snapshot_check.py"],
+      "timeoutSeconds": 20,
+      "expectStatus": "pass"
+    },
+    {
+      "id": "gh_network_authorization_denial_live",
+      "command": ["ozone-manager/scripts/test_fixtures/gh_network_authorization_denial_check.py"],
+      "timeoutSeconds": 30,
+      "expectStatus": "pass"
+    },
+    {
+      "id": "contract_schema_specificity_live",
+      "command": [
+        "ozone-manager/scripts/contract_schema_specificity_check.py",
+        "--skill-root",
+        ".",
+        "--max-generic-required-artifacts",
+        "10",
+        "--json"
+      ],
+      "timeoutSeconds": 20,
+      "expectStatus": "pass"
+    }
+  ]
+}

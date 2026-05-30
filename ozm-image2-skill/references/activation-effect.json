@@ -1,0 +1,29 @@
+{
+  "schema": "ozm.activation_effect.v1",
+  "skill": "ozm-image2-skill",
+  "ownerQuestions": [
+    "Craft and audit GPT Image 2 / image-2 prompts and visual briefs under OZM governance. Use for prompt-only planning, image-2 brief refinement, and project asset prompt evidence posture; actual generation remains owned by imagegen."
+  ],
+  "blocksActionWhen": [
+    "prompt craft is claimed as generated/integrated asset",
+    "game asset lacks style, sequence, or integration boundary"
+  ],
+  "requiredArtifacts": [
+    "image2_prompt_brief",
+    "asset_provenance",
+    "visual_qa_receipt"
+  ],
+  "downstreamBinding": [
+    "image_generation.prompt_input",
+    "ozm-review-diffgate-acceptance.visual_claim_boundary"
+  ],
+  "proofOrScript": [
+    "manual prompt/asset QA; image generation tool result when available"
+  ],
+  "claimEffects": [
+    "separates prompt_ready, asset_generated, asset_reviewed, and integrated claims"
+  ],
+  "nonSurfaceFailureCodes": [
+    "ozm-image2-skill_loaded_without_required_activation_effect"
+  ]
+}

@@ -1,0 +1,4 @@
+interface:
+  display_name: "OZM Error Repair Debug"
+  short_description: "Reproduce, classify, and repair OZM failures"
+  default_prompt: "Use $ozm-error-repair-debug for OZM failures to reproduce or classify stale/no-op/working-as-intended cases, identify violated constraints, optionally create a bounded git_history_receipt from git log/blame history, repair minimally, and name the next verifier. Do not load standalone git-history-analyzer on the OZM normal path."

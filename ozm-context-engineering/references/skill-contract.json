@@ -1,0 +1,131 @@
+{
+  "schema": "ozm.skill_contract.v3.1",
+  "skill": "ozm-context-engineering",
+  "activationTriggers": {
+    "ownerStrongPhrases": [],
+    "ownerWeakKeywords": [
+      "详细审计",
+      "详尽审计",
+      "compression",
+      "compress context",
+      "summarize context",
+      "summarize conversation history",
+      "skill库",
+      "技能库",
+      "skill 库",
+      "skill library audit"
+    ],
+    "companionStrongPhrases": [
+      "再次审计",
+      "详尽优化建议",
+      "论文证据链",
+      "基于论文层面的证据链",
+      "逐个skill分析",
+      "skill library audit with papers"
+    ],
+    "companionWeakKeywords": [
+      "再次审计",
+      "详尽优化建议"
+    ],
+    "negativeTriggers": [
+      "metadata-only mention",
+      "route output without SKILL.md hydration",
+      "pre-compaction receipt reused after compaction"
+    ]
+  },
+  "ownerQuestions": [
+    "Use for OZM-governed context engineering: compression, context degradation, context budgeting, progressive disclosure, large-output routing, filesystem-backed context, post-compaction recovery, and long-horizon memory/working-index health."
+  ],
+  "preconditions": [
+    "ozm-context-engineering selected by ozone-manager for a matching OZM-governed request",
+    "latest visible request role and authority class are classified",
+    "owner surfaces or explicit absence are recorded"
+  ],
+  "blockingConditions": [
+    "compressed context would drop owner truth or open claim ceilings",
+    "post-compaction action lacks reentry owner reads"
+  ],
+  "requiredArtifacts": [
+    {
+      "id": "context_pack",
+      "schema": "references/context-pack-manifest.schema.json",
+      "requiredWhen": "ozm-context-engineering is activated and context_pack governs the next downstream claim or action",
+      "claimCeilingIfMissing": "artifact_missing_or_candidate_only"
+    },
+    {
+      "id": "compaction_receipt",
+      "schema": "ozone-manager/references/schemas/compaction_receipt.schema.json",
+      "requiredWhen": "ozm-context-engineering is activated and compaction_receipt governs the next downstream claim or action",
+      "claimCeilingIfMissing": "artifact_missing_or_candidate_only"
+    },
+    {
+      "id": "context_loss_report",
+      "schema": "ozone-manager/references/schemas/context_loss_report.schema.json",
+      "requiredWhen": "ozm-context-engineering is activated and context_loss_report governs the next downstream claim or action",
+      "claimCeilingIfMissing": "artifact_missing_or_candidate_only"
+    }
+  ],
+  "validators": [
+    {
+      "script": "ozm-context-engineering/scripts/compression_evaluator.py",
+      "appliesTo": [
+        "context_pack",
+        "compaction_receipt",
+        "context_loss_report"
+      ],
+      "mustPassBefore": [
+        "positive_claim",
+        "closeout"
+      ]
+    },
+    {
+      "script": "ozm-context-engineering/scripts/degradation_detector.py",
+      "appliesTo": [
+        "context_pack",
+        "compaction_receipt",
+        "context_loss_report"
+      ],
+      "mustPassBefore": [
+        "positive_claim",
+        "closeout"
+      ]
+    }
+  ],
+  "downstreamBindings": [
+    {
+      "consumer": "ozm-record-surface-management",
+      "field": "reentry_receipt",
+      "required": true
+    },
+    {
+      "consumer": "ozm-truth-boundary-management",
+      "field": "owner_reread",
+      "required": true
+    }
+  ],
+  "claimTransitions": [
+    {
+      "from": "planned",
+      "to": "artifact_present",
+      "requires": [
+        "context_pack",
+        "compaction_receipt",
+        "context_loss_report"
+      ],
+      "validator": "ozm-context-engineering/scripts/compression_evaluator.py"
+    },
+    {
+      "from": "artifact_present",
+      "to": "reviewed",
+      "requires": [
+        "reentry_receipt",
+        "owner_reread"
+      ],
+      "validator": "ozm-context-engineering/scripts/compression_evaluator.py"
+    }
+  ],
+  "nonSurfaceFailures": [
+    "ozm-context-engineering_loaded_without_required_activation_effect"
+  ],
+  "paperEvidenceClass": "contractual_control_surface"
+}

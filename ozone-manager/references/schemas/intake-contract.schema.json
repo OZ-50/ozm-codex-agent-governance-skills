@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "ozm.intake_contract.v1",
+  "type": "object",
+  "required": [
+    "owner_truth_surfaces",
+    "non_owner_surfaces",
+    "prerequisite_posture",
+    "expected_artifacts",
+    "negative_scope",
+    "constraint_ids"
+  ],
+  "properties": {
+    "owner_truth_surfaces": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+    "non_owner_surfaces": {"type": "array", "items": {"type": "string"}},
+    "prerequisite_posture": {"type": "string", "minLength": 1},
+    "expected_artifacts": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+    "negative_scope": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+    "constraint_ids": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+    "paper_source_set": {"type": "array", "items": {"type": "string"}},
+    "claim_verification_policy": {"type": "string"}
+  },
+  "additionalProperties": true
+}

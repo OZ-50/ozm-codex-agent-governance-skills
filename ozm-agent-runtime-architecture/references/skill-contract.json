@@ -1,0 +1,114 @@
+{
+  "schema": "ozm.skill_contract.v3.1",
+  "skill": "ozm-agent-runtime-architecture",
+  "activationTriggers": {
+    "ownerStrongPhrases": [
+      "agent runtime",
+      "MCP boundary",
+      "tool contract",
+      "memory boundary",
+      "operator shell parity",
+      "运行时架构"
+    ],
+    "ownerWeakKeywords": [
+      "agent-framework-development-governor",
+      "agent-native-architecture",
+      "agent-native-audit",
+      "agent-native-reviewer",
+      "agent runtime",
+      "MCP boundary",
+      "tool contract",
+      "memory boundary"
+    ],
+    "companionStrongPhrases": [],
+    "companionWeakKeywords": [],
+    "negativeTriggers": [
+      "metadata-only mention",
+      "route output without SKILL.md hydration",
+      "pre-compaction receipt reused after compaction"
+    ]
+  },
+  "ownerQuestions": [
+    "Use for OZM-governed agent-native, multi-agent, memory, MCP/tool, control-plane, operator-shell, or agent framework work that needs runtime-real evidence, user-agent parity, tool contracts, state transitions, memory boundaries, and claim ceilings."
+  ],
+  "preconditions": [
+    "ozm-agent-runtime-architecture selected by ozone-manager for a matching OZM-governed request",
+    "latest visible request role and authority class are classified",
+    "owner surfaces or explicit absence are recorded"
+  ],
+  "blockingConditions": [
+    "agent capability is claimed without runtime/tool/state proof",
+    "projection-only architecture is treated as implemented runtime"
+  ],
+  "requiredArtifacts": [
+    {
+      "id": "agent_runtime_capability_map",
+      "schema": "ozone-manager/references/schemas/agent_runtime_capability_map.schema.json",
+      "requiredWhen": "ozm-agent-runtime-architecture is activated and agent_runtime_capability_map governs the next downstream claim or action",
+      "claimCeilingIfMissing": "artifact_missing_or_candidate_only"
+    },
+    {
+      "id": "tool_contract_table",
+      "schema": "ozone-manager/references/schemas/tool_contract_table.schema.json",
+      "requiredWhen": "ozm-agent-runtime-architecture is activated and tool_contract_table governs the next downstream claim or action",
+      "claimCeilingIfMissing": "artifact_missing_or_candidate_only"
+    },
+    {
+      "id": "runtime_real_vs_projection_receipt",
+      "schema": "ozone-manager/references/schemas/runtime_real_vs_projection_receipt.schema.json",
+      "requiredWhen": "ozm-agent-runtime-architecture is activated and runtime_real_vs_projection_receipt governs the next downstream claim or action",
+      "claimCeilingIfMissing": "artifact_missing_or_candidate_only"
+    }
+  ],
+  "validators": [
+    {
+      "script": "ozm-agent-runtime-architecture/scripts/runtime_capability_verifier.py",
+      "appliesTo": [
+        "agent_runtime_capability_map",
+        "tool_contract_table",
+        "runtime_real_vs_projection_receipt"
+      ],
+      "mustPassBefore": [
+        "positive_claim",
+        "closeout"
+      ]
+    }
+  ],
+  "downstreamBindings": [
+    {
+      "consumer": "ozm-requirement-load",
+      "field": "runtime_truth_map",
+      "required": true
+    },
+    {
+      "consumer": "ozm-review-diffgate-acceptance",
+      "field": "runtime_real_verdict",
+      "required": true
+    }
+  ],
+  "claimTransitions": [
+    {
+      "from": "planned",
+      "to": "artifact_present",
+      "requires": [
+        "agent_runtime_capability_map",
+        "tool_contract_table",
+        "runtime_real_vs_projection_receipt"
+      ],
+      "validator": "ozm-agent-runtime-architecture/scripts/runtime_capability_verifier.py"
+    },
+    {
+      "from": "artifact_present",
+      "to": "reviewed",
+      "requires": [
+        "runtime_truth_map",
+        "runtime_real_verdict"
+      ],
+      "validator": "ozm-agent-runtime-architecture/scripts/runtime_capability_verifier.py"
+    }
+  ],
+  "nonSurfaceFailures": [
+    "ozm-agent-runtime-architecture_loaded_without_required_activation_effect"
+  ],
+  "paperEvidenceClass": "contractual_control_surface"
+}

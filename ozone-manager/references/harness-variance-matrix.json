@@ -1,0 +1,46 @@
+{
+  "schema": "ozm.harness_variance_matrix.v1",
+  "generatedBy": "ozone-manager/scripts/build_harness_variance_matrix.py",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "python": "3.14.2 (tags/v3.14.2:df79316, Dec  5 2025, 17:18:21) [MSC v.1944 64 bit (AMD64)]",
+  "variance_matrix": [
+    {
+      "matrix_id": "HV-001",
+      "baseline": "process-group",
+      "model": "local-eval-harness",
+      "runner_mode": "process-group",
+      "timeout_policy": "auto",
+      "eval_manifest_ref": "ozone-manager/references/eval-run-manifest.json",
+      "result_ref": "ozone-manager/references/eval-last-run.json",
+      "status": "pass",
+      "case_counts": {
+        "route": 92,
+        "behavior": 60,
+        "regression": 34,
+        "outcome": 141,
+        "process": 23,
+        "heldout": 2,
+        "adversarial": 2,
+        "performance": 2,
+        "security": 37,
+        "total": 393
+      },
+      "failed_count": 0,
+      "same_model_control": true
+    }
+  ],
+  "environments": [
+    {
+      "os": "windows",
+      "python": "3.14.2",
+      "runner": "process-group"
+    }
+  ],
+  "caseClasses": [
+    "route",
+    "script_fixture",
+    "process_trace"
+  ],
+  "knownVariance": [],
+  "maxAllowedFalseFailRate": 0
+}

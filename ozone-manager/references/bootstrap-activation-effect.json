@@ -1,0 +1,23 @@
+{
+  "schema": "ozm.bootstrap_activation_effect.v1",
+  "skill": "ozone-manager",
+  "mandatoryBootstrap": true,
+  "candidateRouteOnly": true,
+  "actualHydrationRequired": true,
+  "minOwnerBundle": ["ozone-manager"],
+  "routeLatencyBudgetMs": {
+    "p50": 500,
+    "p95": 1500,
+    "strongPhrase": 1000
+  },
+  "blackHoleScoreMax": 0.35,
+  "postCompactionRereadRequired": true,
+  "claimEffect": "OZM routing may name candidate owners, but no child skill is active until its SKILL.md or required reference/script is actually loaded and consumed.",
+  "requiredReceiptFields": [
+    "matched_route_ids",
+    "hydrated_child_ids",
+    "owner_bundle_reason",
+    "omitted_due_to_budget",
+    "post_compaction_epoch"
+  ]
+}

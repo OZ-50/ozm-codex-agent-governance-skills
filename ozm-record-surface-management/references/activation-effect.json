@@ -1,0 +1,29 @@
+{
+  "schema": "ozm.activation_effect.v1",
+  "skill": "ozm-record-surface-management",
+  "ownerQuestions": [
+    "Use when OZM-governed control surfaces such as task cards, receipts, ledgers, state files, evidence hashes, audit receipts, active windows, and maps must stay synchronized with live progress instead of drifting into stale summaries or proof-chain noise."
+  ],
+  "blocksActionWhen": [
+    "control record lowers controller truth without owner update",
+    "volatile navigation summary is used as proof"
+  ],
+  "requiredArtifacts": [
+    "record_provenance_entry",
+    "state_surface_update",
+    "reentry_or_receipt_index"
+  ],
+  "downstreamBinding": [
+    "ozm-truth-boundary-management.surface_authority",
+    "ozm-closeout-handoff.handoff_records"
+  ],
+  "proofOrScript": [
+    "manual record receipt; no dedicated script"
+  ],
+  "claimEffects": [
+    "limits records to navigation, candidate evidence, controller delta, or proof according to authority class"
+  ],
+  "nonSurfaceFailureCodes": [
+    "ozm-record-surface-management_loaded_without_required_activation_effect"
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "ozm.project_boot_matrix.v1",
+  "type": "object",
+  "required": ["repo_layout", "instruction_surfaces", "env_entrypoints", "smoke_commands", "truthdocs", "initial_risks", "fallback_path"],
+  "properties": {
+    "repo_layout": {"type": "string"},
+    "instruction_surfaces": {"type": "array", "items": {"type": "string"}},
+    "env_entrypoints": {"type": "array", "items": {"type": "string"}},
+    "smoke_commands": {"type": "array", "items": {"type": "string"}},
+    "truthdocs": {"type": "array", "items": {"type": "string"}},
+    "initial_risks": {"type": "array", "items": {"type": "string"}},
+    "fallback_path": {"type": "string"},
+    "first_smoke_evidence": {"type": "string"}
+  },
+  "additionalProperties": true
+}

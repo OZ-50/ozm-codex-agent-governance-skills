@@ -1,0 +1,125 @@
+{
+  "schema": "ozm.skill_contract.v3.1",
+  "skill": "ozm-requirement-load",
+  "activationTriggers": {
+    "ownerStrongPhrases": [],
+    "ownerWeakKeywords": [
+      "plan-only",
+      "plan only",
+      "planning only",
+      "read-only plan",
+      "ce:plan",
+      "ce-plan",
+      "ce:brainstorm",
+      "ce-brainstorm"
+    ],
+    "companionStrongPhrases": [
+      "new project setup",
+      "project bootstrap",
+      "新项目初始化",
+      "TruthDocs",
+      "task loop",
+      "goal loop",
+      "document drafting",
+      "draft research gate",
+      "claim evidence argument matrix",
+      "draft issue registry",
+      "text artifact",
+      "governed text"
+    ],
+    "companionWeakKeywords": [
+      "todo-create",
+      "todo-triage",
+      "todo-resolve",
+      "durable todo"
+    ],
+    "negativeTriggers": [
+      "metadata-only mention",
+      "route output without SKILL.md hydration",
+      "pre-compaction receipt reused after compaction"
+    ]
+  },
+  "ownerQuestions": [
+    "Use before OZM-governed writer admission to analyze the request, predict landing and blockers, prepare primary and fallback implementations, freeze naming and boundaries, and build the required maps."
+  ],
+  "preconditions": [
+    "ozm-requirement-load selected by ozone-manager for a matching OZM-governed request",
+    "latest visible request role and authority class are classified",
+    "owner surfaces or explicit absence are recorded"
+  ],
+  "blockingConditions": [
+    "plan-only request attempts writer admission",
+    "contract rows, truth owner, or prerequisite posture are missing"
+  ],
+  "requiredArtifacts": [
+    {
+      "id": "intake_contract",
+      "schema": "ozone-manager/references/schemas/requirement_intake_contract.schema.json",
+      "requiredWhen": "ozm-requirement-load is activated and intake_contract governs the next downstream claim or action",
+      "claimCeilingIfMissing": "artifact_missing_or_candidate_only"
+    },
+    {
+      "id": "plan_goal_contract_matrix",
+      "schema": "ozone-manager/references/schemas/plan_goal_contract_matrix.schema.json",
+      "requiredWhen": "ozm-requirement-load is activated and plan_goal_contract_matrix governs the next downstream claim or action",
+      "claimCeilingIfMissing": "artifact_missing_or_candidate_only"
+    },
+    {
+      "id": "readiness_check",
+      "schema": "ozone-manager/references/schemas/plan_to_dev_readiness_check.schema.json",
+      "requiredWhen": "ozm-requirement-load is activated and readiness_check governs the next downstream claim or action",
+      "claimCeilingIfMissing": "artifact_missing_or_candidate_only"
+    }
+  ],
+  "validators": [
+    {
+      "script": "ozm-requirement-load/scripts/requirement_intake_contract_check.py",
+      "appliesTo": [
+        "intake_contract",
+        "plan_goal_contract_matrix",
+        "readiness_check"
+      ],
+      "mustPassBefore": [
+        "positive_claim",
+        "closeout"
+      ]
+    }
+  ],
+  "downstreamBindings": [
+    {
+      "consumer": "ozm-dispatch-freeze",
+      "field": "packet_contract",
+      "required": true
+    },
+    {
+      "consumer": "ozm-claim-ceiling",
+      "field": "intake_ceiling",
+      "required": true
+    }
+  ],
+  "claimTransitions": [
+    {
+      "from": "planned",
+      "to": "artifact_present",
+      "requires": [
+        "intake_contract",
+        "plan_goal_contract_matrix",
+        "readiness_check"
+      ],
+      "validator": "ozm-requirement-load/scripts/requirement_intake_contract_check.py"
+    },
+    {
+      "from": "artifact_present",
+      "to": "reviewed",
+      "requires": [
+        "packet_contract",
+        "intake_ceiling"
+      ],
+      "validator": "ozm-requirement-load/scripts/requirement_intake_contract_check.py"
+    }
+  ],
+  "nonSurfaceFailures": [
+    "ozm-requirement-load_loaded_without_required_activation_effect"
+  ],
+  "paperEvidenceClass": "contractual_control_surface"
+}

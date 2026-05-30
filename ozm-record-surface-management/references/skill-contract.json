@@ -1,0 +1,128 @@
+{
+  "schema": "ozm.skill_contract.v3.1",
+  "skill": "ozm-record-surface-management",
+  "activationTriggers": {
+    "ownerStrongPhrases": [],
+    "ownerWeakKeywords": [
+      "todo-create",
+      "todo-triage",
+      "todo-resolve",
+      "durable todo"
+    ],
+    "companionStrongPhrases": [
+      "skill激活",
+      "skill 的激活",
+      "skill的激活",
+      "技能激活",
+      "非表层作用",
+      "表层激活",
+      "new project setup",
+      "project bootstrap",
+      "新项目初始化",
+      "TruthDocs",
+      "task loop",
+      "goal loop"
+    ],
+    "companionWeakKeywords": [
+      "git-history-analyzer",
+      "git history analyzer",
+      "git history archaeology",
+      "git blame",
+      "multi-agent-patterns",
+      "multi agent patterns",
+      "multi-agent pattern",
+      "supervisor swarm hierarchy"
+    ],
+    "negativeTriggers": [
+      "metadata-only mention",
+      "route output without SKILL.md hydration",
+      "pre-compaction receipt reused after compaction"
+    ]
+  },
+  "ownerQuestions": [
+    "Use when OZM-governed control surfaces such as task cards, receipts, ledgers, state files, evidence hashes, audit receipts, active windows, and maps must stay synchronized with live progress instead of drifting into stale summaries or proof-chain noise."
+  ],
+  "preconditions": [
+    "ozm-record-surface-management selected by ozone-manager for a matching OZM-governed request",
+    "latest visible request role and authority class are classified",
+    "owner surfaces or explicit absence are recorded"
+  ],
+  "blockingConditions": [
+    "control record lowers controller truth without owner update",
+    "volatile navigation summary is used as proof"
+  ],
+  "requiredArtifacts": [
+    {
+      "id": "record_provenance_entry",
+      "schema": "ozone-manager/references/schemas/record_provenance_entry.schema.json",
+      "requiredWhen": "ozm-record-surface-management is activated and record_provenance_entry governs the next downstream claim or action",
+      "claimCeilingIfMissing": "artifact_missing_or_candidate_only"
+    },
+    {
+      "id": "state_surface_update",
+      "schema": "references/state-surface.schema.json",
+      "requiredWhen": "ozm-record-surface-management is activated and state_surface_update governs the next downstream claim or action",
+      "claimCeilingIfMissing": "artifact_missing_or_candidate_only"
+    },
+    {
+      "id": "reentry_or_receipt_index",
+      "schema": "ozone-manager/references/schemas/reentry_receipt_index.schema.json",
+      "requiredWhen": "ozm-record-surface-management is activated and reentry_or_receipt_index governs the next downstream claim or action",
+      "claimCeilingIfMissing": "artifact_missing_or_candidate_only"
+    }
+  ],
+  "validators": [
+    {
+      "script": "ozm-record-surface-management/scripts/record_surface_provenance_check.py",
+      "appliesTo": [
+        "state_surface_record",
+        "receipt_index",
+        "provenance_record",
+        "record_provenance_entry",
+        "state_surface_update",
+        "reentry_or_receipt_index"
+      ],
+      "mustPassBefore": [
+        "positive_claim",
+        "closeout"
+      ]
+    }
+  ],
+  "downstreamBindings": [
+    {
+      "consumer": "ozm-truth-boundary-management",
+      "field": "surface_authority",
+      "required": true
+    },
+    {
+      "consumer": "ozm-closeout-handoff",
+      "field": "handoff_records",
+      "required": true
+    }
+  ],
+  "claimTransitions": [
+    {
+      "from": "planned",
+      "to": "artifact_present",
+      "requires": [
+        "record_provenance_entry",
+        "state_surface_update",
+        "reentry_or_receipt_index"
+      ],
+      "validator": "ozm-record-surface-management/scripts/record_surface_provenance_check.py"
+    },
+    {
+      "from": "artifact_present",
+      "to": "reviewed",
+      "requires": [
+        "surface_authority",
+        "handoff_records"
+      ],
+      "validator": "ozm-record-surface-management/scripts/record_surface_provenance_check.py"
+    }
+  ],
+  "nonSurfaceFailures": [
+    "ozm-record-surface-management_loaded_without_required_activation_effect"
+  ],
+  "paperEvidenceClass": "contractual_control_surface"
+}

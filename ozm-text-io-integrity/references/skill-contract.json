@@ -1,0 +1,114 @@
+{
+  "schema": "ozm.skill_contract.v3.1",
+  "skill": "ozm-text-io-integrity",
+  "activationTriggers": {
+    "ownerStrongPhrases": [
+      "Markdown 写入",
+      "JSON 写入",
+      "YAML 写入",
+      "中文乱码",
+      "PowerShell encoding",
+      "safe write"
+    ],
+    "ownerWeakKeywords": [
+      "encoding-fix",
+      "encoding fix",
+      "text encoding",
+      "encoding drift",
+      "Markdown 写入",
+      "JSON 写入",
+      "YAML 写入",
+      "中文乱码"
+    ],
+    "companionStrongPhrases": [],
+    "companionWeakKeywords": [],
+    "negativeTriggers": [
+      "metadata-only mention",
+      "route output without SKILL.md hydration",
+      "pre-compaction receipt reused after compaction"
+    ]
+  },
+  "ownerQuestions": [
+    "Use for OZM-governed text file writes, generated reports, skill files, Markdown/JSON/YAML/config edits, Windows or PowerShell encoding boundaries, mojibake, newline drift, BOM handling, oversized inline payloads, chunked writes, and safe text preflight before positive claims."
+  ],
+  "preconditions": [
+    "ozm-text-io-integrity selected by ozone-manager for a matching OZM-governed request",
+    "latest visible request role and authority class are classified",
+    "owner surfaces or explicit absence are recorded"
+  ],
+  "blockingConditions": [
+    "generated text write lacks encoding/newline/readback posture",
+    "oversized payload is written without chunk/manifest boundary"
+  ],
+  "requiredArtifacts": [
+    {
+      "id": "text_preflight_report",
+      "schema": "ozone-manager/references/schemas/text_preflight_report.schema.json",
+      "requiredWhen": "ozm-text-io-integrity is activated and text_preflight_report governs the next downstream claim or action",
+      "claimCeilingIfMissing": "artifact_missing_or_candidate_only"
+    },
+    {
+      "id": "chunk_manifest",
+      "schema": "references/chunk-manifest.schema.json",
+      "requiredWhen": "ozm-text-io-integrity is activated and chunk_manifest governs the next downstream claim or action",
+      "claimCeilingIfMissing": "artifact_missing_or_candidate_only"
+    },
+    {
+      "id": "round_trip_hash_receipt",
+      "schema": "ozone-manager/references/schemas/round_trip_hash_receipt.schema.json",
+      "requiredWhen": "ozm-text-io-integrity is activated and round_trip_hash_receipt governs the next downstream claim or action",
+      "claimCeilingIfMissing": "artifact_missing_or_candidate_only"
+    }
+  ],
+  "validators": [
+    {
+      "script": "ozm-text-io-integrity/scripts/text_preflight.py",
+      "appliesTo": [
+        "text_preflight_report",
+        "chunk_manifest",
+        "round_trip_hash_receipt"
+      ],
+      "mustPassBefore": [
+        "positive_claim",
+        "closeout"
+      ]
+    }
+  ],
+  "downstreamBindings": [
+    {
+      "consumer": "ozm-record-surface-management",
+      "field": "text_write_receipt",
+      "required": true
+    },
+    {
+      "consumer": "ozm-closeout-handoff",
+      "field": "artifact_integrity",
+      "required": true
+    }
+  ],
+  "claimTransitions": [
+    {
+      "from": "planned",
+      "to": "artifact_present",
+      "requires": [
+        "text_preflight_report",
+        "chunk_manifest",
+        "round_trip_hash_receipt"
+      ],
+      "validator": "ozm-text-io-integrity/scripts/text_preflight.py"
+    },
+    {
+      "from": "artifact_present",
+      "to": "reviewed",
+      "requires": [
+        "text_write_receipt",
+        "artifact_integrity"
+      ],
+      "validator": "ozm-text-io-integrity/scripts/text_preflight.py"
+    }
+  ],
+  "nonSurfaceFailures": [
+    "ozm-text-io-integrity_loaded_without_required_activation_effect"
+  ],
+  "paperEvidenceClass": "contractual_control_surface"
+}

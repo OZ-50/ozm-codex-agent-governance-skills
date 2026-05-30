@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "ozm.repo_graph_freshness.v1",
+  "type": "object",
+  "required": ["graph_id", "file_hash_set", "parser_version", "ignored_files", "failed_files", "built_at", "claim_ceiling"],
+  "properties": {
+    "graph_id": {"type": "string", "minLength": 1},
+    "file_hash_set": {"type": "array", "items": {"type": "object", "required": ["path", "sha256"], "properties": {"path": {"type": "string"}, "sha256": {"type": "string"}}, "additionalProperties": true}},
+    "parser_version": {"type": "string", "minLength": 1},
+    "ignored_files": {"type": "array", "items": {"type": "string"}},
+    "failed_files": {"type": "array", "items": {"type": "string"}},
+    "impact_radius_query": {"type": "string"},
+    "allowed_writes": {"type": "array", "items": {"type": "string"}},
+    "claim_ceiling": {"type": "string", "minLength": 1}
+  },
+  "additionalProperties": true
+}

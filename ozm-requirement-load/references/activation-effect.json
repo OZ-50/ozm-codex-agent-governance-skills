@@ -1,0 +1,29 @@
+{
+  "schema": "ozm.activation_effect.v1",
+  "skill": "ozm-requirement-load",
+  "ownerQuestions": [
+    "Use before OZM-governed writer admission to analyze the request, predict landing and blockers, prepare primary and fallback implementations, freeze naming and boundaries, and build the required maps."
+  ],
+  "blocksActionWhen": [
+    "plan-only request attempts writer admission",
+    "contract rows, truth owner, or prerequisite posture are missing"
+  ],
+  "requiredArtifacts": [
+    "intake_contract",
+    "plan_goal_contract_matrix",
+    "readiness_check"
+  ],
+  "downstreamBinding": [
+    "ozm-dispatch-freeze.packet_contract",
+    "ozm-claim-ceiling.intake_ceiling"
+  ],
+  "proofOrScript": [
+    "manual intake matrix; route/eval checks when hardening"
+  ],
+  "claimEffects": [
+    "raises only to planned or dev_ready_candidate; dispatch remains closed until freeze"
+  ],
+  "nonSurfaceFailureCodes": [
+    "ozm-requirement-load_loaded_without_required_activation_effect"
+  ]
+}

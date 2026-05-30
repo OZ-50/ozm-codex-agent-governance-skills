@@ -1,0 +1,4 @@
+interface:
+  display_name: "OZM Closeout Handoff"
+  short_description: "Closeout, handoff, proof, and continuation posture"
+  default_prompt: "Use $ozm-closeout-handoff to close OZM phases with fresh proof, pre-closeout and final review/subagent-result reconciliation, active non-planning surface sweep, plan-to-dev readiness, draft closed-loop receipt when text artifacts are in scope, reference gap closeout when method grounding is in scope, loop efficiency posture, unresolved gaps, claim ceiling, and continuation or handoff records."

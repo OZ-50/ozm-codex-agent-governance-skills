@@ -1,0 +1,29 @@
+{
+  "schema": "ozm.activation_effect.v1",
+  "skill": "ozm-recurring-failure-governance",
+  "ownerQuestions": [
+    "Use when OZM-governed work touches known repeated failure modes such as stale summaries, ownership drift, self-promoted evidence, nonstart loops, late prerequisite discovery, evidence hash cascades, gate-noise loops, runtime-carrier mismatch, masking, or false blockers and needs extra governance."
+  ],
+  "blocksActionWhen": [
+    "same failure repeats as ordinary repair",
+    "hardening prose is added without eval or owner child"
+  ],
+  "requiredArtifacts": [
+    "failure_signature",
+    "recurring_family_entry",
+    "regression_candidate"
+  ],
+  "downstreamBinding": [
+    "ozm-skill-hardening.hardening_candidate",
+    "ozone-manager.recurring_failure_registry"
+  ],
+  "proofOrScript": [
+    "ozone-manager/scripts/ozm_skill_health_checks.py pre-skill-hardening for recurring-failure-registry.json consistency"
+  ],
+  "claimEffects": [
+    "turns repeated failure into method_failure or regression_needed until prevention is installed"
+  ],
+  "nonSurfaceFailureCodes": [
+    "ozm-recurring-failure-governance_loaded_without_required_activation_effect"
+  ]
+}

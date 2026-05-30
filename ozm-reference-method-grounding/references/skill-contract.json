@@ -1,0 +1,163 @@
+{
+  "schema": "ozm.skill_contract.v3.1",
+  "skill": "ozm-reference-method-grounding",
+  "activationTriggers": {
+    "ownerStrongPhrases": [
+      "参考项目有效分析",
+      "论文方法提炼",
+      "论文方法论",
+      "方法论落地",
+      "reference method grounding",
+      "paper method grounding"
+    ],
+    "ownerWeakKeywords": [
+      "详细审计",
+      "详尽审计",
+      "参考项目有效分析",
+      "参考项目分析",
+      "参考项目提炼",
+      "论文方法提炼",
+      "reference method map",
+      "reference method adoption",
+      "method adoption contract",
+      "same technical approach"
+    ],
+    "companionStrongPhrases": [
+      "再次审计",
+      "详尽优化建议",
+      "论文证据链",
+      "基于论文层面的证据链",
+      "逐个skill分析",
+      "skill library audit with papers"
+    ],
+    "companionWeakKeywords": [
+      "再次审计",
+      "详尽优化建议"
+    ],
+    "negativeTriggers": [
+      "metadata-only mention",
+      "route output without SKILL.md hydration",
+      "pre-compaction receipt reused after compaction"
+    ]
+  },
+  "ownerQuestions": [
+    "Use when OZM-governed work must keep reference projects, papers, frameworks, engines, products, or prior implementations as source-backed method anchors during later planning, dispatch, writing, review, and closeout."
+  ],
+  "preconditions": [
+    "ozm-reference-method-grounding selected by ozone-manager for a matching OZM-governed request",
+    "latest visible request role and authority class are classified",
+    "owner surfaces or explicit absence are recorded"
+  ],
+  "blockingConditions": [
+    "reference-guided packet lacks reference_anchor_ids",
+    "source-backed gap or proof_surface is missing"
+  ],
+  "requiredArtifacts": [
+    {
+      "id": "paper_method_card",
+      "schema": "references/paper-method-card.schema.json",
+      "requiredWhen": "ozm-reference-method-grounding is activated and paper_method_card governs the next downstream claim or action",
+      "claimCeilingIfMissing": "artifact_missing_or_candidate_only"
+    },
+    {
+      "id": "source_backed_gap_ledger",
+      "schema": "references/source-backed-gap-ledger.schema.json",
+      "requiredWhen": "ozm-reference-method-grounding is activated and source_backed_gap_ledger governs the next downstream claim or action",
+      "claimCeilingIfMissing": "artifact_missing_or_candidate_only"
+    },
+    {
+      "id": "execution_anchor_contract",
+      "schema": "references/execution-anchor-contract.schema.json",
+      "requiredWhen": "ozm-reference-method-grounding is activated and execution_anchor_contract governs the next downstream claim or action",
+      "claimCeilingIfMissing": "artifact_missing_or_candidate_only"
+    }
+  ],
+  "validators": [
+    {
+      "script": "ozm-reference-method-grounding/scripts/method_anchor_check.py",
+      "appliesTo": [
+        "paper_method_card",
+        "source_backed_gap_ledger",
+        "execution_anchor_contract"
+      ],
+      "mustPassBefore": [
+        "positive_claim",
+        "closeout"
+      ]
+    },
+    {
+      "script": "ozm-reference-method-grounding/scripts/reference_gap_check.py",
+      "appliesTo": [
+        "paper_method_card",
+        "source_backed_gap_ledger",
+        "execution_anchor_contract"
+      ],
+      "mustPassBefore": [
+        "positive_claim",
+        "closeout"
+      ]
+    },
+    {
+      "script": "ozm-reference-method-grounding/scripts/paper_method_claim_verifier.py",
+      "appliesTo": [
+        "paper_method_card",
+        "source_backed_gap_ledger",
+        "execution_anchor_contract"
+      ],
+      "mustPassBefore": [
+        "positive_claim",
+        "closeout"
+      ]
+    },
+    {
+      "script": "ozm-reference-method-grounding/scripts/method_code_alignment_check.py",
+      "appliesTo": [
+        "method_code_alignment_score",
+        "paper_method_card",
+        "source_backed_gap_ledger",
+        "execution_anchor_contract"
+      ],
+      "mustPassBefore": [
+        "positive_claim",
+        "closeout"
+      ]
+    }
+  ],
+  "downstreamBindings": [
+    {
+      "consumer": "ozm-dispatch-freeze",
+      "field": "reference_anchor_ids",
+      "required": true
+    },
+    {
+      "consumer": "ozm-review-diffgate-acceptance",
+      "field": "reference_gap_reduction",
+      "required": true
+    }
+  ],
+  "claimTransitions": [
+    {
+      "from": "planned",
+      "to": "artifact_present",
+      "requires": [
+        "paper_method_card",
+        "source_backed_gap_ledger",
+        "execution_anchor_contract"
+      ],
+      "validator": "ozm-reference-method-grounding/scripts/method_anchor_check.py"
+    },
+    {
+      "from": "artifact_present",
+      "to": "reviewed",
+      "requires": [
+        "reference_anchor_ids",
+        "reference_gap_reduction"
+      ],
+      "validator": "ozm-reference-method-grounding/scripts/method_anchor_check.py"
+    }
+  ],
+  "nonSurfaceFailures": [
+    "ozm-reference-method-grounding_loaded_without_required_activation_effect"
+  ],
+  "paperEvidenceClass": "contractual_control_surface"
+}

@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "ozm.dispatch_packet.v1",
+  "type": "object",
+  "required": ["owner_row", "write_set", "read_set", "rollback_surface", "validator", "constraint_ids"],
+  "properties": {
+    "owner_row": {"type": "string"},
+    "write_set": {"type": "array", "items": {"type": "string"}},
+    "read_set": {"type": "array", "items": {"type": "string"}},
+    "rollback_surface": {"type": "array", "items": {"type": "string"}},
+    "validator": {"type": "array", "items": {"type": "string"}},
+    "reference_anchor_ids": {"type": "array", "items": {"type": "string"}},
+    "constraint_ids": {"type": "array", "items": {"type": "string"}}
+  },
+  "additionalProperties": true
+}

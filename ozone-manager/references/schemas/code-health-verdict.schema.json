@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "ozm.code_health_verdict.v1",
+  "type": "object",
+  "required": ["status", "checked_files", "validators", "issues", "claim_effect"],
+  "properties": {
+    "status": {"enum": ["pass", "warn", "fail"]},
+    "checked_files": {"type": "array", "items": {"type": "string"}},
+    "validators": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+    "issues": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["severity", "code", "message"],
+        "properties": {
+          "severity": {"enum": ["info", "warning", "error"]},
+          "code": {"type": "string"},
+          "message": {"type": "string"},
+          "path": {"type": "string"}
+        },
+        "additionalProperties": true
+      }
+    },
+    "repo_graph_freshness": {"type": "string"},
+    "claim_effect": {"type": "string"}
+  },
+  "additionalProperties": true
+}

@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "ozm.packet_contract.v1",
+  "type": "object",
+  "required": [
+    "packet_id",
+    "allowed_write_set",
+    "forbidden_paths",
+    "constraint_ids",
+    "proof_required",
+    "rollback_path",
+    "claim_ceiling_before",
+    "claim_ceiling_after"
+  ],
+  "properties": {
+    "packet_id": {"type": "string", "minLength": 1},
+    "allowed_write_set": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+    "forbidden_paths": {"type": "array", "items": {"type": "string"}},
+    "constraint_ids": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+    "reference_anchor_ids": {"type": "array", "items": {"type": "string"}},
+    "draft_issue_ids": {"type": "array", "items": {"type": "string"}},
+    "proof_required": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+    "rollback_path": {"type": "string", "minLength": 1},
+    "claim_ceiling_before": {"type": "string", "minLength": 1},
+    "claim_ceiling_after": {"type": "string", "minLength": 1}
+  },
+  "additionalProperties": true
+}

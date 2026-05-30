@@ -1,0 +1,29 @@
+{
+  "schema": "ozm.activation_effect.v1",
+  "skill": "ozm-dispatch-freeze",
+  "ownerQuestions": [
+    "Use before starting, replaying, or replacing an OZM-governed writer lane to freeze the reference row, write-set, controller-owned surfaces, admission order, current claim ceiling, change class, gate tier, and runtime carrier posture."
+  ],
+  "blocksActionWhen": [
+    "packet lacks owner row, write-set, verifier, rollback, or reference anchor",
+    "wrong-direction signal conflicts with reference method map"
+  ],
+  "requiredArtifacts": [
+    "dispatch_freeze_receipt",
+    "allowed_write_set",
+    "packet_gate_plan"
+  ],
+  "downstreamBinding": [
+    "ozm-code-writing.allowed_write_set",
+    "ozm-review-diffgate-acceptance.review_target"
+  ],
+  "proofOrScript": [
+    "manual dispatch receipt; ozm_guard.py pre-dispatch when paths apply"
+  ],
+  "claimEffects": [
+    "raises only to dispatch_frozen; never to implemented or accepted"
+  ],
+  "nonSurfaceFailureCodes": [
+    "ozm-dispatch-freeze_loaded_without_required_activation_effect"
+  ]
+}

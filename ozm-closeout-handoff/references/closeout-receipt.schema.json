@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "ozm.closeout_receipt.v1",
+  "type": "object",
+  "required": ["fresh_vs_inherited_evidence", "open_debt", "claim_ceiling", "next_consumer", "stale_when", "rerun_commands", "reentry_skills"],
+  "properties": {
+    "fresh_vs_inherited_evidence": {"type": "array", "items": {"type": "object"}},
+    "open_debt": {"type": "array", "items": {"type": "string"}},
+    "claim_ceiling": {"type": "string"},
+    "next_consumer": {"type": "string"},
+    "stale_when": {"type": "array", "items": {"type": "string"}},
+    "rerun_commands": {"type": "array", "items": {"type": "string"}},
+    "reentry_skills": {"type": "array", "items": {"type": "string"}}
+  },
+  "additionalProperties": true
+}

@@ -1,0 +1,33 @@
+{
+  "schema": "ozm.bootstrap_skill_contract.v1",
+  "skill": "ozone-manager",
+  "ownerQuestions": [
+    "Which OZM child owns the latest request, which companions are mandatory, and what claim ceiling applies before any governed action?"
+  ],
+  "requiredArtifacts": [
+    {
+      "id": "bootstrap_route_receipt",
+      "schema": "ozone-manager/references/bootstrap-minimal.json"
+    },
+    {
+      "id": "child_hydration_receipt",
+      "schema": "ozone-manager/references/bootstrap-activation-effect.json"
+    },
+    {
+      "id": "post_compaction_hydration_epoch",
+      "schema": "ozone-manager/references/bootstrap-activation-effect.json"
+    }
+  ],
+  "blockingConditions": [
+    "candidate route is treated as actual child activation",
+    "post-compaction execution uses a pre-compaction child receipt",
+    "positive wording lacks claim ceiling"
+  ],
+  "downstreamBindings": [
+    "owner_child_skill",
+    "mandatory_companions",
+    "claim_ceiling",
+    "next_authorized_action"
+  ],
+  "claimEffect": "candidate_route_only until child SKILL.md hydration and activation effect are current"
+}

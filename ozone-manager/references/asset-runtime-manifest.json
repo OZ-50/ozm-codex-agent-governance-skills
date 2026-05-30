@@ -1,0 +1,168 @@
+{
+  "schema": "ozm.asset_runtime_manifest.v1",
+  "purpose": "Permission and provenance manifest for executable assets bundled under skill assets/ directories but not treated as normal OZM skill scripts.",
+  "defaultPolicy": {
+    "disabled_by_default": true,
+    "requires_user_approval": true,
+    "claim_effect_when_unrun": "asset_runtime_packaged_but_not_executed"
+  },
+  "executableAssets": {
+    "ozm-repo-graph-reconstruction/assets/codegraph-runtime/scripts/agent-eval/audit.sh": {
+      "sha256": "0d91eed6884098b4bdec2f3b2ec47e7204897a41878d064c2798c77da90b335d",
+      "capability": "operator_local_agent_eval_asset",
+      "disabled_by_default": true,
+      "requires_user_approval": true,
+      "external_commands": [
+        "bash",
+        "node",
+        "codex"
+      ],
+      "network": "possible_agent_runtime",
+      "credential_surface": "operator_shell_environment",
+      "writes_global_state": false,
+      "approval_mode": "explicit_operator_asset_runtime",
+      "stdout_data_class": "diagnostic_may_include_project_paths"
+    },
+    "ozm-repo-graph-reconstruction/assets/codegraph-runtime/scripts/agent-eval/itrun.sh": {
+      "sha256": "273c3fecb31c541345ab586732604008a9460eae22904241d138e1af3014ec08",
+      "capability": "operator_local_agent_eval_asset",
+      "disabled_by_default": true,
+      "requires_user_approval": true,
+      "external_commands": [
+        "bash",
+        "node",
+        "codex"
+      ],
+      "network": "possible_agent_runtime",
+      "credential_surface": "operator_shell_environment",
+      "writes_global_state": false,
+      "approval_mode": "explicit_operator_asset_runtime",
+      "stdout_data_class": "diagnostic_may_include_project_paths"
+    },
+    "ozm-repo-graph-reconstruction/assets/codegraph-runtime/scripts/agent-eval/parse-run.mjs": {
+      "sha256": "d5afa931e2183ad037cdc39485472b1638681f1fb229310aca4001452b0154fe",
+      "capability": "local_eval_log_parser",
+      "disabled_by_default": true,
+      "requires_user_approval": true,
+      "external_commands": [
+        "node"
+      ],
+      "network": "false",
+      "credential_surface": "input_log_only",
+      "writes_global_state": false,
+      "approval_mode": "explicit_operator_asset_runtime",
+      "stdout_data_class": "diagnostic_json"
+    },
+    "ozm-repo-graph-reconstruction/assets/codegraph-runtime/scripts/agent-eval/parse-session.mjs": {
+      "sha256": "f4551d5f4449c8815d63d9fca363f34dd0b8bf66244d677fea96b0956fbca810",
+      "capability": "local_eval_session_parser",
+      "disabled_by_default": true,
+      "requires_user_approval": true,
+      "external_commands": [
+        "node"
+      ],
+      "network": "false",
+      "credential_surface": "input_log_only",
+      "writes_global_state": false,
+      "approval_mode": "explicit_operator_asset_runtime",
+      "stdout_data_class": "diagnostic_json"
+    },
+    "ozm-repo-graph-reconstruction/assets/codegraph-runtime/scripts/agent-eval/run-agent.sh": {
+      "sha256": "72417cf97ad1be7c2ab925a926b560bdb927150977fdb5d1e1a9831b369585a6",
+      "capability": "operator_local_agent_eval_asset",
+      "disabled_by_default": true,
+      "requires_user_approval": true,
+      "external_commands": [
+        "bash",
+        "codex"
+      ],
+      "network": "possible_agent_runtime",
+      "credential_surface": "operator_shell_environment",
+      "writes_global_state": false,
+      "approval_mode": "explicit_operator_asset_runtime",
+      "stdout_data_class": "diagnostic_may_include_project_paths"
+    },
+    "ozm-repo-graph-reconstruction/assets/codegraph-runtime/scripts/agent-eval/run-all.sh": {
+      "sha256": "d5791271e64d3b70b1619fb059ca8d73f3285470247046d60456235f13947e85",
+      "capability": "operator_local_agent_eval_asset",
+      "disabled_by_default": true,
+      "requires_user_approval": true,
+      "external_commands": [
+        "bash",
+        "codex"
+      ],
+      "network": "possible_agent_runtime",
+      "credential_surface": "operator_shell_environment",
+      "writes_global_state": false,
+      "approval_mode": "explicit_operator_asset_runtime",
+      "stdout_data_class": "diagnostic_may_include_project_paths"
+    },
+    "ozm-repo-graph-reconstruction/assets/codegraph-runtime/scripts/extract-release-notes.mjs": {
+      "sha256": "82bceeaa841356da5c1e0685e69fac778b5ae7a22b977a63536521fdf8c2600a",
+      "capability": "release_note_extraction_asset",
+      "disabled_by_default": true,
+      "requires_user_approval": true,
+      "external_commands": [
+        "node",
+        "git"
+      ],
+      "network": "false",
+      "credential_surface": "git_log_only",
+      "writes_global_state": false,
+      "approval_mode": "explicit_operator_asset_runtime",
+      "stdout_data_class": "release_note_text"
+    },
+    "ozm-repo-graph-reconstruction/assets/codegraph-runtime/scripts/local-install.sh": {
+      "sha256": "b022a460180da1d71bbc7c704e711679da9bd33dee52f6a279d7be7c9a0c9f67",
+      "capability": "operator_local_global_install",
+      "disabled_by_default": true,
+      "requires_user_approval": true,
+      "external_commands": [
+        "bash",
+        "node",
+        "npm"
+      ],
+      "network": "possible_npm_registry",
+      "credential_surface": "npm_and_shell_environment",
+      "writes_global_state": true,
+      "approval_mode": "explicit_operator_asset_runtime",
+      "stdout_data_class": "install_log_may_include_paths",
+      "claim_effect_when_unrun": "repo_graph_runtime_packaged_but_not_installed"
+    },
+    "ozm-repo-graph-reconstruction/assets/codegraph-runtime/scripts/patch-tree-sitter-dart.js": {
+      "sha256": "4054d19dd8cadb543f7312d3400ac002cdb8910437e01ebf69157b3948e1c704",
+      "capability": "operator_local_native_dependency_patch",
+      "disabled_by_default": true,
+      "requires_user_approval": true,
+      "external_commands": [
+        "node",
+        "npx",
+        "node-gyp"
+      ],
+      "network": "possible_npm_registry",
+      "credential_surface": "npm_and_shell_environment",
+      "writes_global_state": true,
+      "approval_mode": "explicit_operator_asset_runtime",
+      "stdout_data_class": "native_build_log_may_include_paths",
+      "claim_effect_when_unrun": "tree_sitter_patch_not_applied"
+    },
+    "ozm-repo-graph-reconstruction/assets/codegraph-runtime/scripts/release.sh": {
+      "sha256": "491389cf3806e96a5167664f974a6fd01f3ad18055512c85ab34daa0645e4f58",
+      "capability": "upstream_release_asset",
+      "disabled_by_default": true,
+      "requires_user_approval": true,
+      "external_commands": [
+        "bash",
+        "git",
+        "gh",
+        "npm"
+      ],
+      "network": "github_and_npm_registry",
+      "credential_surface": "github_npm_and_shell_environment",
+      "writes_global_state": true,
+      "approval_mode": "explicit_operator_asset_runtime",
+      "stdout_data_class": "release_log_may_include_remote_metadata",
+      "claim_effect_when_unrun": "release_asset_not_executed"
+    }
+  }
+}

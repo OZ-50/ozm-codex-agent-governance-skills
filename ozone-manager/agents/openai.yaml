@@ -1,0 +1,4 @@
+interface:
+  display_name: "OZoneManager"
+  short_description: "Bootstrap OZM routing, reentry, closeout, and claims"
+  default_prompt: "Use $ozone-manager first, bind the latest request role, then load the primary current-phase OZM child plus any mandatory support child required by control writes, document drafting, subagent/audit events, post-compression reentry, closeout, admission, or claim wording. Run route graph for composite reference/UI/visual, document-drafting, external-prerequisite admission, subagent tool-event, post-compression audit, and final PASS/closeout requests."

@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "ozm.image_asset_lifecycle.v1",
+  "type": "object",
+  "required": ["prompt_brief", "claim_ceiling"],
+  "properties": {
+    "prompt_brief": {"type": "string"},
+    "generated_asset_ref": {"type": "string"},
+    "integration_ref": {"type": "string"},
+    "visual_qa_receipt": {"type": "string"},
+    "style_consistency": {"type": "string"},
+    "sequence_constraints": {"type": "array", "items": {"type": "string"}},
+    "claim_ceiling": {"enum": ["brief_ready", "asset_generated", "asset_integrated", "visual_qa_passed"]}
+  },
+  "additionalProperties": true
+}

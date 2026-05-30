@@ -1,0 +1,4 @@
+interface:
+  display_name: "OZM Reference Method Grounding"
+  short_description: "Keep reference projects and papers as source-backed execution anchors"
+  default_prompt: "Use $ozm-reference-method-grounding when OZM work references, imitates, ports from, compares with, or claims alignment with a reference project, paper, framework, engine, product, prior implementation, or methodology. Require source classification, paper method cards or project analysis packs, method adoption contracts, source-backed gap ledgers, packet execution anchors, drift sentinel checks, and lowered claims when anchors are missing."

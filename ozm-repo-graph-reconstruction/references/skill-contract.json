@@ -1,0 +1,107 @@
+{
+  "schema": "ozm.skill_contract.v3.1",
+  "skill": "ozm-repo-graph-reconstruction",
+  "activationTriggers": {
+    "ownerStrongPhrases": [],
+    "ownerWeakKeywords": [
+      "repo-knowledge-graph",
+      "repo graph reconstruction",
+      "repository graph",
+      "repository knowledge graph",
+      "repo-analysis-deep-reconstruction",
+      ".repo_analysis",
+      "repo analysis deep reconstruction",
+      "deep reconstruction"
+    ],
+    "companionStrongPhrases": [],
+    "companionWeakKeywords": [],
+    "negativeTriggers": [
+      "metadata-only mention",
+      "route output without SKILL.md hydration",
+      "pre-compaction receipt reused after compaction"
+    ]
+  },
+  "ownerQuestions": [
+    "Use for OZM-governed repo graph/reconstruction work: CodeGraph/codegraph MCP or CLI, .codegraph/.understand-anything, .repo_analysis bundles, graph freshness, impact radius before write, and mechanism fidelity."
+  ],
+  "preconditions": [
+    "ozm-repo-graph-reconstruction selected by ozone-manager for a matching OZM-governed request",
+    "latest visible request role and authority class are classified",
+    "owner surfaces or explicit absence are recorded"
+  ],
+  "blockingConditions": [
+    "stale graph is used for write or reference claim",
+    "impact radius is unknown before code mutation"
+  ],
+  "requiredArtifacts": [
+    {
+      "id": "graph_freshness_receipt",
+      "schema": "ozone-manager/references/schemas/graph_freshness_receipt.schema.json",
+      "requiredWhen": "ozm-repo-graph-reconstruction is activated and graph_freshness_receipt governs the next downstream claim or action",
+      "claimCeilingIfMissing": "artifact_missing_or_candidate_only"
+    },
+    {
+      "id": "impact_radius_map",
+      "schema": "ozone-manager/references/schemas/impact_radius_map.schema.json",
+      "requiredWhen": "ozm-repo-graph-reconstruction is activated and impact_radius_map governs the next downstream claim or action",
+      "claimCeilingIfMissing": "artifact_missing_or_candidate_only"
+    },
+    {
+      "id": "reconstruction_bundle",
+      "schema": "ozone-manager/references/schemas/reconstruction_bundle.schema.json",
+      "requiredWhen": "ozm-repo-graph-reconstruction is activated and reconstruction_bundle governs the next downstream claim or action",
+      "claimCeilingIfMissing": "artifact_missing_or_candidate_only"
+    }
+  ],
+  "validators": [
+    {
+      "script": "ozm-repo-graph-reconstruction/scripts/validate_reconstruction_bundle.py",
+      "appliesTo": [
+        "graph_freshness_receipt",
+        "impact_radius_map",
+        "reconstruction_bundle"
+      ],
+      "mustPassBefore": [
+        "positive_claim",
+        "closeout"
+      ]
+    }
+  ],
+  "downstreamBindings": [
+    {
+      "consumer": "ozm-requirement-load",
+      "field": "repo_graph_basis",
+      "required": true
+    },
+    {
+      "consumer": "ozm-code-writing",
+      "field": "impact_radius",
+      "required": true
+    }
+  ],
+  "claimTransitions": [
+    {
+      "from": "planned",
+      "to": "artifact_present",
+      "requires": [
+        "graph_freshness_receipt",
+        "impact_radius_map",
+        "reconstruction_bundle"
+      ],
+      "validator": "ozm-repo-graph-reconstruction/scripts/validate_reconstruction_bundle.py"
+    },
+    {
+      "from": "artifact_present",
+      "to": "reviewed",
+      "requires": [
+        "repo_graph_basis",
+        "impact_radius"
+      ],
+      "validator": "ozm-repo-graph-reconstruction/scripts/validate_reconstruction_bundle.py"
+    }
+  ],
+  "nonSurfaceFailures": [
+    "ozm-repo-graph-reconstruction_loaded_without_required_activation_effect"
+  ],
+  "paperEvidenceClass": "contractual_control_surface"
+}

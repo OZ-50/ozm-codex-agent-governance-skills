@@ -1,0 +1,151 @@
+{
+  "schema": "ozm.skill_contract.v3.1",
+  "skill": "ozm-document-drafting",
+  "activationTriggers": {
+    "ownerStrongPhrases": [
+      "document drafting",
+      "draft research gate",
+      "claim evidence argument matrix",
+      "draft issue registry",
+      "text artifact",
+      "governed text"
+    ],
+    "ownerWeakKeywords": [
+      "draft-freeze neutral review",
+      "draft freeze neutral review",
+      "skeleton audit",
+      "skeleton-stage audit",
+      "review",
+      "document",
+      "document drafting",
+      "draft research gate",
+      "draft intake gate",
+      "draft quality diffgate",
+      "document strength",
+      "doc strength"
+    ],
+    "companionStrongPhrases": [
+      "再次审计",
+      "详尽优化建议",
+      "论文证据链",
+      "基于论文层面的证据链",
+      "逐个skill分析",
+      "skill library audit with papers"
+    ],
+    "companionWeakKeywords": [],
+    "negativeTriggers": [
+      "metadata-only mention",
+      "route output without SKILL.md hydration",
+      "pre-compaction receipt reused after compaction"
+    ]
+  },
+  "ownerQuestions": [
+    "Use when OZM-governed work creates, rewrites, deepens, audits, or iteratively improves a text artifact such as a plan, spec, report, analysis, handoff, research note, prompt package, roadmap, design doc, or acceptance narrative."
+  ],
+  "preconditions": [
+    "ozm-document-drafting selected by ozone-manager for a matching OZM-governed request",
+    "latest visible request role and authority class are classified",
+    "owner surfaces or explicit absence are recorded"
+  ],
+  "blockingConditions": [
+    "strong claim lacks source or reasoning bridge",
+    "P0/P1 draft issues are open without ceiling downgrade"
+  ],
+  "requiredArtifacts": [
+    {
+      "id": "draft_intake_gate",
+      "schema": "ozone-manager/references/schemas/draft_intake_gate.schema.json",
+      "requiredWhen": "ozm-document-drafting is activated and draft_intake_gate governs the next downstream claim or action",
+      "claimCeilingIfMissing": "artifact_missing_or_candidate_only"
+    },
+    {
+      "id": "claim_evidence_argument_matrix",
+      "schema": "ozone-manager/references/schemas/claim_evidence_argument_matrix.schema.json",
+      "requiredWhen": "ozm-document-drafting is activated and claim_evidence_argument_matrix governs the next downstream claim or action",
+      "claimCeilingIfMissing": "artifact_missing_or_candidate_only"
+    },
+    {
+      "id": "draft_issue_registry",
+      "schema": "references/draft-issue-registry.schema.json",
+      "requiredWhen": "ozm-document-drafting is activated and draft_issue_registry governs the next downstream claim or action",
+      "claimCeilingIfMissing": "artifact_missing_or_candidate_only"
+    }
+  ],
+  "validators": [
+    {
+      "script": "ozm-document-drafting/scripts/claim_evidence_check.py",
+      "appliesTo": [
+        "draft_intake_gate",
+        "claim_evidence_argument_matrix",
+        "draft_issue_registry"
+      ],
+      "mustPassBefore": [
+        "positive_claim",
+        "closeout"
+      ]
+    },
+    {
+      "script": "ozm-document-drafting/scripts/draft_quality_gate.py",
+      "appliesTo": [
+        "claim_evidence_argument_matrix",
+        "draft_issue_registry",
+        "concept_map",
+        "draft_intake_gate"
+      ],
+      "mustPassBefore": [
+        "positive_claim",
+        "closeout"
+      ]
+    },
+    {
+      "script": "ozm-document-drafting/scripts/citation_ast_map_check.py",
+      "appliesTo": [
+        "citation_ast_map",
+        "claim_evidence_argument_matrix",
+        "draft_intake_gate",
+        "draft_issue_registry"
+      ],
+      "mustPassBefore": [
+        "positive_claim",
+        "closeout"
+      ]
+    }
+  ],
+  "downstreamBindings": [
+    {
+      "consumer": "ozm-review-diffgate-acceptance",
+      "field": "draft_quality_diffgate",
+      "required": true
+    },
+    {
+      "consumer": "ozm-closeout-handoff",
+      "field": "draft_closeout_receipt",
+      "required": true
+    }
+  ],
+  "claimTransitions": [
+    {
+      "from": "planned",
+      "to": "artifact_present",
+      "requires": [
+        "draft_intake_gate",
+        "claim_evidence_argument_matrix",
+        "draft_issue_registry"
+      ],
+      "validator": "ozm-document-drafting/scripts/claim_evidence_check.py"
+    },
+    {
+      "from": "artifact_present",
+      "to": "reviewed",
+      "requires": [
+        "draft_quality_diffgate",
+        "draft_closeout_receipt"
+      ],
+      "validator": "ozm-document-drafting/scripts/claim_evidence_check.py"
+    }
+  ],
+  "nonSurfaceFailures": [
+    "ozm-document-drafting_loaded_without_required_activation_effect"
+  ],
+  "paperEvidenceClass": "contractual_control_surface"
+}

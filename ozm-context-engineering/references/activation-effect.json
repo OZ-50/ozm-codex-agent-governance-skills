@@ -1,0 +1,29 @@
+{
+  "schema": "ozm.activation_effect.v1",
+  "skill": "ozm-context-engineering",
+  "ownerQuestions": [
+    "Use for OZM-governed context engineering: compression, context degradation, context budgeting, progressive disclosure, large-output routing, filesystem-backed context, post-compaction recovery, and long-horizon memory/working-index health."
+  ],
+  "blocksActionWhen": [
+    "compressed context would drop owner truth or open claim ceilings",
+    "post-compaction action lacks reentry owner reads"
+  ],
+  "requiredArtifacts": [
+    "context_pack",
+    "compaction_receipt",
+    "context_loss_report"
+  ],
+  "downstreamBinding": [
+    "ozm-record-surface-management.reentry_receipt",
+    "ozm-truth-boundary-management.owner_reread"
+  ],
+  "proofOrScript": [
+    "scripts/compression_evaluator.py; scripts/degradation_detector.py"
+  ],
+  "claimEffects": [
+    "limits resumed work to reentry_required until loss and owner reads are reconciled"
+  ],
+  "nonSurfaceFailureCodes": [
+    "ozm-context-engineering_loaded_without_required_activation_effect"
+  ]
+}

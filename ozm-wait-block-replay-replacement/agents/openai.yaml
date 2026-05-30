@@ -1,0 +1,4 @@
+interface:
+  display_name: "OZM Wait Block Replay Replacement"
+  short_description: "Classify OZM wait, stall, replay, and replacement states"
+  default_prompt: "Use $ozm-wait-block-replay-replacement when an OZM lane stalls, waits, fails to start, needs replay/replacement, or requires lease/heartbeat classification without faking progress."

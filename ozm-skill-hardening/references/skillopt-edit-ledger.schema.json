@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "ozm.skillopt_edit_ledger.v1",
+  "type": "object",
+  "required": ["edit_id", "failure_or_rollout_signal", "operation", "affected_surfaces", "eval_delta", "heldout_acceptance", "claim_ceiling"],
+  "properties": {
+    "edit_id": {"type": "string", "minLength": 1},
+    "failure_or_rollout_signal": {"type": "string", "minLength": 1},
+    "operation": {"enum": ["add", "delete", "replace", "move", "archive", "restore", "no_change"]},
+    "affected_surfaces": {"type": "array", "items": {"type": "string"}, "minItems": 1},
+    "eval_delta": {"type": "string", "minLength": 1},
+    "heldout_acceptance": {"enum": ["not_run", "pass", "fail", "not_applicable"]},
+    "rejected_edit_buffer_ref": {"type": "string"},
+    "claim_ceiling": {"type": "string", "minLength": 1}
+  },
+  "additionalProperties": true
+}

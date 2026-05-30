@@ -1,0 +1,4 @@
+interface:
+  display_name: "OZM GPT Image 2 Skill"
+  short_description: "Craft governed GPT Image 2 and game-asset prompts"
+  default_prompt: "Use $ozm-image2-skill to craft or audit GPT Image 2 prompts, including 2D scenes, characters, spritesheets, VFX, tiles, icons, reference constraints, and candidate-versus-integrated asset claim ceilings."

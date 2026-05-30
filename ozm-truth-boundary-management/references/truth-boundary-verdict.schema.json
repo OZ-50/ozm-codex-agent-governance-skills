@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "ozm.truth_boundary_verdict.v1",
+  "type": "object",
+  "required": ["verdict_id", "truth_owner", "candidate_surface", "authority_class", "freshness", "conflicts", "claim_effect"],
+  "properties": {
+    "verdict_id": {"type": "string", "minLength": 1},
+    "truth_owner": {"type": "string", "minLength": 1},
+    "candidate_surface": {"type": "string", "minLength": 1},
+    "authority_class": {"enum": ["controller_truth", "candidate_delta", "execution_record", "derived_navigation", "historical_only", "scratch"]},
+    "freshness": {"enum": ["fresh", "stale", "unknown", "historical_only"]},
+    "conflicts": {"type": "array", "items": {"type": "string"}},
+    "reread_required": {"type": "boolean"},
+    "claim_effect": {"type": "string", "minLength": 1}
+  },
+  "additionalProperties": true
+}

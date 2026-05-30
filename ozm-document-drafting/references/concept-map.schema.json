@@ -1,0 +1,1 @@
+{"$schema":"https://json-schema.org/draft/2020-12/schema","$id":"ozm.draft_concept_map.v1","type":"object","required":["known_nodes","missing_nodes","tension_nodes"],"properties":{"known_nodes":{"type":"array"},"missing_nodes":{"type":"array"},"tension_nodes":{"type":"array"},"perspective_questions":{"type":"array","items":{"type":"string"}}},"additionalProperties":true}

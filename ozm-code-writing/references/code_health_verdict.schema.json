@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "ozm.code_health_verdict.v1",
+  "type": "object",
+  "required": ["navigation_health", "coupling_delta", "secret_risk", "map_freshness", "test_surface", "claim_effect"],
+  "properties": {
+    "navigation_health": {"type": "string"},
+    "coupling_delta": {"type": "string"},
+    "secret_risk": {"type": "string"},
+    "map_freshness": {"type": "string"},
+    "test_surface": {"type": "string"},
+    "claim_effect": {"type": "string"}
+  },
+  "additionalProperties": true
+}

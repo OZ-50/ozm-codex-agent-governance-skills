@@ -1,0 +1,55 @@
+{
+  "schema": "ozm.skill_security_manifest.v1",
+  "purpose": "Security posture for OZM prose, scripts, assets, stdout, and credential boundaries.",
+  "proseTrust": {
+    "activeSkillMarkdown": "operator-maintained; must pass route/eval/guard and avoid payload-less compliance hijacking",
+    "archiveMarkdown": "historical-only; not normal runtime instruction",
+    "donorReferences": "background evidence only unless absorbed into OZM owner contracts"
+  },
+  "scriptTrust": {
+    "normalSkillScripts": "must appear in package-manifest.json with sha256, allowed effects, network posture, stdout data class, and secret scan posture",
+    "assetScripts": "must appear in asset-runtime-manifest.json and remain disabled_by_default"
+  },
+  "assetRuntimeTrust": {
+    "default": "packaged-but-not-executed",
+    "operatorApprovalRequired": true,
+    "globalWritesRequireExternalPrerequisiteGate": true
+  },
+  "stdoutDataClasses": [
+    "diagnostic_no_secret_json_or_text",
+    "diagnostic_json",
+    "install_log_may_include_paths",
+    "release_log_may_include_remote_metadata"
+  ],
+  "credentialPatternScan": [
+    "openai_api_key",
+    "generic_secret",
+    "private_key",
+    "bearer_token",
+    "password_assignment"
+  ],
+  "networkPosture": {
+    "default": false,
+    "networkCapableScripts": "disabled_by_default and require explicit authorization_env or asset-runtime approval"
+  },
+  "proseSecurityScan": {
+    "script": "ozone-manager/scripts/prose_security_scan.py",
+    "covers": [
+      "payload-less instruction override phrases",
+      "secret or credential printing requests",
+      "unapproved network or upload instructions",
+      "global config mutation without permission context"
+    ],
+    "claimEffect": "A public or release package with prose-security findings stays security_candidate until findings are removed, quoted as negative fixtures, or explicitly moved to archive/historical context."
+  },
+  "publicPackagePrivacyProfile": {
+    "profile": "public-redacted",
+    "operatorLocalPaths": "redact_or_replace_with_path_variables",
+    "archiveLocalPaths": "allowed only with archive/historical/operator-local marker",
+    "usernameDisclosure": "forbidden in active package surfaces",
+    "validation": [
+      "ozone-manager/scripts/ozm_package_scope_check.py",
+      "ozone-manager/scripts/prose_security_scan.py"
+    ]
+  }
+}

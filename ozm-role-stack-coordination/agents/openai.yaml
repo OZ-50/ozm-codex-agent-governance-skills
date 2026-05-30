@@ -1,0 +1,4 @@
+interface:
+  display_name: "OZM Role Stack Coordination"
+  short_description: "Coordinate OZM roles, subagents, audits, and models"
+  default_prompt: "Use $ozm-role-stack-coordination to freeze controller/planner/writer/auditor boundaries, text draft Researcher/Architect/Writer/Reader/Editor roles, spawn_agent/wait_agent/close_agent carrier contracts, multi-agent pattern admission with context isolation and result-pack contracts, neutral draft-freeze audit, reference/UI parity audit classification, model/diverse-audit posture, wait budgets, and disjoint lane concurrency. Do not load standalone multi-agent-patterns on the OZM normal path."

@@ -1,0 +1,29 @@
+{
+  "schema": "ozm.activation_effect.v1",
+  "skill": "ozm-document-drafting",
+  "ownerQuestions": [
+    "Use when OZM-governed work creates, rewrites, deepens, audits, or iteratively improves a text artifact such as a plan, spec, report, analysis, handoff, research note, prompt package, roadmap, design doc, or acceptance narrative."
+  ],
+  "blocksActionWhen": [
+    "strong claim lacks source or reasoning bridge",
+    "P0/P1 draft issues are open without ceiling downgrade"
+  ],
+  "requiredArtifacts": [
+    "draft_intake_gate",
+    "claim_evidence_argument_matrix",
+    "draft_issue_registry"
+  ],
+  "downstreamBinding": [
+    "ozm-review-diffgate-acceptance.draft_quality_diffgate",
+    "ozm-closeout-handoff.draft_closeout_receipt"
+  ],
+  "proofOrScript": [
+    "scripts/claim_evidence_check.py; scripts/draft_quality_gate.py"
+  ],
+  "claimEffects": [
+    "keeps text at draft_candidate or review_pending until matrix and issue closure pass"
+  ],
+  "nonSurfaceFailureCodes": [
+    "ozm-document-drafting_loaded_without_required_activation_effect"
+  ]
+}

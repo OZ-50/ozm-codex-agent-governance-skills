@@ -1,0 +1,61 @@
+{
+  "schema": "ozm.constraint_state_ledger.v1",
+  "ledger_id": "CSL-EXAMPLE-20260530",
+  "task_id": "OZM-HARDENING-EXAMPLE",
+  "epoch": "post-dispatch",
+  "constraints": [
+    {
+      "constraint_id": "C-WRITESET-1",
+      "source_skill": "ozm-requirement-load",
+      "source_ref": "owner-request#write-set",
+      "authority": "user_request",
+      "constraint_type": "write_set",
+      "current_status": "active",
+      "must_be_consumed_by": [
+        "ozm-dispatch-freeze",
+        "ozm-code-writing",
+        "ozm-review-diffgate-acceptance",
+        "ozm-closeout-handoff"
+      ],
+      "must_be_inherited_by": [
+        "ozm-dispatch-freeze",
+        "ozm-code-writing",
+        "ozm-review-diffgate-acceptance",
+        "ozm-closeout-handoff"
+      ],
+      "freshness": "current_epoch",
+      "stale_when": [
+        "owner request changes",
+        "dispatch packet changes",
+        "allowed write set changes"
+      ],
+      "blocking_predicate": "writer cannot modify outside allowed_write_set",
+      "claim_effect_if_missing": "dispatch_frozen_claim_only",
+      "evidence_ref": "receipt://requirement-load/example",
+      "last_verified_by": "ozone-manager/scripts/constraint_ledger_check.py",
+      "last_verified_at": "2026-05-30T00:00:00Z"
+    }
+  ],
+  "packet_bindings": [
+    {
+      "packet_id": "P-EXAMPLE-1",
+      "must_carry_constraints": [
+        "C-WRITESET-1"
+      ],
+      "consumed_constraints": [
+        "C-WRITESET-1"
+      ],
+      "claim_ceiling_if_unconsumed": "dispatch_candidate_only"
+    }
+  ],
+  "handoffs": [
+    {
+      "from": "ozm-requirement-load",
+      "to": "ozm-dispatch-freeze",
+      "constraint_ids": [
+        "C-WRITESET-1"
+      ],
+      "status": "accepted"
+    }
+  ]
+}
