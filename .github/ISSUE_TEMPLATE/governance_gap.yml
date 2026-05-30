@@ -1,0 +1,44 @@
+name: Governance gap
+description: Report an OZM governance conflict, weak claim boundary, or unclear agent instruction.
+title: "[Governance]: "
+labels: ["governance", "needs-triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this for scoped governance problems. For open-ended questions, use Discussions or Discord.
+  - type: textarea
+    id: surface
+    attributes:
+      label: Affected surface
+      description: Name the skill, README section, AGENTS.md rule, script, or docs page.
+      placeholder: "Example: ozm-claim-ceiling/SKILL.md"
+    validations:
+      required: true
+  - type: textarea
+    id: conflict
+    attributes:
+      label: What is the governance gap?
+      description: Describe the conflict, overclaim, missing rule, or unclear precedence.
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence or reproduction
+      description: Include links, commands, or quoted short snippets. Do not include secrets or private logs.
+    validations:
+      required: false
+  - type: dropdown
+    id: claim_effect
+    attributes:
+      label: Likely claim-ceiling effect
+      options:
+        - artifact-present only
+        - pending-controller-gate
+        - verified-by-scope risk
+        - production/runtime overclaim risk
+        - unsure
+    validations:
+      required: true
+

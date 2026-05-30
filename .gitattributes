@@ -7,3 +7,11 @@
 *.ico binary
 *.wasm binary
 *.zip binary
+
+# Bundled reference runtime. Keep GitHub language detection focused on OZM docs,
+# skills, and validation scripts rather than this preserved asset.
+ozm-repo-graph-reconstruction/assets/codegraph-runtime/** linguist-vendored
+ozone-manager/references/eval-*.json linguist-generated=true
+ozone-manager/references/eval-*.jsonl linguist-generated=true
+ozone-manager/references/skill-graph*.json linguist-generated=true
+ozone-manager/references/route-index.jsonl linguist-generated=true

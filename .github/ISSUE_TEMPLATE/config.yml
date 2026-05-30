@@ -1,0 +1,12 @@
+blank_issues_enabled: true
+contact_links:
+  - name: GitHub Discussions
+    url: https://github.com/OZ-50/ozm-codex-agent-governance-skills/discussions
+    about: Use Discussions for open questions, adoption notes, and design proposals.
+  - name: OZ-Sir Discord
+    url: https://discord.gg/UxF32zjqR
+    about: Use Discord for lightweight community coordination and informal discussion.
+  - name: Security Policy
+    url: https://github.com/OZ-50/ozm-codex-agent-governance-skills/security/policy
+    about: Report security issues without posting payloads, secrets, or private logs.
+

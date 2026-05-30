@@ -1,0 +1,28 @@
+name: Deterministic check failure
+description: Report a reproducible failure from an OZM validation script.
+title: "[Check]: "
+labels: ["bug", "needs-triage"]
+body:
+  - type: input
+    id: command
+    attributes:
+      label: Command
+      description: Paste the exact command without secrets or machine-private paths.
+      placeholder: "<resolved-python> ozone-manager/scripts/ozm_package_scope_check.py --skill-root . --json"
+    validations:
+      required: true
+  - type: textarea
+    id: output
+    attributes:
+      label: Output
+      description: Paste the scoped error output. Redact secrets, local user names, and private paths.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+      description: What did you expect the check to report?
+    validations:
+      required: true
+

@@ -1,0 +1,27 @@
+name: Documentation improvement
+description: Suggest a README, docs, examples, or wording improvement.
+title: "[Docs]: "
+labels: ["documentation", "needs-triage"]
+body:
+  - type: textarea
+    id: location
+    attributes:
+      label: Location
+      description: Link or name the file and heading.
+    validations:
+      required: true
+  - type: textarea
+    id: issue
+    attributes:
+      label: What should change?
+      description: Explain the wording issue, missing context, or confusing structure.
+    validations:
+      required: true
+  - type: textarea
+    id: suggested
+    attributes:
+      label: Suggested direction
+      description: Optional proposed phrasing or structure. Keep it scoped.
+    validations:
+      required: false
+

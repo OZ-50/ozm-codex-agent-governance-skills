@@ -1,0 +1,10 @@
+cff-version: 1.2.0
+message: "If you reference OZM Skills, cite this repository."
+title: "OZM Skills: Codex-native Agent Governance Skill Pack"
+authors:
+  - name: "OZ-50"
+repository-code: "https://github.com/OZ-50/ozm-codex-agent-governance-skills"
+license: "MIT"
+version: "0.1.0"
+abstract: "A public pre-1.0 Codex-native skill pack for AI coding agent governance, agentic coding loop control, claim ceilings, evidence gates, and AGENTS.md-aware workflows."
+

@@ -28,6 +28,14 @@ When native Goal is active, OZM still owns requirement load, dispatch freeze, ev
 
 After resume, compaction, handoff, long wait, replay, replacement, or role switch, reload `ozone-manager`, the current-phase child skill, mandatory companions, repository instructions, and owner surfaces before tool calls or file mutation.
 
+## Community And Source Authority
+
+GitHub Discussions and the OZ-Sir Discord server are community and support surfaces. They are useful for questions, examples, and adoption feedback, but they are not repository truth by themselves.
+
+Do not treat Discord messages, discussion replies, popularity signals, or screenshots as accepted OZM behavior unless a maintainer converts them into tracked repository changes, issues, pull requests, releases, or documented owner decisions.
+
+Do not post public messages, create channels, edit server settings, or change GitHub community settings unless the latest user request explicitly authorizes that external action.
+
 ## Forbidden By Default
 
 Do not:

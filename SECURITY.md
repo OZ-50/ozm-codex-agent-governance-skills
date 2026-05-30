@@ -10,6 +10,8 @@ This repository contains agent-facing instructions. Treat README files, `AGENTS.
 
 Do not place secrets, credentials, provider keys, cookies, private session transcripts, personal data, or production logs in this repository.
 
+GitHub Discussions and the OZ-Sir Discord server are public or semi-public community surfaces. Do not post exploit payloads, private logs, local absolute paths, account identifiers, provider credentials, or screenshots containing sensitive information there.
+
 ## Supported Security Posture
 
 This public package is a pre-1.0 reference package. Publication does not prove production readiness, safe execution in every repository, or legal/compliance suitability.

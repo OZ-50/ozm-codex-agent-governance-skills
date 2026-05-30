@@ -4,6 +4,46 @@ Status: public pre-1.0 reference package, not production runtime proof.
 Audience: maintainers, contributors, and coding agents evaluating the public OZM skill package.  
 Package notation: this draft uses `<ozm-skills-root>` for the package root and avoids machine-local paths, timestamped archive names, or operator-private workspace labels.
 
+## At A Glance
+
+OZM Skills / OZoneManager Skills is a Codex-native governance skill pack for AI coding agent governance, agentic coding loop control, claim ceilings, evidence gates, and `AGENTS.md`-aware workflows.
+
+Use it when a coding-agent thread needs staged intake, dispatch, writing, review, closeout, reentry, and proof-boundary discipline. Do not use it as a production agent OS, hosted runtime, scheduler, MCP marketplace, or commercial support promise.
+
+First useful path:
+
+1. Read `AGENTS.md`.
+2. Open `ozone-manager/SKILL.md`.
+3. Load only the current-phase child skill plus mandatory companions.
+4. Keep positive wording at the current claim ceiling until evidence supports raising it.
+
+Current public claim ceiling: `artifact-present`. The repository publishes the package and supporting docs; it does not prove accepted governance behavior, production readiness, search ranking, or community adoption.
+
+## Inspect Or Try Locally
+
+```bash
+git clone https://github.com/OZ-50/ozm-codex-agent-governance-skills.git
+cd ozm-codex-agent-governance-skills
+```
+
+Then inspect `ozone-manager/SKILL.md` and the child skill for the phase you are evaluating. If you install selected skills into Codex, copy or symlink them through your own operator-controlled Codex skills root and keep local secrets, cookies, provider keys, private sessions, and project credentials out of this repository.
+
+Optional package checks:
+
+```bash
+<resolved-python> ozone-manager/scripts/ozm_package_scope_check.py --skill-root . --json
+<resolved-python> ozone-manager/scripts/prose_security_scan.py --skill-root . --json
+```
+
+## Community And Support
+
+- GitHub Discussions: [questions, design notes, and adoption discussion](https://github.com/OZ-50/ozm-codex-agent-governance-skills/discussions)
+- Discord: [OZ-Sir community](https://discord.gg/UxF32zjqR) for lightweight coordination and discussion
+- Issues: scoped bugs, documentation gaps, governance conflicts, and reproducible deterministic-check failures
+- Security: use [SECURITY.md](SECURITY.md); do not post secrets, exploit payloads, private logs, or local machine paths
+
+Community posts are discussion inputs. Repository truth still lives in tracked files, accepted issues, pull requests, releases, and maintainer-reviewed changes.
+
 ## Search Summary
 
 OZM Skills, also called OZoneManager Skills, is a Codex-native governance skill pack for AI coding agents, agentic coding loops, and evidence-based software engineering workflows. It helps maintainers describe how coding agents should load `AGENTS.md`, route work through staged skills, separate planning from execution, use claim ceilings, ground reference methods, and close out long-running AI software engineering threads without presenting the package as a production agent OS.
@@ -55,9 +95,8 @@ Suggested GitHub topics, keeping GitHub's lowercase, hyphenated, public-topic co
 - `agent-memory`
 - `prompt-injection`
 - `software-engineering-agents`
-- `open-source-governance`
-- `readme`
-- `ai-safety`
+- `agent-governance`
+- `ai-coding-agent`
 
 Long-tail search queries this README should answer directly:
 
